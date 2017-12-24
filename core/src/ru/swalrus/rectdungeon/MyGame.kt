@@ -3,7 +3,6 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class MyGame : ApplicationAdapter() {
@@ -15,6 +14,7 @@ class MyGame : ApplicationAdapter() {
         Const.importImages()
         batch = SpriteBatch()
 
+        Gdx.app.log("Test", (Const.MAP_MARGIN_BOTTOM).toString())
         chunk = Chunk()
     }
 
@@ -22,7 +22,7 @@ class MyGame : ApplicationAdapter() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
-
+        chunk.Center.draw(batch)
         batch.end()
     }
 

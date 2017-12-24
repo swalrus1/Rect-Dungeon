@@ -1,6 +1,10 @@
 package ru.swalrus.rectdungeon
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+
 class Chunk internal constructor() {
+
+    // TODO: Заменить соседние комнаты на одну прошлую комнату (var direction : Int; var last : Room)
 
     var Left: Room
     var Right: Room

@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Tile (img : Texture) {
 
@@ -11,8 +12,9 @@ class Tile (img : Texture) {
 
     }
 
-    fun draw(x : Int, y : Int) {
+    fun draw(x : Float, y : Float, batch : SpriteBatch) {
 
-        // TODO: Вызвать batch из MyGame для отрисовки
+        batch.draw(img, x, y,
+                Const.TILE_SIZE, Const.TILE_SIZE, 0f, 0f, 1f, 1f)
     }
 }
