@@ -1,62 +1,42 @@
 package ru.swalrus.rectdungeon
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-
 class Chunk internal constructor() {
 
-    // TODO: Заменить соседние комнаты на одну прошлую комнату (var direction : Int; var last : Room)
-
-    var Left: Room
-    var Right: Room
-    var Top: Room
-    var Bottom: Room
-    var Center: Room
+    // Direction - направление СОХРАНЕННОЙ комнаты
+    var direction : Int = Const.CENTER
+    var Last : Room
+    var Center : Room
 
 
     init {
         Center = Room()
-        Top = Room()
-        Bottom = Room()
-        Left = Room()
-        Right = Room()
+        Last = Room()
     }
 
 
-    fun move(direction: Int) {
+    fun backDirection (direction : Int) : Int {
 
         when (direction) {
+            Const.TOP -> return Const.BOTTOM
+            Const.BOTTOM -> return Const.TOP
+            Const.RIGHT -> return Const.LEFT
+            Const.LEFT -> return Const.RIGHT
+            Const.CENTER -> return Const.CENTER
+            else -> return Const.CENTER
+        }
+    }
 
-            Const.LEFT -> {
-                Right = Center
-                Center = Left
-                Left = Room()
-                Top = Room()
-                Bottom = Room()
-            }
+    fun move(dir: Int) {
 
-            Const.RIGHT -> {
-                Left = Center
-                Center = Right
-                Right = Room()
-                Top = Room()
-                Bottom = Room()
-            }
-
-            Const.BOTTOM -> {
-                Top = Center
-                Center = Bottom
-                Bottom = Room()
-                Left = Room()
-                Right = Room()
-            }
-
-            Const.TOP -> {
-                Bottom = Center
-                Center = Top
-                Top = Room()
-                Left = Room()
-                Right = Room()
-            }
+        if (dir == direction) {
+            var temp = Center
+            Center = Last
+            Last = temp
+            direction = backDirection(dir)
+        } else {
+            Last = Center
+            Center = Room()
+            direction = backDirection(dir)
         }
     }
 }

@@ -14,12 +14,11 @@ class MyGame : ApplicationAdapter() {
         Const.importImages()
         batch = SpriteBatch()
 
-        Gdx.app.log("Test", (Const.MAP_MARGIN_BOTTOM).toString())
         chunk = Chunk()
     }
 
     override fun render() {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClearColor(1/16f, 1/16f, 1/16f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
         chunk.Center.draw(batch)

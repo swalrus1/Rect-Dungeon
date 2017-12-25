@@ -15,6 +15,6 @@ class Tile (img : Texture) {
     fun draw(x : Float, y : Float, batch : SpriteBatch) {
 
         batch.draw(img, x, y,
-                Const.TILE_SIZE, Const.TILE_SIZE, 0f, 0f, 1f, 1f)
+                Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
     }
 }
