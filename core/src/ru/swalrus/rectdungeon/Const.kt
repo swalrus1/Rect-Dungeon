@@ -3,6 +3,8 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 
+// Все глобальные неизменяемые переменные
+//
 object Const {
 
     // Screen parameters
@@ -11,7 +13,7 @@ object Const {
 
     // Amount of some stuff
     val ROOM_SIZE = 7
-    val QUCK_SLOTS = 5
+    val QUCK_SLOTS = 6
 
     // Size, scale
     val MAP_BORDER : Float = 0.5f   // Относительная величина
@@ -45,7 +47,8 @@ object Const {
                 "WALL_LEFT" to Texture("Wall_left.png"),
                 "WALL_TOP" to Texture("Wall_top.png"),
                 "WALL_RIGHT" to Texture("Wall_right.png"),
-                "WALL_BOTTOM" to Texture("Wall_bottom.png")
+                "WALL_BOTTOM" to Texture("Wall_bottom.png"),
+                "HUMAN" to Texture("Human_up.png")
         )
 
         FLOOR = Tile(images["FLOOR"]!!)

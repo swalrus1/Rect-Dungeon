@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Room {
 
+    private var creatureList : MutableList<Creature> = mutableListOf()
     private var map : Array<Array<Tile>> = Array(Const.ROOM_SIZE + 2,
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Const.FLOOR }) })
 
@@ -13,6 +14,10 @@ class Room {
         generate()
     }
 
+
+    fun addCreature(creature : Creature) {
+        creatureList.add(creature)
+    }
 
     private fun generate() {
 
@@ -30,7 +35,7 @@ class Room {
         }
     }
 
-    fun draw(batch : SpriteBatch) {
+    fun render(batch : SpriteBatch) {
 
         var xPos : Float = 0f
         var yPos : Float = 0f
@@ -41,5 +46,15 @@ class Room {
                 yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM
                 map[x][y].draw(xPos, yPos, batch)
             }
+
+        for (creature in creatureList) {
+            if (creature.isActive()) {
+                creature.makeTurn()
+            }
+        }
+
+        for (creature in creatureList) {
+            creature.draw(batch)
+        }
     }
 }

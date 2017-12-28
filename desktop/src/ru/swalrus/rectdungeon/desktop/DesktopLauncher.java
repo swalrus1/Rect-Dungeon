@@ -7,8 +7,8 @@ import ru.swalrus.rectdungeon.MyGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 400;
-		config.height = 800;
+		config.width = 360;
+		config.height = 640;
 		new LwjglApplication(new MyGame(), config);
 	}
 }
