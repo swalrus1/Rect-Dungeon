@@ -35,7 +35,7 @@ class Room {
         }
     }
 
-    fun render(batch : SpriteBatch) {
+    fun draw(batch : SpriteBatch) {
 
         var xPos : Float = 0f
         var yPos : Float = 0f
@@ -46,12 +46,6 @@ class Room {
                 yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM
                 map[x][y].draw(xPos, yPos, batch)
             }
-
-        for (creature in creatureList) {
-            if (creature.isActive()) {
-                creature.makeTurn()
-            }
-        }
 
         for (creature in creatureList) {
             creature.draw(batch)

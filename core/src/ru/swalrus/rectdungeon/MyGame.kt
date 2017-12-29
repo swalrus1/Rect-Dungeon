@@ -9,22 +9,21 @@ class MyGame : ApplicationAdapter() {
 
     lateinit var batch: SpriteBatch
     lateinit var chunk : Chunk
-    // TODO: player = Player() (not Creature)
-    lateinit var player : Creature
+    lateinit var player: Player
 
     override fun create() {
         Const.importImages()
         batch = SpriteBatch()
 
         chunk = Chunk()
-        player = Creature(2, 4, Const.images["HUMAN"]!!, chunk.Center)
+        player = Player(2, 3, Const.images["HUMAN"]!!, chunk.Center)
     }
 
     override fun render() {
         Gdx.gl.glClearColor(1/16f, 1/16f, 1/16f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
-        chunk.Center.render(batch)
+        chunk.Center.draw(batch)
 
         batch.end()
     }
