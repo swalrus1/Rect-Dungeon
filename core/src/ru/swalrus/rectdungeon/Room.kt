@@ -8,6 +8,7 @@ class Room {
     private var creatureList : MutableList<Creature> = mutableListOf()
     private var map : Array<Array<Tile>> = Array(Const.ROOM_SIZE + 2,
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Const.FLOOR }) })
+    private var currentCreature : Int = 0
 
 
     init {
@@ -36,6 +37,22 @@ class Room {
     }
 
     fun draw(batch : SpriteBatch) {
+
+        if (creatureList[currentCreature].ready) {
+            // Move focus to the next creature
+            if (currentCreature >= creatureList.size - 1) {
+                currentCreature = 0
+            } else {
+                currentCreature++
+            }
+            // If it isn't sleeping
+            if (creatureList[currentCreature].isActive()) {
+                // Say him to make turn
+                creatureList[currentCreature].makeTurn()
+            }
+        }
+        /* При смерти существо становится неактивным, добавляется в очередь на удаление,
+        и после того, как каждый сделал ход, удаляется из списка, затем очередь очищается. */
 
         var xPos : Float = 0f
         var yPos : Float = 0f

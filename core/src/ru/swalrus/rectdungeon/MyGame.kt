@@ -16,7 +16,7 @@ class MyGame : ApplicationAdapter() {
         batch = SpriteBatch()
 
         chunk = Chunk()
-        player = Player(2, 3, Const.images["HUMAN"]!!, chunk.Center)
+        player = Player(6, 2, Const.images["HUMAN"]!!, chunk.Center)
     }
 
     override fun render() {
