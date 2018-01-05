@@ -1,6 +1,5 @@
 package ru.swalrus.rectdungeon
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Room {
@@ -58,14 +57,18 @@ class Room {
         var yPos : Float = 0f
 
         for (x in 0 until map.size)
-            for (y in 0 until map.size) {
+            for (y in map.size-1 downTo 0) {
                 xPos = x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT
                 yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM
                 map[x][y].draw(xPos, yPos, batch)
             }
 
         for (creature in creatureList) {
-            creature.draw(batch)
+            creature.render(batch)
         }
+    }
+
+    fun getTile(x: Int, y: Int) : Tile {
+        return map[x][y]
     }
 }

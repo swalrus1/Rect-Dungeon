@@ -2,6 +2,7 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Vector2
 
 // Все глобальные неизменяемые переменные
 //
@@ -30,6 +31,11 @@ object Const {
     val RIGHT = 2
     val BOTTOM = 3
     val LEFT = 4
+    val dir2vec: Array<Vector2> = arrayOf(Vector2(0f, 0f), Vector2(0f, 1f),
+            Vector2(1f, 0f), Vector2(0f, -1f), Vector2(-1f, 0f))
+
+    // Animation parameters
+    val MOVE_TIME = 0.4f
 
     var images : Map<String, Texture> = emptyMap()
 
@@ -52,9 +58,9 @@ object Const {
         )
 
         FLOOR = Tile(images["FLOOR"]!!)
-        WALL_LEFT = Tile(images["WALL_LEFT"]!!)
-        WALL_RIGHT = Tile(images["WALL_RIGHT"]!!)
-        WALL_TOP = Tile(images["WALL_TOP"]!!)
-        WALL_BOTTOM = Tile(images["WALL_BOTTOM"]!!)
+        WALL_LEFT = Tile(images["WALL_LEFT"]!!, false)
+        WALL_RIGHT = Tile(images["WALL_RIGHT"]!!, false)
+        WALL_TOP = Tile(images["WALL_TOP"]!!, false)
+        WALL_BOTTOM = Tile(images["WALL_BOTTOM"]!!, false)
     }
 }

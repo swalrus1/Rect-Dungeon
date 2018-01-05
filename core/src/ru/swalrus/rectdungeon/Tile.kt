@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 class Tile (img : Texture, passable : Boolean = true) {
 
     private var img : Texture = img
-    private var passable : Boolean  = passable
+    var passable : Boolean  = passable
 
     init {
 
