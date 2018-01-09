@@ -19,6 +19,15 @@ class Room {
         creatureList.add(creature)
     }
 
+    fun getCreature(x: Int, y: Int) : Creature? {
+        for (item in creatureList) {
+            if ((item.x == x) and (item.y == y)) {
+                return item
+            }
+        }
+        return null
+    }
+
     private fun generate() {
 
         for (y in 1 until map.size-1) {

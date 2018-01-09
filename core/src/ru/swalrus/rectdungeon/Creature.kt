@@ -11,7 +11,7 @@ import kotlin.math.exp
 open class Creature (x: Int, y: Int, img: Texture, room: Room) {
 
     private var active : Boolean = true         // Is not sleeping
-    var ready : Boolean = true                  // Is ready to make next turn
+    open var ready : Boolean = true                  // Is ready to make next turn
 
     var x: Int = x
     var y: Int = y
@@ -38,12 +38,37 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
     }
 
 
-    fun makeTurn() {
-        move(random(1, 4))
+    open fun makeTurn() {
+
     }
 
     fun isActive() : Boolean {
         return active
+    }
+
+    open fun move(direction : Int) {
+        moveDir = Const.dir2vec[direction]
+        val newX = x + moveDir.x.toInt()
+        val nexY = y + moveDir.y.toInt()
+        val tile = room.getTile(newX, nexY)
+
+        if (tile.passable) {
+            val creature = room.getCreature(newX, nexY)
+            // If there are no creature
+            if (creature == null) {
+                startAnim()
+                dTime = 0f
+            } else {
+                // Attack
+                moveDir = Vector2.Zero
+            }
+        } else {
+            moveDir = Vector2.Zero
+        }
+    }
+
+    fun inAnim() : Boolean {
+        return (!moveDir.isZero)
     }
 
 
@@ -64,17 +89,6 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
                 sprite.translate(dPos.x, dPos.y)
                 dTime += graphics.deltaTime
             }
-        }
-    }
-
-    private fun move (direction : Int) {
-        moveDir = Const.dir2vec[direction]
-        val tile = room.getTile(x + moveDir.x.toInt(), y + moveDir.y.toInt())
-        if (tile.passable) {
-            startAnim()
-            dTime = 0f
-        } else {
-            moveDir = Vector2.Zero
         }
     }
 

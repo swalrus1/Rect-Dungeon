@@ -2,6 +2,7 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 
 // Все глобальные неизменяемые переменные
@@ -35,7 +36,7 @@ object Const {
             Vector2(1f, 0f), Vector2(0f, -1f), Vector2(-1f, 0f))
 
     // Animation parameters
-    val MOVE_TIME = 0.4f
+    val MOVE_TIME = 0.3f
 
     var images : Map<String, Texture> = emptyMap()
 
@@ -45,6 +46,10 @@ object Const {
     lateinit var WALL_TOP : Tile
     lateinit var WALL_BOTTOM : Tile
 
+
+    fun randomDirection() : Int {
+        return MathUtils.random(1, 4)
+    }
 
     fun importImages() {
 
