@@ -59,7 +59,6 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
                 startAnim()
                 dTime = 0f
             } else {
-                // Attack
                 moveDir = Vector2.Zero
             }
         } else {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 
-// Все глобальные неизменяемые переменные
+// All global variables
 //
 object Const {
 
@@ -40,15 +40,21 @@ object Const {
 
     var images : Map<String, Texture> = emptyMap()
 
-    lateinit var FLOOR : Tile
-    lateinit var WALL_LEFT : Tile
-    lateinit var WALL_RIGHT : Tile
-    lateinit var WALL_TOP : Tile
-    lateinit var WALL_BOTTOM : Tile
-
+    lateinit var emptyTile: Tile
 
     fun randomDirection() : Int {
         return MathUtils.random(1, 4)
+    }
+
+    fun getWallImg(dir: Int) : Texture {
+        when (dir) {
+            TOP -> return images["WALL_TOP"]!!
+            BOTTOM -> return images["WALL_BOTTOM"]!!
+            RIGHT -> return images["WALL_RIGHT"]!!
+            LEFT -> return images["WALL_LEFT"]!!
+        }
+        return images["FLOOR"]!!
+        // TODO: Заменить на EMPTY
     }
 
     fun importImages() {
@@ -60,12 +66,10 @@ object Const {
                 "WALL_RIGHT" to Texture("Wall_right.png"),
                 "WALL_BOTTOM" to Texture("Wall_bottom.png"),
                 "HUMAN" to Texture("Human_up.png")
+                // TODO: Add "EMPTY"
         )
 
-        FLOOR = Tile(images["FLOOR"]!!)
-        WALL_LEFT = Tile(images["WALL_LEFT"]!!, false)
-        WALL_RIGHT = Tile(images["WALL_RIGHT"]!!, false)
-        WALL_TOP = Tile(images["WALL_TOP"]!!, false)
-        WALL_BOTTOM = Tile(images["WALL_BOTTOM"]!!, false)
+        emptyTile = Tile(images["FLOOR"]!!)
+        // TODO: Заменить на EMPTY
     }
 }

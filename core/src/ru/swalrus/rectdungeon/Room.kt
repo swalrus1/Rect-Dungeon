@@ -6,7 +6,7 @@ class Room {
 
     private var creatureList : MutableList<Creature> = mutableListOf()
     private var map : Array<Array<Tile>> = Array(Const.ROOM_SIZE + 2,
-            { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Const.FLOOR }) })
+            { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Const.emptyTile })})
     private var currentCreature : Int = 0
 
 
@@ -30,17 +30,22 @@ class Room {
 
     private fun generate() {
 
+        for (x in 1 until map.size-1)
+            for (y in 1 until map.size-1) {
+                map[x][y] = Floor()
+            }
+
         for (y in 1 until map.size-1) {
-            map[0][y] = Const.WALL_LEFT
+            map[0][y] = Wall(Const.LEFT)
         }
         for (y in 1 until map.size-1) {
-            map[map.size-1][y] = Const.WALL_RIGHT
+            map[map.size-1][y] = Wall(Const.RIGHT)
         }
         for (x in 1 until map.size-1) {
-            map[x][0] = Const.WALL_BOTTOM
+            map[x][0] = Wall(Const.BOTTOM)
         }
         for (x in 1 until map.size-1) {
-            map[x][map.size-1] = Const.WALL_TOP
+            map[x][map.size-1] = Wall(Const.TOP)
         }
     }
 
@@ -59,8 +64,8 @@ class Room {
                 creatureList[currentCreature].makeTurn()
             }
         }
-        /* При смерти существо становится неактивным, добавляется в очередь на удаление,
-        и после того, как каждый сделал ход, удаляется из списка, затем очередь очищается. */
+        /* TODO: При смерти существо становится неактивным, добавляется в очередь на удаление,
+           TODO: и после того, как каждый сделал ход, удаляется из списка, затем очередь очищается. */
 
         var xPos : Float = 0f
         var yPos : Float = 0f
