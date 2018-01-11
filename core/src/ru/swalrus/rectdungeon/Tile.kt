@@ -17,4 +17,8 @@ open class Tile (img : Texture, passable : Boolean = true) {
         batch.draw(img, x, y,
                 Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
     }
+
+    open fun onStand() {
+
+    }
 }

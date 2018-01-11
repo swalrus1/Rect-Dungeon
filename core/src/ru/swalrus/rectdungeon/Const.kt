@@ -53,9 +53,14 @@ object Const {
             RIGHT -> return images["WALL_RIGHT"]!!
             LEFT -> return images["WALL_LEFT"]!!
         }
-        return images["FLOOR"]!!
-        // TODO: Заменить на EMPTY
+        return images["EMPTY"]!!
     }
+
+    fun getDoorImg(dir: Int) : Texture {
+        return images["DOOR"]!!
+    }
+
+    // TODO: Add getImg(name, dir) method
 
     fun importImages() {
 
@@ -65,11 +70,11 @@ object Const {
                 "WALL_TOP" to Texture("Wall_top.png"),
                 "WALL_RIGHT" to Texture("Wall_right.png"),
                 "WALL_BOTTOM" to Texture("Wall_bottom.png"),
-                "HUMAN" to Texture("Human_up.png")
-                // TODO: Add "EMPTY"
+                "HUMAN" to Texture("Human_up.png"),
+                "EMPTY" to Texture("Empty.png"),
+                "DOOR" to Texture("Door.png")
         )
 
-        emptyTile = Tile(images["FLOOR"]!!)
-        // TODO: Заменить на EMPTY
+        emptyTile = Tile(images["EMPTY"]!!, passable = false)
     }
 }

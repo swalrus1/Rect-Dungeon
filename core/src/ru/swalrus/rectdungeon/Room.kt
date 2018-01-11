@@ -47,6 +47,10 @@ class Room {
         for (x in 1 until map.size-1) {
             map[x][map.size-1] = Wall(Const.TOP)
         }
+        map[map.size / 2][0] = Door(Const.TOP)
+        map[map.size / 2][map.size - 1] = Door(Const.BOTTOM)
+        map[0][map.size / 2] = Door(Const.LEFT)
+        map[map.size - 1][map.size / 2] = Door(Const.RIGHT)
     }
 
     fun draw(batch : SpriteBatch) {
@@ -83,6 +87,10 @@ class Room {
     }
 
     fun getTile(x: Int, y: Int) : Tile {
-        return map[x][y]
+        try {
+            return map[x][y]
+        } catch (e: IndexOutOfBoundsException) {
+            return Const.emptyTile
+        }
     }
 }

@@ -5,13 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.Gdx.graphics
-import com.badlogic.gdx.math.MathUtils.random
 import kotlin.math.exp
 
 open class Creature (x: Int, y: Int, img: Texture, room: Room) {
 
     private var active : Boolean = true         // Is not sleeping
-    open var ready : Boolean = true                  // Is ready to make next turn
+    open var ready : Boolean = true             // Is ready to make next turn
 
     var x: Int = x
     var y: Int = y
@@ -46,16 +45,16 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
         return active
     }
 
-    open fun move(direction : Int) {
+    open fun move(direction : Int, force: Boolean = false) {
         moveDir = Const.dir2vec[direction]
         val newX = x + moveDir.x.toInt()
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
 
-        if (tile.passable) {
+        if (tile.passable or force or ((this is Player) and (tile is Door))) {
             val creature = room.getCreature(newX, nexY)
             // If there are no creature
-            if (creature == null) {
+            if ((creature == null) or force) {
                 startAnim()
                 dTime = 0f
             } else {
@@ -80,7 +79,7 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
                 y += moveDir.y.toInt()
                 moveDir = Vector2.Zero
                 align()
-                endAnim()
+                endMove()
             } else {
                 align()
                 dPos = Vector2(moveDir)
@@ -108,7 +107,8 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
         dTime = 0f
     }
 
-    private fun endAnim() {
+    private fun endMove() {
         ready = true
+        room.getTile(x, y).onStand()
     }
 }
