@@ -9,8 +9,8 @@ class Chunk internal constructor() {
 
 
     init {
-        Center = Room()
-        Last = Room()
+        Center = Room(this)
+        Last = Room(this)
     }
 
 
@@ -35,7 +35,7 @@ class Chunk internal constructor() {
             direction = backDirection(dir)
         } else {
             Last = Center
-            Center = Room()
+            Center = Room(this)
             direction = backDirection(dir)
         }
     }

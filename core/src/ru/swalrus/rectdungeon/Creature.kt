@@ -46,7 +46,7 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
     }
 
     open fun move(direction : Int, force: Boolean = false) {
-        moveDir = Const.dir2vec[direction]
+        moveDir = Vector2(Const.dir2vec[direction])
         val newX = x + moveDir.x.toInt()
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
@@ -109,6 +109,6 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
 
     private fun endMove() {
         ready = true
-        room.getTile(x, y).onStand()
+        room.getTile(x, y).onStand(this)
     }
 }

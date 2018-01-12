@@ -18,7 +18,7 @@ open class Tile (img : Texture, passable : Boolean = true) {
                 Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
     }
 
-    open fun onStand() {
+    open fun onStand(creature: Creature) {
 
     }
 }

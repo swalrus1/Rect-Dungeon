@@ -36,7 +36,7 @@ object Const {
             Vector2(1f, 0f), Vector2(0f, -1f), Vector2(-1f, 0f))
 
     // Animation parameters
-    val MOVE_TIME = 0.3f
+    val MOVE_TIME = 0.25f
 
     var images : Map<String, Texture> = emptyMap()
 

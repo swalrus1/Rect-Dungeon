@@ -2,12 +2,14 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
-class Room {
+class Room (chunk: Chunk) {
 
+    var chunk: Chunk = chunk
     private var creatureList : MutableList<Creature> = mutableListOf()
     private var map : Array<Array<Tile>> = Array(Const.ROOM_SIZE + 2,
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Const.emptyTile })})
     private var currentCreature : Int = 0
+    private var removeQueue: MutableList<Pair<Int, Int>> = MutableList(0, { _ -> Pair(0, 0) })
 
 
     init {
@@ -26,6 +28,10 @@ class Room {
             }
         }
         return null
+    }
+
+    fun removeCreatureAt(x: Int, y: Int) {
+        removeQueue.add(Pair(x, y))
     }
 
     private fun generate() {
@@ -47,10 +53,10 @@ class Room {
         for (x in 1 until map.size-1) {
             map[x][map.size-1] = Wall(Const.TOP)
         }
-        map[map.size / 2][0] = Door(Const.TOP)
-        map[map.size / 2][map.size - 1] = Door(Const.BOTTOM)
-        map[0][map.size / 2] = Door(Const.LEFT)
-        map[map.size - 1][map.size / 2] = Door(Const.RIGHT)
+        map[map.size / 2][map.size - 1] = Door(Const.TOP, this)
+        map[map.size / 2][0] = Door(Const.BOTTOM, this)
+        map[0][map.size / 2] = Door(Const.LEFT, this)
+        map[map.size - 1][map.size / 2] = Door(Const.RIGHT, this)
     }
 
     fun draw(batch : SpriteBatch) {
@@ -62,14 +68,24 @@ class Room {
             } else {
                 currentCreature++
             }
-            // If it isn't sleeping
-            if (creatureList[currentCreature].isActive()) {
+            // If it isn't sleeping AND is not in remove queue
+            if (creatureList[currentCreature].isActive() and
+                    (Pair(creatureList[currentCreature].x, creatureList[currentCreature].y) !in removeQueue)) {
                 // Say him to make turn
                 creatureList[currentCreature].makeTurn()
             }
         }
-        /* TODO: При смерти существо становится неактивным, добавляется в очередь на удаление,
-           TODO: и после того, как каждый сделал ход, удаляется из списка, затем очередь очищается. */
+
+        // Remove creatures from remove queue
+        for (pos in removeQueue) {
+            for (creature in creatureList) {
+                if ((creature.x == pos.first) and (creature.y == pos.second)) {
+                    creatureList.remove(creature)
+                    break
+                }
+            }
+        }
+        removeQueue.clear()
 
         var xPos : Float = 0f
         var yPos : Float = 0f
