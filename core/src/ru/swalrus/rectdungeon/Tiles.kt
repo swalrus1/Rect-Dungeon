@@ -33,7 +33,10 @@ class Door(direction: Int, room: Room) : Tile(Const.getDoorImg(direction), passa
                     creature.y = Const.ROOM_SIZE / 2 + 1
                 }
             }
-            creature.move(direction)
+            creature.move(direction, true)
+            creature.endTurn()
+            // TODO: Закрываем двери
+            creature.makeTurn()
         }
     }
 }

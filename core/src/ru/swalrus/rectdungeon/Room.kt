@@ -61,6 +61,7 @@ class Room (chunk: Chunk) {
 
     fun draw(batch : SpriteBatch) {
 
+        // If the current creature is ready to end turn,
         if (creatureList[currentCreature].ready) {
             // Move focus to the next creature
             if (currentCreature >= creatureList.size - 1) {

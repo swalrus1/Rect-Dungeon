@@ -16,6 +16,7 @@ object Const {
     // Amount of some stuff
     val ROOM_SIZE = 7
     val QUCK_SLOTS = 6
+    val MAX_AP = 2
 
     // Size, scale
     val MAP_BORDER : Float = 0.5f   // Относительная величина

@@ -51,10 +51,10 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
 
-        if (tile.passable or force or ((this is Player) and (tile is Door))) {
+        if (tile.passable or ((this is Player) and (tile is Door))) {
             val creature = room.getCreature(newX, nexY)
             // If there are no creature
-            if ((creature == null) or force) {
+            if (creature == null) {
                 startAnim()
                 dTime = 0f
             } else {
@@ -75,10 +75,6 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
         if (!moveDir.isZero) {
             // Check if creature has reached the destination
             if (dTime >= Const.MOVE_TIME) {
-                x += moveDir.x.toInt()
-                y += moveDir.y.toInt()
-                moveDir = Vector2.Zero
-                align()
                 endMove()
             } else {
                 align()
@@ -107,7 +103,11 @@ open class Creature (x: Int, y: Int, img: Texture, room: Room) {
         dTime = 0f
     }
 
-    private fun endMove() {
+    open fun endMove() {
+        x += moveDir.x.toInt()
+        y += moveDir.y.toInt()
+        moveDir = Vector2.Zero
+        align()
         ready = true
         room.getTile(x, y).onStand(this)
     }
