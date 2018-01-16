@@ -2,12 +2,15 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.graphics.Texture
 
-class Player (x: Int, y: Int, img: Texture, room: Room) : Creature(x, y, img, room) {
+class Player (x: Int, y: Int, HP: Int, img: Texture, room: Room) : Creature(x, y, 6, img, room) {
 
     var AP: Int = Const.MAX_AP
+    var maxHP = HP
+
 
     override fun makeTurn() {
         ready = false
+        AP = Const.MAX_AP
     }
 
     override fun endMove() {
@@ -17,7 +20,6 @@ class Player (x: Int, y: Int, img: Texture, room: Room) : Creature(x, y, img, ro
 
 
     fun endTurn() {
-        AP = Const.MAX_AP
         ready = true
     }
 

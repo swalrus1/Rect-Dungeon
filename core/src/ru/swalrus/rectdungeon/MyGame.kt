@@ -12,14 +12,16 @@ class MyGame : ApplicationAdapter() {
     lateinit var batch: SpriteBatch
     lateinit var chunk : Chunk
     lateinit var player: Player
+    lateinit var topPanel: StatusPanel
 
     override fun create() {
         Const.importImages()
         batch = SpriteBatch()
 
         chunk = Chunk()
-        player = Player(6, 2, Const.images["HUMAN"]!!, chunk.Center)
+        player = Player(6, 2, 8, Const.images["HUMAN"]!!, chunk.Center)
         var testEnemy = Dummy(3, 5, chunk.Center)
+        topPanel = StatusPanel(player)
         Gdx.input.inputProcessor = GestureDetector(InputListener(player))
     }
 
@@ -27,7 +29,12 @@ class MyGame : ApplicationAdapter() {
         Gdx.gl.glClearColor(1/16f, 1/16f, 1/16f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
+
+        // Draw room
         chunk.Center.draw(batch)
+
+        // Draw UI
+        topPanel.draw(batch)
 
         batch.end()
     }

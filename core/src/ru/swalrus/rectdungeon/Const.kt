@@ -18,7 +18,7 @@ object Const {
     val QUCK_SLOTS = 6
     val MAX_AP = 2
 
-    // Size, scale
+    // Map render parameters
     val MAP_BORDER : Float = 0.5f   // Относительная величина
     val MAP_SIZE : Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUCK_SLOTS,
             SCREEN_WIDTH.toFloat())
@@ -26,6 +26,11 @@ object Const {
     val TILE_SIZE: Float = MAP_SIZE / (ROOM_SIZE + 2 * MAP_BORDER)
     val MAP_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
     val MAP_MARGIN_LEFT : Float = (SCREEN_WIDTH - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
+
+    // UI
+    val UI_SCALE: Float = TILE_SIZE / IMG_SIZE
+    val HP_MARGIN: Float = 3.5f * UI_SCALE
+    val UI_MAX_HP: Int = 8
 
     // Directions
     val CENTER = 0
@@ -73,7 +78,14 @@ object Const {
                 "WALL_BOTTOM" to Texture("Wall_bottom.png"),
                 "HUMAN" to Texture("Human_up.png"),
                 "EMPTY" to Texture("Empty.png"),
-                "DOOR" to Texture("Door.png")
+                "DOOR" to Texture("Door.png"),
+                "AP_0" to Texture("AP_empty.png"),
+                "AP_1" to Texture("AP_half.png"),
+                "AP_2" to Texture("AP_full.png"),
+                "UI_TILE_TOP" to Texture("UI_tile_top.png"),
+                "HEART" to Texture("Heart.png"),
+                "HEART_EMPTY" to Texture("Heart_empty.png"),
+                "MENU_BUTTON" to Texture("Menu_button.png")
         )
 
         emptyTile = Tile(images["EMPTY"]!!, passable = false)

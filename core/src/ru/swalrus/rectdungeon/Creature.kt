@@ -7,13 +7,14 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.Gdx.graphics
 import kotlin.math.exp
 
-open class Creature (x: Int, y: Int, img: Texture, room: Room) {
+open class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
 
     private var active : Boolean = true         // Is not sleeping
     open var ready : Boolean = true             // Is ready to make next turn
 
     var x: Int = x
     var y: Int = y
+    open var HP: Int = HP
     var room: Room = room
     private var sprite: Sprite = Sprite(img)
     private var moveDir: Vector2 = Vector2()
