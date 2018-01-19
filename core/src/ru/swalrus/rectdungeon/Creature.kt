@@ -1,13 +1,13 @@
 package ru.swalrus.rectdungeon
 
+import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.Gdx.graphics
 import kotlin.math.exp
 
-open class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
+abstract class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
 
     private var active : Boolean = true         // Is not sleeping
     open var ready : Boolean = true             // Is ready to make next turn
@@ -31,15 +31,12 @@ open class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
         sprite.setSize(Const.TILE_SIZE, Const.TILE_SIZE)
     }
 
+    abstract fun makeTurn()
+
 
     fun render(batch: SpriteBatch) {
         update()
         sprite.draw(batch)
-    }
-
-
-    open fun makeTurn() {
-
     }
 
     fun isActive() : Boolean {
@@ -47,22 +44,24 @@ open class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
     }
 
     open fun move(direction : Int, force: Boolean = false) {
-        moveDir = Vector2(Const.dir2vec[direction])
+        moveDir = Vector2(Utils.dir2vec(direction))
         val newX = x + moveDir.x.toInt()
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
 
         if (tile.passable or ((this is Player) and (tile is Door))) {
-            val creature = room.getCreature(newX, nexY)
+            val creature = room.getCreatureAt(newX, nexY)
             // If there are no creature
             if (creature == null) {
                 startAnim()
                 dTime = 0f
             } else {
                 moveDir = Vector2.Zero
+                endMove()
             }
         } else {
             moveDir = Vector2.Zero
+            endMove()
         }
     }
 
@@ -73,7 +72,7 @@ open class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {
 
     private fun update() {
         // Move creature
-        if (!moveDir.isZero) {
+        if (inAnim()) {
             // Check if creature has reached the destination
             if (dTime >= Const.MOVE_TIME) {
                 endMove()

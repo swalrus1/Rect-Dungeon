@@ -3,7 +3,7 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
-open class Tile (img : Texture, passable : Boolean = true) {
+abstract class Tile (img : Texture, passable : Boolean = true) {
 
     private var img : Texture = img
     open var passable : Boolean  = passable

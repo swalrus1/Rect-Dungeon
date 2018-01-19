@@ -2,10 +2,8 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector2
 
-// All global variables
+// All global constants
 //
 object Const {
 
@@ -38,56 +36,30 @@ object Const {
     val RIGHT = 2
     val BOTTOM = 3
     val LEFT = 4
-    val dir2vec: Array<Vector2> = arrayOf(Vector2(0f, 0f), Vector2(0f, 1f),
-            Vector2(1f, 0f), Vector2(0f, -1f), Vector2(-1f, 0f))
 
     // Animation parameters
     val MOVE_TIME = 0.25f
 
     var images : Map<String, Texture> = emptyMap()
 
-    lateinit var emptyTile: Tile
-
-    fun randomDirection() : Int {
-        return MathUtils.random(1, 4)
-    }
-
-    fun getWallImg(dir: Int) : Texture {
-        when (dir) {
-            TOP -> return images["WALL_TOP"]!!
-            BOTTOM -> return images["WALL_BOTTOM"]!!
-            RIGHT -> return images["WALL_RIGHT"]!!
-            LEFT -> return images["WALL_LEFT"]!!
-        }
-        return images["EMPTY"]!!
-    }
-
-    fun getDoorImg(dir: Int) : Texture {
-        return images["DOOR"]!!
-    }
-
-    // TODO: Add getImg(name, dir) method
-
-    fun importImages() {
+    fun loadImages() {
 
         images = mapOf(
-                "FLOOR" to Texture("Floor.png"),
-                "WALL_LEFT" to Texture("Wall_left.png"),
-                "WALL_TOP" to Texture("Wall_top.png"),
-                "WALL_RIGHT" to Texture("Wall_right.png"),
-                "WALL_BOTTOM" to Texture("Wall_bottom.png"),
-                "HUMAN" to Texture("Human_up.png"),
-                "EMPTY" to Texture("Empty.png"),
-                "DOOR" to Texture("Door.png"),
+                "floor" to Texture("Floor.png"),
+                "wall_left" to Texture("Wall_left.png"),
+                "wall_top" to Texture("Wall_top.png"),
+                "wall_right" to Texture("Wall_right.png"),
+                "wall_bottom" to Texture("Wall_bottom.png"),
+                "human" to Texture("Human_up.png"),
+                "empty" to Texture("Empty.png"),
+                "door" to Texture("Door.png"),
                 "AP_0" to Texture("AP_empty.png"),
                 "AP_1" to Texture("AP_half.png"),
                 "AP_2" to Texture("AP_full.png"),
-                "UI_TILE_TOP" to Texture("UI_tile_top.png"),
-                "HEART" to Texture("Heart.png"),
-                "HEART_EMPTY" to Texture("Heart_empty.png"),
-                "MENU_BUTTON" to Texture("Menu_button.png")
+                "ui_tile_top" to Texture("UI_tile_top.png"),
+                "heart" to Texture("Heart.png"),
+                "heart_empty" to Texture("Heart_empty.png"),
+                "menu_button" to Texture("Menu_button.png")
         )
-
-        emptyTile = Tile(images["EMPTY"]!!, passable = false)
     }
 }

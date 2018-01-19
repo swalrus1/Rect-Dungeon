@@ -1,8 +1,6 @@
 package ru.swalrus.rectdungeon
 
-import com.badlogic.gdx.graphics.Texture
-
-class Player (x: Int, y: Int, HP: Int, img: Texture, room: Room) : Creature(x, y, 6, img, room) {
+class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
 
     var AP: Int = Const.MAX_AP
     var maxHP = HP
@@ -39,7 +37,7 @@ class Player (x: Int, y: Int, HP: Int, img: Texture, room: Room) : Creature(x, y
     }
 
     ///////////////////////////////////////
-    ///             ACTIONS             ///
+    ////////        ACTIONS        ////////
     ///////////////////////////////////////
 
     fun makeAction(requiredAP: Int) : Boolean {
@@ -54,7 +52,7 @@ class Player (x: Int, y: Int, HP: Int, img: Texture, room: Room) : Creature(x, y
 
     override fun move(direction: Int, force: Boolean) {
         if (force or makeAction(1)) {
-            super.move(direction, false)
+            super.move(direction, force)
         }
     }
 }

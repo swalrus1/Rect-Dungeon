@@ -3,18 +3,17 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
-class StatusPanel (player: Player) {
+class StatusPanel (var player: Player) {
 
     private val AP_img: Array<Texture> = arrayOf(
-            Const.images["AP_0"]!!, Const.images["AP_1"]!!, Const.images["AP_2"]!!)
-    private var player: Player = player
+            Utils.getImg("AP_0"), Utils.getImg("AP_1"), Utils.getImg("AP_2"))
     private val SCREEN_HEIGHT: Int = Const.SCREEN_HEIGHT
     private val SCREEN_WIDTH: Int = Const.SCREEN_WIDTH
     private val PANEL_HEIGHT: Float = Const.IMG_SIZE * Const.UI_SCALE
-    private val heart: Texture = Const.images["HEART"]!!
-    private val heart_empty: Texture = Const.images["HEART_EMPTY"]!!
-    private val tile: Texture = Const.images["UI_TILE_TOP"]!!
-    private val menu_button: Texture = Const.images["MENU_BUTTON"]!!
+    private val heart: Texture = Utils.getImg("heart")
+    private val heart_empty: Texture = Utils.getImg("heart_empty")
+    private val tile: Texture = Utils.getImg("ui_tile_top")
+    private val menu_button: Texture = Utils.getImg("menu_button")
     private val HP_MARGIN = Const.HP_MARGIN
 
     fun draw(batch: SpriteBatch) {

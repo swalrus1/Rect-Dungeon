@@ -1,12 +1,12 @@
 package ru.swalrus.rectdungeon.Creatures
 
-import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Creature
 import ru.swalrus.rectdungeon.Room
+import ru.swalrus.rectdungeon.Utils
 
-class Dummy (x: Int, y: Int, room: Room) : Creature(x, y, 3, Const.images["HUMAN"]!!, room) {
+class Dummy (x: Int, y: Int, room: Room) : Creature(x, y, 3, Utils.getImg("human"), room) {
 
     override fun makeTurn() {
-        move(Const.randomDirection())
+        move(Utils.randomDirection())
     }
 }

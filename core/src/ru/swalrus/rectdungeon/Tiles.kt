@@ -1,11 +1,13 @@
 package ru.swalrus.rectdungeon
 
-class Wall(direction: Int) : Tile(Const.getWallImg(direction), passable = false)
+class Wall(direction: Int) : Tile(Utils.getImg("wall", direction), passable = false)
 
-class Floor : Tile(Const.images["FLOOR"]!!)
+class Floor : Tile(Utils.getImg("floor"))
+
+class EmptyTile : Tile(Utils.getImg("empty"), passable = false)
 
 
-class Door(direction: Int, room: Room) : Tile(Const.getDoorImg(direction), passable = false) {
+class Door(direction: Int, room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
     var direction: Int = direction
     var room: Room = room
 
