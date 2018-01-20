@@ -1,4 +1,7 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Game
+
+import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Utils
 
 class Wall(direction: Int) : Tile(Utils.getImg("wall", direction), passable = false)
 

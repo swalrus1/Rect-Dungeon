@@ -1,4 +1,7 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Game
+
+import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Utils
 
 class Chunk {
 

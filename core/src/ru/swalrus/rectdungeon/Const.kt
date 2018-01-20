@@ -59,7 +59,12 @@ object Const {
                 "ui_tile_top" to Texture("UI_tile_top.png"),
                 "heart" to Texture("Heart.png"),
                 "heart_empty" to Texture("Heart_empty.png"),
-                "menu_button" to Texture("Menu_button.png")
+                "menu_button" to Texture("Menu_button.png"),
+                "bottom_button" to Texture("Bottom_button_right.png"),
+                "bottom_slot" to Texture("Item_slot.png"),
+                "button_shadow" to Texture("Button_shadow.png"),
+                "inventory_icon" to Texture("Bag.png"),
+                "wait_icon" to Texture("Clock.png")
         )
     }
 }

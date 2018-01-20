@@ -1,7 +1,8 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import ru.swalrus.rectdungeon.Const
 
 abstract class Tile (img : Texture, passable : Boolean = true) {
 

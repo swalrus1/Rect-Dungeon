@@ -1,10 +1,14 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.UI
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Game.Player
+import ru.swalrus.rectdungeon.Utils
 
 class StatusPanel (var player: Player) {
 
+    // WARNING! Bad code!
     private val AP_img: Array<Texture> = arrayOf(
             Utils.getImg("AP_0"), Utils.getImg("AP_1"), Utils.getImg("AP_2"))
     private val SCREEN_HEIGHT: Int = Const.SCREEN_HEIGHT

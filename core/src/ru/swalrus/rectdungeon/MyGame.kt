@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.input.GestureDetector
 import ru.swalrus.rectdungeon.Creatures.Dummy
+import ru.swalrus.rectdungeon.Game.Chunk
+import ru.swalrus.rectdungeon.Game.Player
+import ru.swalrus.rectdungeon.UI.BottomPanel
+import ru.swalrus.rectdungeon.UI.StatusPanel
 
 class MyGame : ApplicationAdapter() {
 
@@ -13,6 +17,7 @@ class MyGame : ApplicationAdapter() {
     lateinit var chunk : Chunk
     lateinit var player: Player
     lateinit var topPanel: StatusPanel
+    lateinit var bottomPanel: BottomPanel
 
     override fun create() {
         Const.loadImages()
@@ -24,6 +29,7 @@ class MyGame : ApplicationAdapter() {
         var testEnemy = Dummy(3, 5, chunk.Center)
 
         topPanel = StatusPanel(player)
+        bottomPanel = BottomPanel()
         Gdx.input.inputProcessor = GestureDetector(InputListener(player))
     }
 
@@ -36,6 +42,7 @@ class MyGame : ApplicationAdapter() {
         chunk.Center.render(batch)
         // Draw UI
         topPanel.draw(batch)
+        bottomPanel.draw(batch)
 
         batch.end()
     }

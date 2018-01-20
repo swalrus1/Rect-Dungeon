@@ -1,10 +1,12 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Utils
 import kotlin.math.exp
 
 abstract class Creature (x: Int, y: Int, HP: Int, img: Texture, room: Room) {

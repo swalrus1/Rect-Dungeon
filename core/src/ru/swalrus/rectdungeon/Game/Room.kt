@@ -1,6 +1,7 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import ru.swalrus.rectdungeon.Const
 
 class Room (val chunk: Chunk) {
 

@@ -2,6 +2,7 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener
 import com.badlogic.gdx.math.Vector2
+import ru.swalrus.rectdungeon.Game.Player
 import kotlin.math.abs
 
 class InputListener (player: Player) : GestureListener {
