@@ -29,6 +29,7 @@ object Const {
     val UI_SCALE: Float = TILE_SIZE / IMG_SIZE
     val HP_MARGIN: Float = 3.5f * UI_SCALE
     val UI_MAX_HP: Int = 8
+    val BOTTOM_TILE_SIZE: Float = TILE_SIZE * 1.3f
 
     // Directions
     val CENTER = 0
