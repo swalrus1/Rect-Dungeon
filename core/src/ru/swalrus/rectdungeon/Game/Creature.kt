@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.sun.org.apache.xpath.internal.operations.Bool
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.exp
@@ -19,6 +18,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
     private var dPos: Vector2 = Vector2()
+    private var rotated: Boolean = false
     private var lookRight: Boolean = true
 
 
@@ -55,8 +55,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             // If there are no creature
             if (creature == null) {
                 startAnim()
+                rotated = false
                 dTime = 0f
-                changeSpriteDirection(direction)
             } else {
                 moveDir = Vector2.Zero
                 endMove()
@@ -84,6 +84,9 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 dPos.scl(Const.TILE_SIZE * moveFun(dTime))
                 sprite.translate(dPos.x, dPos.y)
                 dTime += graphics.deltaTime
+                if (!rotated and (dTime >= Const.ROTATE_TIME * Const.MOVE_TIME)) {
+                    changeSpriteDirection(Utils.vec2dir(moveDir))
+                }
             }
         }
     }

@@ -2,11 +2,17 @@ package ru.swalrus.rectdungeon.Game
 
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
+import ru.swalrus.rectdungeon.Items.*
 
 class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
 
     var AP: Int = Const.MAX_AP
     var maxHP = HP
+    var inventory: Array<Item?> = arrayOfNulls(Const.INVENTORY_SIZE)
+
+    var weapon: Weapon? = null
+    var armor: Armor? = null
+    var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTEFACT_SLOTS)
 
 
     override fun makeTurn() {
@@ -36,6 +42,19 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             ready = false
         } else {
             endTurn()
+        }
+    }
+
+
+    fun addItem(item: Item) {
+        if (null in inventory) {
+            var i = 0
+            while (inventory[i] != null) {
+                i++
+            }
+            inventory[i] = item
+        } else {
+            // TODO: Написать в лог, что инвентарь полон, анимировать предмет
         }
     }
 

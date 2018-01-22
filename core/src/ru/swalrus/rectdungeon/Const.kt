@@ -15,6 +15,8 @@ object Const {
     val ROOM_SIZE = 7
     val QUCK_SLOTS = 6
     val MAX_AP = 2
+    val INVENTORY_SIZE = 24
+    val ARTEFACT_SLOTS = 3
 
     // Map render parameters
     val MAP_BORDER: Float = 0.5f   // Относительная величина
@@ -40,6 +42,7 @@ object Const {
 
     // Animation parameters
     val MOVE_TIME = 0.25f
+    val ROTATE_TIME = 0.3f      // Time to rotate in move
 
     var images : Map<String, Texture> = emptyMap()
 

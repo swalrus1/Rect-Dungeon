@@ -3,6 +3,7 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import kotlin.math.abs
 
 object Utils {
 
@@ -25,6 +26,20 @@ object Utils {
             Const.RIGHT -> return Vector2(1f, 0f)
             Const.LEFT -> return Vector2(-1f, 0f)
             else -> return Vector2(0f, 0f)
+        }
+    }
+
+    fun vec2dir (vector: Vector2) : Int {
+        if (vector.x > 0) {
+            return Const.RIGHT
+        } else if (vector.x < 0) {
+            return Const.LEFT
+        } else if (vector.y > 0) {
+            return Const.TOP
+        } else if (vector.y < 0) {
+            return Const.BOTTOM
+        } else {
+            return Const.CENTER
         }
     }
 
