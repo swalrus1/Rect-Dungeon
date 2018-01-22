@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture
 object Const {
 
     // Screen parameters
-    val SCREEN_WIDTH : Int = Gdx.graphics.width
-    val SCREEN_HEIGHT : Int = Gdx.graphics.height
+    val SCREEN_WIDTH: Int = Gdx.graphics.width
+    val SCREEN_HEIGHT: Int = Gdx.graphics.height
 
     // Amount of some stuff
     val ROOM_SIZE = 7
@@ -17,13 +17,13 @@ object Const {
     val MAX_AP = 2
 
     // Map render parameters
-    val MAP_BORDER : Float = 0.5f   // Относительная величина
-    val MAP_SIZE : Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUCK_SLOTS,
+    val MAP_BORDER: Float = 0.5f   // Относительная величина
+    val MAP_SIZE: Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUCK_SLOTS,
             SCREEN_WIDTH.toFloat())
     val IMG_SIZE: Int = 16
     val TILE_SIZE: Float = MAP_SIZE / (ROOM_SIZE + 2 * MAP_BORDER)
     val MAP_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
-    val MAP_MARGIN_LEFT : Float = (SCREEN_WIDTH - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
+    val MAP_MARGIN_LEFT: Float = (SCREEN_WIDTH - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
 
     // UI
     val UI_SCALE: Float = TILE_SIZE / IMG_SIZE
