@@ -15,7 +15,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTEFACT_SLOTS)
 
 
-    override fun makeTurn() {
+    override fun act() {
         ready = false
         AP = Const.MAX_AP
     }

@@ -6,14 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Effects.Buff
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.exp
 
 abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, var room: Room) {
 
-    private var active : Boolean = true         // Is not sleeping
     open var ready : Boolean = true             // Is ready to make next turn
+    var buffs: Array<Buff> = emptyArray()
 
+    private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
@@ -32,8 +34,16 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         sprite.setOriginCenter()
     }
 
-    abstract fun makeTurn()
+    abstract fun act()
 
+
+    private fun makeTurn() {
+        for (buff in buffs) {
+            buff.onTurn(this)
+        }
+
+        makeTurn()
+    }
 
     fun render(batch: SpriteBatch) {
         update()
@@ -84,6 +94,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 dPos.scl(Const.TILE_SIZE * moveFun(dTime))
                 sprite.translate(dPos.x, dPos.y)
                 dTime += graphics.deltaTime
+                // Change look direction if necessary
                 if (!rotated and (dTime >= Const.ROTATE_TIME * Const.MOVE_TIME)) {
                     changeSpriteDirection(Utils.vec2dir(moveDir))
                 }
@@ -93,8 +104,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     // Set sprite position to the center of the tile
     private fun align () {
-        val xPos = x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT// + Const.TILE_SIZE / 2
-        val yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM// + Const.TILE_SIZE / 2
+        val xPos = x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT
+        val yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM
         sprite.setPosition(xPos, yPos)
     }
 

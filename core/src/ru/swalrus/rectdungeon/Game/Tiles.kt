@@ -41,7 +41,7 @@ class Door(direction: Int, room: Room) : Tile(Utils.getImg("door", direction), p
             creature.move(direction, true)
             creature.endTurn()
             // TODO: Закрываем двери
-            creature.makeTurn()
+            creature.act()
         }
     }
 }
