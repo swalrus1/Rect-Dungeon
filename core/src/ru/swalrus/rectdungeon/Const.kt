@@ -28,8 +28,9 @@ object Const {
     val MAP_MARGIN_LEFT: Float = (SCREEN_WIDTH - MAP_SIZE) / 2 - TILE_SIZE * MAP_BORDER
 
     // UI
-    val UI_SCALE: Float = TILE_SIZE / IMG_SIZE
-    val HP_MARGIN: Float = 3.5f * UI_SCALE
+    val STATUS_SCALE: Float = TILE_SIZE / IMG_SIZE
+    val BOTTOM_SCALE: Float = TILE_SIZE / IMG_SIZE * 1.3f
+    val HP_MARGIN: Float = 3.5f * STATUS_SCALE
     val UI_MAX_HP: Int = 8
     val BOTTOM_TILE_SIZE: Float = TILE_SIZE * 1.3f
 
@@ -68,7 +69,8 @@ object Const {
                 "bottom_slot" to Texture("Item_slot.png"),
                 "button_shadow" to Texture("Button_shadow.png"),
                 "inventory_icon" to Texture("Bag.png"),
-                "wait_icon" to Texture("Clock.png")
+                "wait_icon" to Texture("Clock.png"),
+                "short_sword" to Texture("Short_sword.png")
         )
     }
 }

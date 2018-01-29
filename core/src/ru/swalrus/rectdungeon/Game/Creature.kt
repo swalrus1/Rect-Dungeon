@@ -42,7 +42,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             buff.onTurn(this)
         }
 
-        makeTurn()
+        act()
     }
 
     fun render(batch: SpriteBatch) {

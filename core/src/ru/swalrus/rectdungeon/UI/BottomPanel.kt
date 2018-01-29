@@ -22,5 +22,7 @@ class BottomPanel {
                 size, size, 0f, 1f, 1f, 0f)
         batch.draw(inventoryIcon, Const.SCREEN_WIDTH - size, 0f,
                 size, size, 0f, 1f, 1f, 0f)
+
+
     }
 }

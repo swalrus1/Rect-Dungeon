@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Player
 import kotlin.math.abs
@@ -8,6 +9,13 @@ import kotlin.math.abs
 class InputListener (player: Player) : GestureListener {
 
     var player: Player = player
+    var touchAreas: MutableList<Pair<Rectangle, () -> Unit>> = mutableListOf()
+
+
+    fun addArea(x1: Float, y1: Float, width: Float, height: Float, f: () -> Unit) {
+        touchAreas.add(Pair(Rectangle(x1, y1, width, height), f))
+    }
+
 
     override fun fling(velocityX: Float, velocityY: Float, button: Int): Boolean {
         if (abs(velocityX) > abs(velocityY)) {
@@ -39,6 +47,12 @@ class InputListener (player: Player) : GestureListener {
     }
 
     override fun tap(x: Float, y: Float, count: Int, button: Int): Boolean {
+        for (i in 0 until touchAreas.size) {
+            if (touchAreas[i].first.contains(x, y)) {
+                touchAreas[i].second()
+                return true
+            }
+        }
         return false
     }
 

@@ -13,7 +13,7 @@ class StatusPanel (var player: Player) {
             Utils.getImg("AP_0"), Utils.getImg("AP_1"), Utils.getImg("AP_2"))
     private val SCREEN_HEIGHT: Int = Const.SCREEN_HEIGHT
     private val SCREEN_WIDTH: Int = Const.SCREEN_WIDTH
-    private val PANEL_HEIGHT: Float = Const.IMG_SIZE * Const.UI_SCALE
+    private val PANEL_HEIGHT: Float = Const.IMG_SIZE * Const.STATUS_SCALE
     private val heart: Texture = Utils.getImg("heart")
     private val heart_empty: Texture = Utils.getImg("heart_empty")
     private val tile: Texture = Utils.getImg("ui_tile_top")
