@@ -9,6 +9,7 @@ import ru.swalrus.rectdungeon.Creatures.Dummy
 import ru.swalrus.rectdungeon.Game.Chunk
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
+import ru.swalrus.rectdungeon.UI.ItemButton
 import ru.swalrus.rectdungeon.UI.StatusPanel
 
 class MyGame : ApplicationAdapter() {
@@ -18,6 +19,7 @@ class MyGame : ApplicationAdapter() {
     lateinit var player: Player
     lateinit var topPanel: StatusPanel
     lateinit var bottomPanel: BottomPanel
+    lateinit var listener: InputListener
 
     override fun create() {
         Const.loadImages()
@@ -28,9 +30,10 @@ class MyGame : ApplicationAdapter() {
         player = Player(6, 2, 8, chunk.Center)
         var testEnemy = Dummy(3, 5, chunk.Center)
 
+        listener = InputListener(player)
         topPanel = StatusPanel(player)
-        bottomPanel = BottomPanel()
-        Gdx.input.inputProcessor = GestureDetector(InputListener(player))
+        bottomPanel = BottomPanel(player, listener)
+        Gdx.input.inputProcessor = GestureDetector(listener)
     }
 
     override fun render() {

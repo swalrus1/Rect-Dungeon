@@ -48,7 +48,7 @@ class InputListener (player: Player) : GestureListener {
 
     override fun tap(x: Float, y: Float, count: Int, button: Int): Boolean {
         for (i in 0 until touchAreas.size) {
-            if (touchAreas[i].first.contains(x, y)) {
+            if (touchAreas[i].first.contains(x, Const.SCREEN_HEIGHT - y)) {
                 touchAreas[i].second()
                 return true
             }

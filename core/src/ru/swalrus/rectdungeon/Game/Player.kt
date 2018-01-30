@@ -13,6 +13,8 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     var weapon: Weapon? = null
     var armor: Armor? = null
     var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTEFACT_SLOTS)
+    var rightHand: Weapon? = ShortSword()
+    var leftHand: Weapon? = null
 
 
     override fun act() {

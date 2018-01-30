@@ -9,8 +9,4 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1) {
         return "A sword with a short blade." +
                 "Perfect for fast and stealth killers and robbers."
     }
-
-    override fun draw(batch: SpriteBatch, x: Float, y: Float, scale: Float) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
