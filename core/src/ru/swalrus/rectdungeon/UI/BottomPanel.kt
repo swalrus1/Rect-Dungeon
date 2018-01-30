@@ -13,11 +13,12 @@ class BottomPanel (player: Player, listener: InputListener) {
     val inventoryIcon = Utils.getImg("inventory_icon")
     val button = Utils.getImg("bottom_button")
     val size = Const.BOTTOM_TILE_SIZE
+    var activeHandID: Int = 0
 
     var leftHandSlot: ItemButton = ItemButton(Const.SCREEN_WIDTH - 3.5f * Const.BOTTOM_TILE_SIZE,
-            0f, Const.BOTTOM_TILE_SIZE, player.leftHand, listener)
+            0f, 1, Const.BOTTOM_TILE_SIZE, player.leftHand, this, listener)
     var rightHandSlot: ItemButton = ItemButton(Const.SCREEN_WIDTH - 2.5f * Const.BOTTOM_TILE_SIZE,
-            0f, Const.BOTTOM_TILE_SIZE, player.rightHand, listener)
+            0f, 2, Const.BOTTOM_TILE_SIZE, player.rightHand, this, listener)
 
 
     fun draw(batch: SpriteBatch) {

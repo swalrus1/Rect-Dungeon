@@ -8,9 +8,9 @@ import ru.swalrus.rectdungeon.InputListener
 import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 
-class ItemButton(val x: Float, val y: Float, var size: Float, var item: Item?, listener: InputListener) {
+class ItemButton(val x: Float, val y: Float, val id: Int, var size: Float, var item: Item?, var panel: BottomPanel,
+                 listener: InputListener) {
 
-    var pressed: Boolean = false
     val shadow: Texture = Utils.getImg("button_shadow")
     val slot: Texture = Utils.getImg("bottom_slot")
 
@@ -21,7 +21,7 @@ class ItemButton(val x: Float, val y: Float, var size: Float, var item: Item?, l
 
 
     fun draw(batch: SpriteBatch) {
-        if (pressed or (item == null)) {
+        if ((panel.activeHandID == id) or (item == null)) {
             batch.draw(slot, x, y, size, size, 0f, 1f, 1f, 0f)
             if (item != null) {
                 batch.draw(item!!.img, x, y, size, size, 0f, 1f, 1f, 0f)
@@ -35,7 +35,11 @@ class ItemButton(val x: Float, val y: Float, var size: Float, var item: Item?, l
 
     fun onTouch() {
         if (item != null) {
-            pressed = !pressed
+            if (panel.activeHandID == id) {
+                panel.activeHandID = 0
+            } else {
+                panel.activeHandID = id
+            }
         }
     }
 }
