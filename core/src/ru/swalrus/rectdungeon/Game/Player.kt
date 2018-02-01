@@ -39,6 +39,17 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    fun onButtonTouch(id: Int) {
+        when (id) {
+            1 -> if (leftHand != null) {
+                room.setYellowArea(x-1, y-1, leftHand!!.area, leftHand!!.target, leftHand!!.range)
+            }
+            2 -> if (rightHand != null) {
+                room.setYellowArea(x-1, y-1, rightHand!!.area, rightHand!!.target, rightHand!!.range)
+            }
+        }
+    }
+
     private fun endAction() {
         if (AP > 0) {
             ready = false

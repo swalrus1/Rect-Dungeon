@@ -70,7 +70,8 @@ object Const {
                 "button_shadow" to Texture("Button_shadow.png"),
                 "inventory_icon" to Texture("Bag.png"),
                 "wait_icon" to Texture("Clock.png"),
-                "short_sword" to Texture("Short_sword.png")
+                "short_sword" to Texture("Short_sword.png"),
+                "yellow_area" to Texture("Yellow_area.png")
         )
     }
 }

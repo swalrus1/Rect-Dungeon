@@ -3,6 +3,8 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import ru.swalrus.rectdungeon.Game.Creature
+import ru.swalrus.rectdungeon.Game.Player
 import kotlin.math.abs
 
 object Utils {
@@ -45,6 +47,16 @@ object Utils {
 
     fun randomDirection() : Int {
         return MathUtils.random(1, 4)
+    }
+
+    fun isTarget(creature: Creature?, target: Char) : Boolean {
+        return when (target) {
+            'a' -> true
+            'c' -> (creature != null)
+            'p' -> (creature != null) and (creature is Player)
+            'e' -> (creature != null) and (creature !is Player)
+            else -> false
+        }
     }
 
     fun getImg(name: String, direction: Int = Const.CENTER) : Texture {

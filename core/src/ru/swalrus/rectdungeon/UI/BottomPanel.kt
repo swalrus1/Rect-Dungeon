@@ -16,9 +16,9 @@ class BottomPanel (player: Player, listener: InputListener) {
     var activeHandID: Int = 0
 
     var leftHandSlot: ItemButton = ItemButton(Const.SCREEN_WIDTH - 3.5f * Const.BOTTOM_TILE_SIZE,
-            0f, 1, Const.BOTTOM_TILE_SIZE, player.leftHand, this, listener)
+            0f, 1, Const.BOTTOM_TILE_SIZE, player.leftHand, this, player, listener)
     var rightHandSlot: ItemButton = ItemButton(Const.SCREEN_WIDTH - 2.5f * Const.BOTTOM_TILE_SIZE,
-            0f, 2, Const.BOTTOM_TILE_SIZE, player.rightHand, this, listener)
+            0f, 2, Const.BOTTOM_TILE_SIZE, player.rightHand, this, player, listener)
 
 
     fun draw(batch: SpriteBatch) {

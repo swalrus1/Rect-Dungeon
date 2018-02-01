@@ -9,7 +9,7 @@ import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 
 class ItemButton(val x: Float, val y: Float, val id: Int, var size: Float, var item: Item?, var panel: BottomPanel,
-                 listener: InputListener) {
+                 val player: Player, listener: InputListener) {
 
     val shadow: Texture = Utils.getImg("button_shadow")
     val slot: Texture = Utils.getImg("bottom_slot")
@@ -37,8 +37,10 @@ class ItemButton(val x: Float, val y: Float, val id: Int, var size: Float, var i
         if (item != null) {
             if (panel.activeHandID == id) {
                 panel.activeHandID = 0
+                player.room.resetYellowArea()
             } else {
                 panel.activeHandID = id
+                player.onButtonTouch(id)
             }
         }
     }
