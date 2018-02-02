@@ -29,10 +29,12 @@ class MyGame : ApplicationAdapter() {
         chunk = Chunk()
         player = Player(6, 2, 8, chunk.Center)
         var testEnemy = Dummy(3, 5, chunk.Center)
+        var testEnemy2 = Dummy(5, 1, chunk.Center)
 
         listener = InputListener(player)
         topPanel = StatusPanel(player)
         bottomPanel = BottomPanel(player, listener)
+        listener.bottomPanel = bottomPanel
         Gdx.input.inputProcessor = GestureDetector(listener)
     }
 

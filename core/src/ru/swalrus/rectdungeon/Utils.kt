@@ -49,6 +49,26 @@ object Utils {
         return MathUtils.random(1, 4)
     }
 
+    fun getDirection(x: Float, y: Float) : Int {
+        return if (abs(x) > abs(y)) {
+            if (x > 0) {
+                Const.RIGHT
+            } else {
+                Const.LEFT
+            }
+        } else {
+            if (y > 0) {
+                Const.TOP
+            } else {
+                Const.BOTTOM
+            }
+        }
+    }
+
+    fun getDirection(x: Int, y: Int) : Int {
+        return getDirection(x.toFloat(), y.toFloat())
+    }
+
     fun isTarget(creature: Creature?, target: Char) : Boolean {
         return when (target) {
             'a' -> true

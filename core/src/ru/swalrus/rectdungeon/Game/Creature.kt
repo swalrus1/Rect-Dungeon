@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Effects.Buff
+import ru.swalrus.rectdungeon.Items.Weapon
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.exp
 
@@ -17,13 +18,17 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
+    private var action: Char = 'n'              // {Nothing, Move, Attack}
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
+    private var animTime: Float = 0f
+    private var target: Creature? = null
+    private var afterAttack: (attacker: Creature, defender: Creature) -> Unit = {_, _ -> }
     private var dPos: Vector2 = Vector2()
-    private var rotated: Boolean = false
+    private var rotated: Boolean = false        // If creature has been rotated during the current movement
     private var lookRight: Boolean = true
 
-
+// TODO: kill(), dealDamage(), abstract onDeath()
     init {
         // Add creature to the queue
         room.addCreature(this)
@@ -65,8 +70,9 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             // If there are no creature
             if (creature == null) {
                 startAnim()
-                rotated = false
                 dTime = 0f
+                animTime = Const.MOVE_TIME
+                action = 'm'
             } else {
                 moveDir = Vector2.Zero
                 endMove()
@@ -75,6 +81,16 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             moveDir = Vector2.Zero
             endMove()
         }
+    }
+
+    open fun attack(direction: Int, target: Creature,
+                    afterAttack: (attacker: Creature, defender: Creature) -> Unit) {
+        moveDir = Vector2(Utils.dir2vec(direction))
+        startAnim()
+        animTime = Const.ATTACK_TIME
+        action = 'a'
+        this.target = target
+        this.afterAttack = afterAttack
     }
 
     fun inAnim() : Boolean {
@@ -86,16 +102,23 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         // Move creature
         if (inAnim()) {
             // Check if creature has reached the destination
-            if (dTime >= Const.MOVE_TIME) {
-                endMove()
+            if (dTime >= animTime) {
+                when (action) {
+                    'm' -> endMove()
+                    'a' -> endAttack()
+                }
             } else {
                 align()
                 dPos = Vector2(moveDir)
-                dPos.scl(Const.TILE_SIZE * moveFun(dTime))
+                dPos.scl(Const.TILE_SIZE * when (action) {
+                    'm' -> moveFun(dTime / animTime)
+                    'a' -> attackFun(dTime / animTime)
+                    else -> 0f
+                })
                 sprite.translate(dPos.x, dPos.y)
                 dTime += graphics.deltaTime
                 // Change look direction if necessary
-                if (!rotated and (dTime >= Const.ROTATE_TIME * Const.MOVE_TIME)) {
+                if (!rotated and (dTime >= Const.ROTATE_TIME * animTime)) {
                     changeSpriteDirection(Utils.vec2dir(moveDir))
                 }
             }
@@ -103,20 +126,29 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     // Set sprite position to the center of the tile
-    private fun align () {
+    private fun align() {
         val xPos = x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT
         val yPos = y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM
         sprite.setPosition(xPos, yPos)
     }
 
     // Move function (y ~ (0; 1))
-    private fun moveFun (x: Float) : Float {
-        return 1 / (1 + exp(5 - 10 * x / Const.MOVE_TIME))
+    private fun moveFun(x: Float) : Float {
+        return 1 / (1 + exp(5 - 10 * x))
+    }
+
+    private fun attackFun(x: Float) : Float {
+        return if (x > 0.5f) {
+            (x-1) * (x-1)
+        } else {
+            x * x
+        } // TODO: Сделать параболу более выгнутой (резкий выпад)
     }
 
     private fun startAnim() {
         ready = false
         dTime = 0f
+        rotated = false
     }
 
     open fun endMove() {
@@ -126,6 +158,15 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         align()
         ready = true
         room.getTile(x, y).onStand(this)
+        action = 'n'
+    }
+
+    open fun endAttack() {
+        moveDir = Vector2.Zero
+        align()
+        ready = true
+        action = 'n'
+        afterAttack(this, target!!)
     }
 
     private fun changeSpriteDirection(dir: Int) {

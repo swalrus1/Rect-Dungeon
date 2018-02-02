@@ -50,6 +50,17 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    fun cast(id: Int, x: Int, y: Int) {
+        when (id) {
+            1 -> if (leftHand != null) {
+                leftHand!!.cast(x, y, this, room.getCreatureAt(x, y))
+            }
+            2 -> if (rightHand != null) {
+                rightHand!!.cast(x, y, this, room.getCreatureAt(x, y))
+            }
+        }
+    }
+
     private fun endAction() {
         if (AP > 0) {
             ready = false

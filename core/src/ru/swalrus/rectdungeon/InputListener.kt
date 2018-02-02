@@ -4,12 +4,14 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Player
+import ru.swalrus.rectdungeon.UI.BottomPanel
 import kotlin.math.abs
 
 class InputListener (player: Player) : GestureListener {
 
     var player: Player = player
     var touchAreas: MutableList<Pair<Rectangle, () -> Unit>> = mutableListOf()
+    lateinit var bottomPanel: BottomPanel
 
 
     fun addArea(x1: Float, y1: Float, width: Float, height: Float, f: () -> Unit) {
@@ -53,7 +55,7 @@ class InputListener (player: Player) : GestureListener {
                 return true
             }
         }
-        return false
+        return bottomPanel.tapOnMap(x, Const.SCREEN_HEIGHT - y)
     }
 
     override fun panStop(x: Float, y: Float, pointer: Int, button: Int): Boolean {

@@ -117,8 +117,8 @@ class Room (val chunk: Chunk) {
         }
         removeQueue.clear()
 
-        var xPos : Float = 0f
-        var yPos : Float = 0f
+        var xPos : Float
+        var yPos : Float
 
         for (x in 0 until map.size)
             for (y in map.size-1 downTo 0) {
