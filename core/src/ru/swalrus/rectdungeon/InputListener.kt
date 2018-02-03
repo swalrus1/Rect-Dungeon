@@ -20,19 +20,7 @@ class InputListener (player: Player) : GestureListener {
 
 
     override fun fling(velocityX: Float, velocityY: Float, button: Int): Boolean {
-        if (abs(velocityX) > abs(velocityY)) {
-            if (velocityX > 0) {
-                player.swipe(Const.RIGHT)
-            } else {
-                player.swipe(Const.LEFT)
-            }
-        } else {
-            if (velocityY > 0) {
-                player.swipe(Const.BOTTOM)
-            } else {
-                player.swipe(Const.TOP)
-            }
-        }
+        player.swipe(Utils.getDirection(velocityX, -velocityY))
         return true
     }
 

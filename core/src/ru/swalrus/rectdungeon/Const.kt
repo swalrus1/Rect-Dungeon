@@ -44,6 +44,9 @@ object Const {
     // Animation parameters
     val MOVE_TIME = 0.25f
     val ATTACK_TIME = 0.25f
+    val ATTACK_D_S = 0.5f
+    val PUSH_TIME = 0.1f
+    val PUSH_D_S = 0.2f
     val ROTATE_TIME = 0.3f      // Time to rotate in move
 
     var images : Map<String, Texture> = emptyMap()

@@ -1,6 +1,5 @@
 package ru.swalrus.rectdungeon.Items
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Utils
 
@@ -15,8 +14,8 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1) {
                 "Perfect for fast and stealth killers and robbers."
     }
 
-    override fun attack(attacker: Creature, defender: Creature) {
-// TODO: Deal damage
+    override fun attack(attacker: Creature, target: Creature) {
+        target.dealDamage(1f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
     }
 }
 
@@ -24,7 +23,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1) {
 class Rapier : Weapon(Utils.getImg("rapier"), 2) {
 
     override val range: Int = 2
-    override val area: Char = 'r'
+    override val area: Char = 'l'
     override val target: Char = 'e'
 
     override fun getDescription(): String {
@@ -32,7 +31,7 @@ class Rapier : Weapon(Utils.getImg("rapier"), 2) {
                 "You can touch enemies from a long distance with this weapon."
     }
 
-    override fun attack(attacker: Creature, defender: Creature) {
-
+    override fun attack(attacker: Creature, target: Creature) {
+        target.dealDamage(1f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
     }
 }
