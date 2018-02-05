@@ -46,7 +46,7 @@ object Const {
     val ATTACK_TIME = 0.25f
     val ATTACK_D_S = 0.5f
     val PUSH_TIME = 0.1f
-    val PUSH_D_S = 0.2f
+    val PUSH_D_S = 0.4f
     val ROTATE_TIME = 0.3f      // Time to rotate in move
 
     var images : Map<String, Texture> = emptyMap()
@@ -77,7 +77,9 @@ object Const {
                 "short_sword" to Texture("Short_sword.png"),
                 "yellow_area" to Texture("Yellow_area.png"),
                 "gray_area" to Texture("Gray_area.png"),
-                "rapier" to Texture("Rapier.png")
+                "rapier" to Texture("Rapier.png"),
+                "skeleton" to Texture("Skeleton.png"),
+                "lava" to Texture("Lava.png")
         )
     }
 }

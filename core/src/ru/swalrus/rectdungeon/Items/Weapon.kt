@@ -12,7 +12,7 @@ abstract class Weapon(img: Texture, id: Int) : Item(img, id), Castable {
             Utils.getDirection(x - attacker.x, y - attacker.y)
         else
             Const.CENTER
-        attacker.attack(direction, defender!!, {a, b -> attack(a, b)})
+        attacker.attack(direction, defender!!, {a, b -> attack(a, b)}, requiredAP)
     }
 
     abstract fun attack(attacker: Creature, target: Creature)

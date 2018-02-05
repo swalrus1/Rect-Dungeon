@@ -1,7 +1,9 @@
 package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.MathUtils
 import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Creatures.Skeleton
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 
@@ -91,7 +93,9 @@ class Room (val chunk: Chunk) {
     fun render(batch : SpriteBatch) {
 
         // If the current creature is ready to end turn,
-        if (creatureList[currentCreature].ready) {
+        if (currentCreature >= creatureList.size) {
+            // Not a very good solution, but it works :]
+        } else if (creatureList[currentCreature].ready) {
             // Move focus to the next creature
             if (currentCreature >= creatureList.size - 1) {
                 currentCreature = 0
@@ -110,7 +114,11 @@ class Room (val chunk: Chunk) {
         for (pos in removeQueue) {
             for (creature in creatureList) {
                 if ((creature.x == pos.first) and (creature.y == pos.second)) {
-                    creatureList.remove(creature)
+                    val i = creatureList.indexOf(creature)
+                    creatureList.removeAt(i)
+                    if (currentCreature > i) {
+                        currentCreature--
+                    }
                     break
                 }
             }
@@ -160,6 +168,14 @@ class Room (val chunk: Chunk) {
         map[map.size / 2][0] = Door(Const.BOTTOM, this)
         map[0][map.size / 2] = Door(Const.LEFT, this)
         map[map.size - 1][map.size / 2] = Door(Const.RIGHT, this)
+
+        for (i in 1..4) {
+            map[MathUtils.random(1, Const.ROOM_SIZE)][MathUtils.random(1, Const.ROOM_SIZE)] = Lava()
+        }
+
+        for (i in 1..5) {
+            Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), this)
+        }
     }
 
     fun getTile(x: Int, y: Int) : Tile {

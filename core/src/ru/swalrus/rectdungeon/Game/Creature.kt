@@ -39,6 +39,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         align()
         sprite.setSize(Const.TILE_SIZE, Const.TILE_SIZE)
         sprite.setOriginCenter()
+
+        room.getTile(x, y).onStand(this)
     }
 
     abstract fun act()
@@ -71,10 +73,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
 
-        if (tile.passable or ((this is Player) and (tile is Door))) {
+        if (force or tile.passable or ((this is Player) and (tile is Door))) {
             val creature = room.getCreatureAt(newX, nexY)
             // If there are no creature
-            if (creature == null) {
+            if (force or (creature == null)) {
                 startAnim()
                 dTime = 0f
                 animTime = Const.MOVE_TIME
@@ -90,7 +92,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     open fun attack(direction: Int, target: Creature,
-                    afterAttack: (attacker: Creature, defender: Creature) -> Unit) {
+                    afterAttack: (attacker: Creature, defender: Creature) -> Unit, requiredAP: Int) {
         // TODO: Make animation (change sprite in attack)
         if (direction != Const.CENTER) {
             moveDir = Vector2(Utils.dir2vec(direction))

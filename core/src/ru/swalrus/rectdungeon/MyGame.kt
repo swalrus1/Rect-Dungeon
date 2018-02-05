@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.input.GestureDetector
 import ru.swalrus.rectdungeon.Creatures.Dummy
+import ru.swalrus.rectdungeon.Creatures.Skeleton
 import ru.swalrus.rectdungeon.Game.Chunk
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
@@ -28,8 +29,6 @@ class MyGame : ApplicationAdapter() {
         // Define dungeon objects
         chunk = Chunk()
         player = Player(6, 2, 8, chunk.Center)
-        var testEnemy = Dummy(3, 5, chunk.Center)
-        var testEnemy2 = Dummy(5, 1, chunk.Center)
 
         listener = InputListener(player)
         topPanel = StatusPanel(player)

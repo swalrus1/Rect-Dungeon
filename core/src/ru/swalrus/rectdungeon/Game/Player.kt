@@ -27,6 +27,11 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         endAction()
     }
 
+    override fun endAttack() {
+        super.endAttack()
+        endAction()
+    }
+
 
     fun endTurn() {
         ready = true
@@ -99,6 +104,14 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     override fun move(direction: Int, force: Boolean) {
         if (force or makeAction(1)) {
             super.move(direction, force)
+            room.resetYellowArea()
+        }
+    }
+
+    override fun attack(direction: Int, target: Creature,
+                        afterAttack: (attacker: Creature, defender: Creature) -> Unit, requiredAP: Int) {
+        if (makeAction(requiredAP)) {
+            super.attack(direction, target, afterAttack, requiredAP)
         }
     }
 }

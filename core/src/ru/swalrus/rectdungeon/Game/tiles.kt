@@ -10,9 +10,7 @@ class Floor : Tile(Utils.getImg("floor"))
 class EmptyTile : Tile(Utils.getImg("empty"), passable = false)
 
 
-class Door(direction: Int, room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
-    var direction: Int = direction
-    var room: Room = room
+class Door(val direction: Int, val room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
 
     override fun onStand(creature: Creature) {
         if (creature is Player) {
@@ -41,7 +39,14 @@ class Door(direction: Int, room: Room) : Tile(Utils.getImg("door", direction), p
             creature.move(direction, true)
             creature.endTurn()
             // TODO: Закрываем двери
-            creature.act()
         }
+    }
+}
+
+
+class Lava() : Tile(Utils.getImg("lava")) {
+
+    override fun onStand(creature: Creature) {
+        creature.dealDamage(2f)
     }
 }
