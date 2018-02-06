@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx.app
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 
@@ -18,6 +19,8 @@ class Door(val direction: Int, val room: Room) : Tile(Utils.getImg("door", direc
             room.removeCreatureAt(creature.x, creature.y)
             creature.room = room.chunk.Center
             room.chunk.Center.addCreature(creature)
+            room.chunk.Center.setFocusToPlayer()
+            creature.act()
             when (direction) {
                 Const.TOP -> {
                     creature.x = Const.ROOM_SIZE / 2 + 1
@@ -37,7 +40,6 @@ class Door(val direction: Int, val room: Room) : Tile(Utils.getImg("door", direc
                 }
             }
             creature.move(direction, true)
-            creature.endTurn()
             // TODO: Закрываем двери
         }
     }

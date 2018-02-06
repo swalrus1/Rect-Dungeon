@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*

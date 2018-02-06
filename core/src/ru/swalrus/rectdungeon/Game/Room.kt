@@ -77,6 +77,16 @@ class Room (val chunk: Chunk) {
         creatureList.add(creature)
     }
 
+    fun setFocusToPlayer() {
+        var i = 0
+        while ((i < creatureList.size) and (creatureList[i] !is Player)) {
+            i++
+        }
+        if (i < creatureList.size) {
+            currentCreature = i
+        }
+    }
+
     fun getCreatureAt(x: Int, y: Int) : Creature? {
         for (item in creatureList) {
             if ((item.x == x) and (item.y == y)) {

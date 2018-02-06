@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
@@ -206,8 +207,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         x += moveDir.x.toInt()
         y += moveDir.y.toInt()
         align()
-        room.getTile(x, y).onStand(this)
         endAnim()
+        room.getTile(x, y).onStand(this)
     }
 
     open fun endAttack() {
