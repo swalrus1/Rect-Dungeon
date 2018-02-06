@@ -9,6 +9,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1) {
     override val area: Char = 'l'
     override val target: Char = 'e'
     override val requiredAP: Int = 1
+    override val resetAP: Boolean = false
 
     override fun getDescription(): String {
         return "A sword with a short blade." +
@@ -26,7 +27,8 @@ class Rapier : Weapon(Utils.getImg("rapier"), 2) {
     override val range: Int = 2
     override val area: Char = 'l'
     override val target: Char = 'e'
-    override val requiredAP: Int = 2
+    override val requiredAP: Int = 1
+    override val resetAP: Boolean = true
 
     override fun getDescription(): String {
         return "A long thin kind of sword." +

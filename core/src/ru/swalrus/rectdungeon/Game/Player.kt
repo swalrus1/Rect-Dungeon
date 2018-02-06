@@ -101,17 +101,31 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
-    override fun move(direction: Int, force: Boolean) {
+    override fun move(direction: Int, force: Boolean) : Boolean {
+        room.resetYellowArea()
         if (force or makeAction(1)) {
-            super.move(direction, force)
-            room.resetYellowArea()
+            val isCorrect = super.move(direction, force)
+            if (!isCorrect) {
+                // Restore AP
+                AP += 1
+                endAction()
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
         }
     }
 
     override fun attack(direction: Int, target: Creature,
-                        afterAttack: (attacker: Creature, defender: Creature) -> Unit, requiredAP: Int) {
+                        afterAttack: (attacker: Creature, defender: Creature) -> Unit,
+                        requiredAP: Int, resetAP: Boolean) {
         if (makeAction(requiredAP)) {
-            super.attack(direction, target, afterAttack, requiredAP)
+            if (resetAP) {
+                AP = 0
+            }
+            super.attack(direction, target, afterAttack, requiredAP, resetAP)
         }
     }
 }

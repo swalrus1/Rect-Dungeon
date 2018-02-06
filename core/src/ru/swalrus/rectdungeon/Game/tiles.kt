@@ -44,7 +44,7 @@ class Door(val direction: Int, val room: Room) : Tile(Utils.getImg("door", direc
 }
 
 
-class Lava() : Tile(Utils.getImg("lava")) {
+class Lava : Tile(Utils.getImg("lava")) {
 
     override fun onStand(creature: Creature) {
         creature.dealDamage(2f)

@@ -67,7 +67,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return active
     }
 
-    open fun move(direction : Int, force: Boolean = false) {
+    // Returns true if the creature will move
+    open fun move(direction : Int, force: Boolean = false) : Boolean {
         moveDir = Vector2(Utils.dir2vec(direction))
         val newX = x + moveDir.x.toInt()
         val nexY = y + moveDir.y.toInt()
@@ -81,18 +82,22 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 dTime = 0f
                 animTime = Const.MOVE_TIME
                 action = 'm'
+                return true
             } else {
                 moveDir = Vector2.Zero
-                endMove()
+                endAnim()
+                return false
             }
         } else {
             moveDir = Vector2.Zero
-            endMove()
+            endAnim()
+            return false
         }
     }
 
     open fun attack(direction: Int, target: Creature,
-                    afterAttack: (attacker: Creature, defender: Creature) -> Unit, requiredAP: Int) {
+                    afterAttack: (attacker: Creature, defender: Creature) -> Unit,
+                    requiredAP: Int, resetAP: Boolean) {
         // TODO: Make animation (change sprite in attack)
         if (direction != Const.CENTER) {
             moveDir = Vector2(Utils.dir2vec(direction))

@@ -8,6 +8,7 @@ interface Castable {
     val range: Int
     val target: Char
     val requiredAP: Int
+    val resetAP: Boolean
 
     fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?)
 }
