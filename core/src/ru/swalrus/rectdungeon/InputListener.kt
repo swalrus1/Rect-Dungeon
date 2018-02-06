@@ -37,13 +37,18 @@ class InputListener (player: Player) : GestureListener {
     }
 
     override fun tap(x: Float, y: Float, count: Int, button: Int): Boolean {
-        for (i in 0 until touchAreas.size) {
-            if (touchAreas[i].first.contains(x, Const.SCREEN_HEIGHT - y)) {
-                touchAreas[i].second()
-                return true
+        // If player is waiting for input
+        if (!player.inAnim() and !player.ready) {
+            for (i in 0 until touchAreas.size) {
+                if (touchAreas[i].first.contains(x, Const.SCREEN_HEIGHT - y)) {
+                    touchAreas[i].second()
+                    return true
+                }
             }
+            return bottomPanel.tapOnMap(x, Const.SCREEN_HEIGHT - y)
+        } else {
+            return false
         }
-        return bottomPanel.tapOnMap(x, Const.SCREEN_HEIGHT - y)
     }
 
     override fun panStop(x: Float, y: Float, pointer: Int, button: Int): Boolean {

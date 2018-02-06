@@ -130,7 +130,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
 
     fun inAnim() : Boolean {
-        return (!moveDir.isZero)
+        return action != 'n'
     }
 
     private fun die() {
