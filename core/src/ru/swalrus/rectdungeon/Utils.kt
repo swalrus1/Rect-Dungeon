@@ -3,8 +3,7 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
-import ru.swalrus.rectdungeon.Game.Creature
-import ru.swalrus.rectdungeon.Game.Player
+import ru.swalrus.rectdungeon.Game.*
 import kotlin.math.abs
 
 object Utils {
@@ -69,6 +68,22 @@ object Utils {
         return getDirection(x.toFloat(), y.toFloat())
     }
 
+    fun getTile(id: Int) : Tile {
+        return when (id) {
+            0 -> Floor()
+            1 -> Lava()
+            else -> Floor()
+        }
+    }
+
+    fun getTileID(name: String) : Int {
+        return when (name) {
+            "floor" -> 0
+            "lava" -> 1
+            else -> 0
+        }
+    }
+
     fun isTarget(creature: Creature?, target: Char) : Boolean {
         return when (target) {
             'a' -> true
@@ -90,7 +105,12 @@ object Utils {
                 }
             }
             "door" -> {
-                return Const.images["door"]!!
+                when (direction) {
+                    Const.TOP -> return Const.images["door_top"]!!
+                    Const.BOTTOM -> return Const.images["door_bottom"]!!
+                    Const.RIGHT -> return Const.images["door_right"]!!
+                    Const.LEFT -> return Const.images["door_left"]!!
+                }
             }
             else -> return Const.images[name]!!
         }

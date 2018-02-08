@@ -162,29 +162,40 @@ class Room (val chunk: Chunk) {
 
     private fun generate() {
 
-        for (y in 1 until map.size-1) {
-            map[0][y] = Wall(Const.LEFT)
-        }
-        for (y in 1 until map.size-1) {
-            map[map.size-1][y] = Wall(Const.RIGHT)
-        }
-        for (x in 1 until map.size-1) {
-            map[x][0] = Wall(Const.BOTTOM)
-        }
-        for (x in 1 until map.size-1) {
-            map[x][map.size-1] = Wall(Const.TOP)
-        }
-        map[map.size / 2][map.size - 1] = Door(Const.TOP, this)
-        map[map.size / 2][0] = Door(Const.BOTTOM, this)
-        map[0][map.size / 2] = Door(Const.LEFT, this)
-        map[map.size - 1][map.size / 2] = Door(Const.RIGHT, this)
+        var idMap = Array(Const.ROOM_SIZE,
+                { _ -> Array(Const.ROOM_SIZE, { _ -> Utils.getTileID("floor") }) })
+        idMap[0][0] = Utils.getTileID("lava")
 
-        for (i in 1..4) {
-            map[MathUtils.random(1, Const.ROOM_SIZE)][MathUtils.random(1, Const.ROOM_SIZE)] = Lava()
-        }
+        setMap(idMap)
 
         for (i in 1..5) {
             Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), this)
+        }
+    }
+
+    private fun setMap(arr: Array<Array<Int>>, doors: Array<Boolean> = arrayOf(true, true, true, true)) {
+        if ((arr.size == Const.ROOM_SIZE) and (arr[0].size == Const.ROOM_SIZE)) {
+            for (y in 1 until map.size) {
+                map[0][y] = Wall(Const.LEFT)
+            }
+            for (y in 1 until map.size) {
+                map[map.size-1][y] = Wall(Const.RIGHT)
+            }
+            for (x in 1 until map.size-1) {
+                map[x][0] = Wall(Const.BOTTOM)
+            }
+            for (x in 1 until map.size-1) {
+                map[x][map.size-1] = Wall(Const.TOP)
+            }
+            if (doors[0]) map[map.size / 2][map.size - 1] = Door(Const.TOP, this)
+            if (doors[1]) map[map.size / 2][0] = Door(Const.BOTTOM, this)
+            if (doors[2]) map[0][map.size / 2] = Door(Const.LEFT, this)
+            if (doors[3]) map[map.size - 1][map.size / 2] = Door(Const.RIGHT, this)
+
+            for (x in 0 until Const.ROOM_SIZE)
+                for (y in 0 until Const.ROOM_SIZE) {
+                    map[x+1][y+1] = Utils.getTile(arr[x][y])
+                }
         }
     }
 
