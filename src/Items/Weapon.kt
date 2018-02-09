@@ -8,7 +8,7 @@ import ru.swalrus.rectdungeon.Utils
 abstract class Weapon(img: Texture, id: Int) : Item(img, id), Castable {
 
     override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {
-        val direction: Char = if (area == 'l')
+        val direction: Int = if (area == 'l')
             Utils.getDirection(x - attacker.x, y - attacker.y)
         else
             Const.CENTER

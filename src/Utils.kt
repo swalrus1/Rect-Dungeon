@@ -8,43 +8,47 @@ import kotlin.math.abs
 
 object Utils {
 
-    fun reverseDirection(direction : Char) : Char {
+    fun reverseDirection(direction : Int) : Int {
 
-        return when (direction) {
-            Const.TOP -> Const.BOTTOM
-            Const.BOTTOM -> Const.TOP
-            Const.RIGHT -> Const.LEFT
-            Const.LEFT -> Const.RIGHT
-            Const.CENTER -> Const.CENTER
-            else -> Const.CENTER
+        when (direction) {
+            Const.TOP -> return Const.BOTTOM
+            Const.BOTTOM -> return Const.TOP
+            Const.RIGHT -> return Const.LEFT
+            Const.LEFT -> return Const.RIGHT
+            Const.CENTER -> return Const.CENTER
+            else -> return Const.CENTER
         }
     }
 
-    fun dir2vec (direction: Char) : Vector2 {
-        return when (direction) {
-            Const.TOP -> Vector2(0f, 1f)
-            Const.BOTTOM -> Vector2(0f, -1f)
-            Const.RIGHT -> Vector2(1f, 0f)
-            Const.LEFT -> Vector2(-1f, 0f)
-            else -> Vector2(0f, 0f)
+    fun dir2vec (direction: Int) : Vector2 {
+        when (direction) {
+            Const.TOP -> return Vector2(0f, 1f)
+            Const.BOTTOM -> return Vector2(0f, -1f)
+            Const.RIGHT -> return Vector2(1f, 0f)
+            Const.LEFT -> return Vector2(-1f, 0f)
+            else -> return Vector2(0f, 0f)
         }
     }
 
-    fun vec2dir (vector: Vector2) : Char {
-        return when {
-            vector.x > 0 -> Const.RIGHT
-            vector.x < 0 -> Const.LEFT
-            vector.y > 0 -> Const.TOP
-            vector.y < 0 -> Const.BOTTOM
-            else -> Const.CENTER
+    fun vec2dir (vector: Vector2) : Int {
+        if (vector.x > 0) {
+            return Const.RIGHT
+        } else if (vector.x < 0) {
+            return Const.LEFT
+        } else if (vector.y > 0) {
+            return Const.TOP
+        } else if (vector.y < 0) {
+            return Const.BOTTOM
+        } else {
+            return Const.CENTER
         }
     }
 
-    fun randomDirection() : Char {
-        return arrayOf(Const.TOP, Const.BOTTOM, Const.LEFT, Const.RIGHT)[MathUtils.random(4)]
+    fun randomDirection() : Int {
+        return MathUtils.random(1, 4)
     }
 
-    fun getDirection(x: Float, y: Float) : Char {
+    fun getDirection(x: Float, y: Float) : Int {
         return if (abs(x) > abs(y)) {
             if (x > 0) {
                 Const.RIGHT
@@ -60,7 +64,7 @@ object Utils {
         }
     }
 
-    fun getDirection(x: Int, y: Int) : Char {
+    fun getDirection(x: Int, y: Int) : Int {
         return getDirection(x.toFloat(), y.toFloat())
     }
 
@@ -90,15 +94,7 @@ object Utils {
         }
     }
 
-    fun getTileDirection(map: Array<Array<Int>>, x: Int, y: Int, connect: (Int) -> Boolean) : Char {
-        val top = (y == map[0].size - 1) or (connect(map[x][y+1]))
-        val right = (x == map.size - 1) or (connect(map[x+1][y]))
-        val bottom = (y == 0) or (connect(map[x][y-1]))
-        val left = (x == 0) or (connect(map[x-1][y]))
-        // TODO: add return
-    }
-
-    fun getImg(name: String, direction: Char = Const.CENTER) : Texture {
+    fun getImg(name: String, direction: Int = Const.CENTER) : Texture {
         when (name) {
             "wall" -> {
                 when (direction) {
@@ -114,17 +110,6 @@ object Utils {
                     Const.BOTTOM -> return Const.images["door_bottom"]!!
                     Const.RIGHT -> return Const.images["door_right"]!!
                     Const.LEFT -> return Const.images["door_left"]!!
-                }
-            }
-            "lava" -> {
-                when (direction) {
-                    't' -> return Const.images["lava_top"]!!
-                    'r' -> return Const.images["lava_right"]!!
-                    'b' -> return Const.images["lava_bottom"]!!
-                    'l' -> return Const.images["lava_left"]!!
-                    'h' -> return Const.images["lava_horizontal"]!!
-                    'v' -> return Const.images["lava_vertical"]!!
-                    else -> return Const.images["lava"]!!
                 }
             }
             else -> return Const.images[name]!!

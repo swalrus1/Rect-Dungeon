@@ -39,7 +39,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     }
 
 
-    fun swipe (dir: Char) {
+    fun swipe (dir: Int) {
         if (!ready and !super.inAnim()) {
             move(dir)
         }
@@ -102,7 +102,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
-    override fun move(direction: Char, force: Boolean) : Boolean {
+    override fun move(direction: Int, force: Boolean) : Boolean {
         room.resetYellowArea()
         if (force or makeAction(1)) {
             val isCorrect = super.move(direction, force)
@@ -119,7 +119,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
-    override fun attack(direction: Char, target: Creature,
+    override fun attack(direction: Int, target: Creature,
                         afterAttack: (attacker: Creature, defender: Creature) -> Unit,
                         requiredAP: Int, resetAP: Boolean) {
         if (makeAction(requiredAP)) {

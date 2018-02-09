@@ -194,9 +194,6 @@ class Room (val chunk: Chunk) {
 
             for (x in 0 until Const.ROOM_SIZE)
                 for (y in 0 until Const.ROOM_SIZE) {
-                    val tile = Utils.getTile(arr[x][y])
-                    // TODO
-                    }
                     map[x+1][y+1] = Utils.getTile(arr[x][y])
                 }
         }

@@ -35,11 +35,11 @@ object Const {
     val BOTTOM_TILE_SIZE: Float = TILE_SIZE * 1.3f
 
     // Directions
-    val CENTER = 'c'
-    val TOP = 't'
-    val RIGHT = 'r'
-    val BOTTOM = 'b'
-    val LEFT = 'l'
+    val CENTER = 0
+    val TOP = 1
+    val RIGHT = 2
+    val BOTTOM = 3
+    val LEFT = 4
 
     // Animation parameters
     val MOVE_TIME = 0.25f
@@ -82,13 +82,7 @@ object Const {
                 "gray_area" to Texture("Gray_area.png"),
                 "rapier" to Texture("Rapier.png"),
                 "skeleton" to Texture("Skeleton.png"),
-                "lava" to Texture("Lava.png"),
-                "lava_top" to Texture("Lava_top.png"),
-                "lava_right" to Texture("Lava_right.png"),
-                "lava_bottom" to Texture("Lava_bottom.png"),
-                "lava_left" to Texture("Lava_left.png"),
-                "lava_horizontal" to Texture("Lava_horizontal.png"),
-                "lava_vertical" to Texture("Lava_vertical.png")
+                "lava" to Texture("Lava.png")
         )
     }
 }

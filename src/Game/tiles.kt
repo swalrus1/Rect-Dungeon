@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx.app
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 
-class Wall(direction: Char) : Tile(Utils.getImg("wall", direction), passable = false)
+class Wall(direction: Int) : Tile(Utils.getImg("wall", direction), passable = false)
 
 class Floor : Tile(Utils.getImg("floor"))
 
 class EmptyTile : Tile(Utils.getImg("empty"), passable = false)
 
 
-class Door(val direction: Char, val room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
+class Door(val direction: Int, val room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
 
     override fun onStand(creature: Creature) {
         if (creature is Player) {

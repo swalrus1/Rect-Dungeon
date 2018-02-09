@@ -6,7 +6,7 @@ import ru.swalrus.rectdungeon.Utils
 class Chunk {
 
     // Direction - направление СОХРАНЕННОЙ комнаты
-    private var direction : Char = Const.CENTER
+    var direction : Int = Const.CENTER
     var Last : Room
     var Center : Room
 
@@ -17,10 +17,10 @@ class Chunk {
     }
 
 
-    fun move(dir: Char) {
+    fun move(dir: Int) {
 
         if (dir == direction) {
-            val temp = Center
+            var temp = Center
             Center = Last
             Last = temp
             direction = Utils.reverseDirection(dir)

@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Effects.Buff
+import ru.swalrus.rectdungeon.Items.Weapon
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 import kotlin.math.exp
@@ -67,7 +69,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     // Returns true if the creature will move
-    open fun move(direction : Char, force: Boolean = false) : Boolean {
+    open fun move(direction : Int, force: Boolean = false) : Boolean {
         moveDir = Vector2(Utils.dir2vec(direction))
         val newX = x + moveDir.x.toInt()
         val nexY = y + moveDir.y.toInt()
@@ -94,7 +96,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
-    open fun attack(direction: Char, target: Creature,
+    open fun attack(direction: Int, target: Creature,
                     afterAttack: (attacker: Creature, defender: Creature) -> Unit,
                     requiredAP: Int, resetAP: Boolean) {
         // TODO: Make animation (change sprite in attack)
@@ -111,7 +113,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
-    fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
+    fun dealDamage(damage: Float, direction: Int = Const.CENTER) {
         // TODO: Calculate damage
         if (direction != Const.CENTER) {
             moveDir = Vector2(Utils.dir2vec(direction))
@@ -220,7 +222,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         align()
     }
 
-    private fun changeSpriteDirection(dir: Char) {
+    private fun changeSpriteDirection(dir: Int) {
         if (lookRight and (dir == Const.LEFT)) {
             sprite.setScale(-1f, 1f)
             lookRight = false
