@@ -162,9 +162,13 @@ class Room (val chunk: Chunk) {
 
     private fun generate() {
 
-        var idMap = Array(Const.ROOM_SIZE,
+        val idMap = Array(Const.ROOM_SIZE,
                 { _ -> Array(Const.ROOM_SIZE, { _ -> Utils.getTileID("floor") }) })
-        idMap[0][0] = Utils.getTileID("lava")
+
+        idMap[1][1] = Utils.getTileID("lava")
+        idMap[2][1] = Utils.getTileID("lava")
+        idMap[2][2] = Utils.getTileID("lava")
+        idMap[3][2] = Utils.getTileID("lava")
 
         setMap(idMap)
 
@@ -195,18 +199,19 @@ class Room (val chunk: Chunk) {
             for (x in 0 until Const.ROOM_SIZE)
                 for (y in 0 until Const.ROOM_SIZE) {
                     val tile = Utils.getTile(arr[x][y])
-                    // TODO
+                    map[x+1][y+1] = when (tile) {
+                        is Lava -> Lava(Utils.getLavaImg(arr, x, y, {id: Int -> Utils.getTile(id) is Lava}))
+                        else -> tile
                     }
-                    map[x+1][y+1] = Utils.getTile(arr[x][y])
                 }
         }
     }
 
     fun getTile(x: Int, y: Int) : Tile {
-        try {
-            return map[x][y]
+        return try {
+            map[x][y]
         } catch (e: IndexOutOfBoundsException) {
-            return EmptyTile()
+            EmptyTile()
         }
     }
 }

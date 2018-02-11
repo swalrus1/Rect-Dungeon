@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.Gdx.app
+import com.badlogic.gdx.graphics.Texture
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 
@@ -46,9 +47,9 @@ class Door(val direction: Char, val room: Room) : Tile(Utils.getImg("door", dire
 }
 
 
-class Lava : Tile(Utils.getImg("lava")) {
+class Lava (img: Texture) : Tile(img) {
 
     override fun onStand(creature: Creature) {
-        creature.dealDamage(2f)
+        creature.dealDamage(10f)
     }
 }

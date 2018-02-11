@@ -41,7 +41,7 @@ object Utils {
     }
 
     fun randomDirection() : Char {
-        return arrayOf(Const.TOP, Const.BOTTOM, Const.LEFT, Const.RIGHT)[MathUtils.random(4)]
+        return arrayOf(Const.TOP, Const.BOTTOM, Const.LEFT, Const.RIGHT)[MathUtils.random(3)]
     }
 
     fun getDirection(x: Float, y: Float) : Char {
@@ -67,7 +67,7 @@ object Utils {
     fun getTile(id: Int) : Tile {
         return when (id) {
             0 -> Floor()
-            1 -> Lava()
+            1 -> Lava(getImg("lava"))
             else -> Floor()
         }
     }
@@ -90,12 +90,26 @@ object Utils {
         }
     }
 
-    fun getTileDirection(map: Array<Array<Int>>, x: Int, y: Int, connect: (Int) -> Boolean) : Char {
-        val top = (y == map[0].size - 1) or (connect(map[x][y+1]))
-        val right = (x == map.size - 1) or (connect(map[x+1][y]))
-        val bottom = (y == 0) or (connect(map[x][y-1]))
-        val left = (x == 0) or (connect(map[x-1][y]))
-        // TODO: add return
+    fun getLavaImg(map: Array<Array<Int>>, x: Int, y: Int, connect: (Int) -> Boolean) : Texture {
+        // Directions are reversed
+        val bottom = (y == map[0].size - 1) or (connect(map[x][y+1]))
+        val left = (x == map.size - 1) or (connect(map[x+1][y]))
+        val top = (y == 0) or (connect(map[x][y-1]))
+        val right = (x == 0) or (connect(map[x-1][y]))
+
+        return when {
+            top and right -> Const.images["lava_top_right"]!!
+            top and bottom -> Const.images["lava_vertical"]!!
+            top and left -> Const.images["lava_top_left"]!!
+            right and bottom -> Const.images["lava_bottom_right"]!!
+            right and left -> Const.images["lava_horizontal"]!!
+            bottom and left -> Const.images["lava_bottom_left"]!!
+            top -> Const.images["lava_top"]!!
+            right -> Const.images["lava_right"]!!
+            bottom -> Const.images["lava_bottom"]!!
+            left -> Const.images["lava_left"]!!
+            else -> Const.images["lava"]!!
+        }
     }
 
     fun getImg(name: String, direction: Char = Const.CENTER) : Texture {

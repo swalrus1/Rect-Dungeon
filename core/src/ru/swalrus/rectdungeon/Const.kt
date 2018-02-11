@@ -40,6 +40,12 @@ object Const {
     val RIGHT = 'r'
     val BOTTOM = 'b'
     val LEFT = 'l'
+    val HORIZONTAL = 'h'
+    val VERTICAL = 'v'
+    val TOP_LEFT = 'k'
+    val TOP_RIGHT = 'l'
+    val BOTTOM_LEFT = 'm'
+    val BOTTOM_RIGHT = 'n'
 
     // Animation parameters
     val MOVE_TIME = 0.25f
@@ -88,7 +94,11 @@ object Const {
                 "lava_bottom" to Texture("Lava_bottom.png"),
                 "lava_left" to Texture("Lava_left.png"),
                 "lava_horizontal" to Texture("Lava_horizontal.png"),
-                "lava_vertical" to Texture("Lava_vertical.png")
+                "lava_vertical" to Texture("Lava_vertical.png"),
+                "lava_top_right" to Texture("Lava_top_right.png"),
+                "lava_top_left" to Texture("Lava_top_left.png"),
+                "lava_bottom_right" to Texture("Lava_bottom_right.png"),
+                "lava_bottom_left" to Texture("Lava_bottom_left.png")
         )
     }
 }
