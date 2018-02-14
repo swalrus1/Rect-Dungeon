@@ -8,7 +8,7 @@ import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.InputListener
 import ru.swalrus.rectdungeon.Utils
 
-class BottomPanel (val player: Player, listener: InputListener) {
+class BottomPanel (val player: Player, listener: InputListener, val inventory: InventoryRenderer) {
 
     val slot = Utils.getImg("bottom_slot")
     val waitIcon = Utils.getImg("wait_icon")
@@ -21,6 +21,11 @@ class BottomPanel (val player: Player, listener: InputListener) {
             0f, 1, Const.BOTTOM_TILE_SIZE, player.leftHand, this, player, listener)
     var rightHandSlot: ItemButton = ItemButton(Const.SCREEN_WIDTH - 2.5f * Const.BOTTOM_TILE_SIZE,
             0f, 2, Const.BOTTOM_TILE_SIZE, player.rightHand, this, player, listener)
+
+
+    init {
+        listener.addArea(Const.SCREEN_WIDTH - size, 0f, size, size, { inventory.switch() })
+    }
 
 
     fun draw(batch: SpriteBatch) {

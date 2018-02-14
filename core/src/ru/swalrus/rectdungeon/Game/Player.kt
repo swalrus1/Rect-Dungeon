@@ -1,6 +1,5 @@
 package ru.swalrus.rectdungeon.Game
 
-import com.badlogic.gdx.Gdx
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*
@@ -13,7 +12,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
 
     var weapon: Weapon? = null
     var armor: Armor? = null
-    var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTEFACT_SLOTS)
+    var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTIFACT_SLOTS)
     var rightHand: Weapon? = ShortSword()
     var leftHand: Weapon? = Rapier()
 

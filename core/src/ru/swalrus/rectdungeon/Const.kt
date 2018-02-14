@@ -12,15 +12,15 @@ object Const {
     val SCREEN_HEIGHT: Int = Gdx.graphics.height
 
     // Amount of some stuff
-    val ROOM_SIZE = 7
-    val QUCK_SLOTS = 6
-    val MAX_AP = 2
-    val INVENTORY_SIZE = 24
-    val ARTEFACT_SLOTS = 3
+    const val ROOM_SIZE = 7
+    const val QUICK_SLOTS = 6
+    const val MAX_AP = 2
+    const val INVENTORY_SIZE = 23
+    const val ARTIFACT_SLOTS = 3
 
     // Map render parameters
-    val MAP_BORDER: Float = 0.5f   // Относительная величина
-    val MAP_SIZE: Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUCK_SLOTS,
+    const val MAP_BORDER: Float = 0.5f   // Относительная величина
+    val MAP_SIZE: Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUICK_SLOTS,
             SCREEN_WIDTH.toFloat())
     val IMG_SIZE: Int = 16
     val TILE_SIZE: Float = MAP_SIZE / (ROOM_SIZE + 2 * MAP_BORDER)
@@ -31,29 +31,31 @@ object Const {
     val STATUS_SCALE: Float = TILE_SIZE / IMG_SIZE
     val BOTTOM_SCALE: Float = TILE_SIZE / IMG_SIZE * 1.3f
     val HP_MARGIN: Float = 3.5f * STATUS_SCALE
-    val UI_MAX_HP: Int = 8
+    const val UI_MAX_HP: Int = 8
+    const val INVENTORY_ROW_SIZE: Int = 4
     val BOTTOM_TILE_SIZE: Float = TILE_SIZE * 1.3f
+    const val INV_BACKGROUND_WIDTH: Int = 65
+    const val INV_BACKGROUND_HEIGHT: Int = 80
+    val INV_MARGIN_LEFT: Float = SCREEN_WIDTH.toFloat() / 10f
+    val INV_SCALE: Float = (SCREEN_WIDTH.toFloat() - INV_MARGIN_LEFT * 2) / INV_BACKGROUND_WIDTH
+    const val INV_PADDING: Int = 2
+    val INV_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT.toFloat() - INV_BACKGROUND_HEIGHT * INV_SCALE) / 2
+    // TODO: margin left
 
     // Directions
-    val CENTER = 'c'
-    val TOP = 't'
-    val RIGHT = 'r'
-    val BOTTOM = 'b'
-    val LEFT = 'l'
-    val HORIZONTAL = 'h'
-    val VERTICAL = 'v'
-    val TOP_LEFT = 'k'
-    val TOP_RIGHT = 'l'
-    val BOTTOM_LEFT = 'm'
-    val BOTTOM_RIGHT = 'n'
+    const val CENTER = 'c'
+    const val TOP = 't'
+    const val RIGHT = 'r'
+    const val BOTTOM = 'b'
+    const val LEFT = 'l'
 
     // Animation parameters
-    val MOVE_TIME = 0.25f
-    val ATTACK_TIME = 0.25f
-    val ATTACK_D_S = 0.5f
-    val PUSH_TIME = 0.1f
-    val PUSH_D_S = 0.4f
-    val ROTATE_TIME = 0.3f      // Time to rotate in move
+    const val MOVE_TIME = 0.25f
+    const val ATTACK_TIME = 0.25f
+    const val ATTACK_D_S = 0.5f
+    const val PUSH_TIME = 0.1f
+    const val PUSH_D_S = 0.4f
+    const val ROTATE_TIME = 0.3f      // Time to rotate in move
 
     var images : Map<String, Texture> = emptyMap()
 
@@ -98,7 +100,8 @@ object Const {
                 "lava_top_right" to Texture("Lava_top_right.png"),
                 "lava_top_left" to Texture("Lava_top_left.png"),
                 "lava_bottom_right" to Texture("Lava_bottom_right.png"),
-                "lava_bottom_left" to Texture("Lava_bottom_left.png")
+                "lava_bottom_left" to Texture("Lava_bottom_left.png"),
+                "inventory" to Texture("Inventory_background.png")
         )
     }
 }
