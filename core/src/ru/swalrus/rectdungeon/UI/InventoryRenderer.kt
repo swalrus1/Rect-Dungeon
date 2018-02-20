@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon.UI
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.Gdx.app
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
@@ -41,7 +42,19 @@ class InventoryRenderer (val player: Player) {
     }
 
     // Open/close
-    fun switch() {
-        opened = !opened
+    fun switch(action: Char = 'n') {
+        when (action) {
+            'o' -> opened = true
+            'c' -> opened = false
+            'n' -> opened = !opened
+        }
+    }
+
+    fun press(x: Int, y: Int) {
+        press(y * ROW + x)
+    }
+
+    fun press(i: Int) {
+        app.log("Info", "Pressed $i slot")
     }
 }

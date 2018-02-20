@@ -6,13 +6,17 @@ import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
 import ru.swalrus.rectdungeon.UI.InventoryRenderer
-import kotlin.math.abs
 
 class InputListener (val player: Player, val inventory: InventoryRenderer) : GestureListener {
 
     var touchAreas: MutableList<Pair<Rectangle, () -> Unit>> = mutableListOf()
     val inventotyArea: Rectangle = Rectangle(Const.INV_MARGIN_LEFT, Const.INV_MARGIN_BOTTOM,
             Const.SCREEN_WIDTH - 2 * Const.INV_MARGIN_LEFT, Const.SCREEN_HEIGHT - 2 * Const.INV_MARGIN_BOTTOM)
+    val INV_MARGIN_TOP: Float = Const.INV_MARGIN_BOTTOM + Const.INV_PADDING * Const.INV_SCALE
+    val INV_MARGIN_LEFT: Float = Const.INV_MARGIN_LEFT + Const.INV_PADDING * Const.INV_SCALE
+    val INV_CELL_SIZE: Float = Const.INV_CELL_SIZE * Const.INV_SCALE
+    val INV_ROW: Int = Const.INVENTORY_ROW_SIZE
+    val INV_COLUMN: Int = Const.INVENTORY_SIZE / Const.INVENTORY_ROW_SIZE
     lateinit var bottomPanel: BottomPanel
 
 
@@ -22,8 +26,11 @@ class InputListener (val player: Player, val inventory: InventoryRenderer) : Ges
 
 
     override fun fling(velocityX: Float, velocityY: Float, button: Int): Boolean {
-        player.swipe(Utils.getDirection(velocityX, -velocityY))
-        return true
+        if (!inventory.opened) {
+            player.swipe(Utils.getDirection(velocityX, -velocityY))
+            return true
+        }
+        return false
     }
 
     override fun zoom(initialDistance: Float, distance: Float): Boolean {
@@ -45,12 +52,16 @@ class InputListener (val player: Player, val inventory: InventoryRenderer) : Ges
             if (inventory.opened) {
                 // Check if the tap is in inventory area
                 if (inventotyArea.contains(x, Const.SCREEN_HEIGHT - y)) {
-
-                    return true
+                    val invX: Int = ((x - INV_MARGIN_LEFT) / INV_CELL_SIZE).toInt()
+                    val invY: Int = ((y - INV_MARGIN_TOP) / INV_CELL_SIZE).toInt()
+                    if ((invX >= 0) and (invX < INV_ROW) and
+                            (invY >= 0) and (invY < INV_COLUMN)) {
+                        inventory.press(invX, invY)
+                    }
                 } else {
-                    inventory.switch()
-                    return true
+                    inventory.switch('c')
                 }
+                return true
             } else {
                 // Handle taps on the map
                 for (i in 0 until touchAreas.size) {
