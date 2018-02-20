@@ -40,6 +40,7 @@ object Const {
     val INV_SCALE: Float = (SCREEN_WIDTH.toFloat() - INV_MARGIN_LEFT * 2) / INV_BACKGROUND_WIDTH
     const val INV_PADDING: Int = 2
     val INV_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT.toFloat() - INV_BACKGROUND_HEIGHT * INV_SCALE) / 2
+    const val INV_CELL_SIZE: Int = 16
     // TODO: margin left
 
     // Directions

@@ -32,8 +32,8 @@ class MyGame : ApplicationAdapter() {
         chunk = Chunk()
         player = Player(6, 2, 8, chunk.Center)
 
-        listener = InputListener(player)
         inventoryRenderer = InventoryRenderer(player)
+        listener = InputListener(player, inventoryRenderer)
         topPanel = StatusPanel(player)
         bottomPanel = BottomPanel(player, listener, inventoryRenderer)
         listener.bottomPanel = bottomPanel

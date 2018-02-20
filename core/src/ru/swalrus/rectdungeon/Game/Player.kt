@@ -3,6 +3,7 @@ package ru.swalrus.rectdungeon.Game
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*
+import com.badlogic.gdx.Gdx.app
 
 class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
 
@@ -10,11 +11,18 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     var maxHP = HP
     var inventory: Array<Item?> = arrayOfNulls(Const.INVENTORY_SIZE)
 
-    var weapon: Weapon? = null
     var armor: Armor? = null
-    var stuff: Array<Artefact?> = arrayOfNulls(Const.ARTIFACT_SLOTS)
-    var rightHand: Weapon? = ShortSword()
-    var leftHand: Weapon? = Rapier()
+    var rightHand: Weapon? = null
+    var leftHand: Weapon? = null
+
+
+    init {
+        // ShortSword, Rapier
+        addItem(ShortSword())
+        addItem(Rapier())
+        equip(inventory.indexOfFirst { item -> item is Rapier }, 0)
+        equip(inventory.indexOfFirst { item -> item is ShortSword }, 1)
+    }
 
 
     override fun act() {
@@ -84,6 +92,22 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             inventory[i] = item
         } else {
             // TODO: Написать в лог, что инвентарь полон, анимировать предмет
+        }
+    }
+
+    fun equip(i: Int, slot: Int = 0) {
+        val item = inventory[i]
+        if (item != null) {
+            when (item) {
+                is Weapon -> when (slot) {
+                    0 -> leftHand = item
+                    1 -> rightHand = item
+                    else -> app.error("Inventory", "Wrong hand id")
+                }
+                is Armor -> armor = item
+            }
+        } else {
+            app.error("Inventory", "Attempt to equip nothing (null)")
         }
     }
 
