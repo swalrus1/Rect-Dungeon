@@ -28,6 +28,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var rotated: Boolean = false        // If creature has been rotated during the current movement
     private var attacked: Boolean = false       // If creature has attacked during the current attack
     private var lookRight: Boolean = true
+    private var indicatorState: Char = 'n'      // {Nothing, Damage, Loot}
+    private var indicatorDTime: Float = 0f
+    private var indicatorY: Float = 0f
+    private var indicatorText: String = ""
+    //private var glyphLayout: GlyphLayout = GlyphLayout(Const.cardFont, indicatorText)
 
 
     init {
@@ -49,7 +54,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
 
-    private fun makeTurn() {
+    fun makeTurn() {
         for (buff in buffs) {
             buff.onTurn(this)
         }
@@ -60,6 +65,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     fun render(batch: SpriteBatch) {
         update()
         sprite.draw(batch)
+        when (indicatorState) {
+            'd' -> Const.damageFont.draw(batch, indicatorText,
+                    (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
+                    (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY)
+        }
     }
 
     fun isActive() : Boolean {
@@ -119,8 +129,12 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             animTime = Const.PUSH_TIME
             action = 'p'
         }
-        // TODO: Show damage (number moving up)
         HP -= damage.toInt()
+        // Run indicator
+        indicatorState = 'd'
+        indicatorDTime = 0f
+        indicatorText = damage.toInt().toString()
+        // Kill creature if HP <= 0
         if (HP <= 0) {
             onDeath()
             die()
@@ -170,6 +184,18 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 }
             }
         }
+
+        if (indicatorState != 'n') {
+            if (indicatorDTime >= Const.INDICATOR_TIME) {
+                indicatorDTime = 0f
+                indicatorState = 'n'
+                indicatorText = ""
+                indicatorY = 0f
+            } else {
+                indicatorY = Const.TILE_SIZE * indicatorFun(indicatorDTime / Const.INDICATOR_TIME)
+                indicatorDTime += graphics.deltaTime
+            }
+        }
     }
 
     // Set sprite position to the center of the tile
@@ -192,6 +218,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     // Push function (x, y ~ (0; 1))
     private fun pushFun(x: Float) : Float {
         return -Const.PUSH_D_S / 2 * (abs(x - 0.5f) - 0.5f)
+    }
+
+    // Indicator function (x, y ~ (0; 1))
+    private fun indicatorFun(x: Float) : Float {
+        return Const.INDICATOR_D_S * x * (-x + 2)
     }
 
     private fun startAnim() {

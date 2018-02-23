@@ -3,15 +3,14 @@ package ru.swalrus.rectdungeon
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.input.GestureDetector
-import ru.swalrus.rectdungeon.Creatures.Dummy
-import ru.swalrus.rectdungeon.Creatures.Skeleton
 import ru.swalrus.rectdungeon.Game.Chunk
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
 import ru.swalrus.rectdungeon.UI.InventoryRenderer
-import ru.swalrus.rectdungeon.UI.ItemButton
 import ru.swalrus.rectdungeon.UI.StatusPanel
 
 class MyGame : ApplicationAdapter() {
@@ -25,7 +24,7 @@ class MyGame : ApplicationAdapter() {
     lateinit var inventoryRenderer: InventoryRenderer
 
     override fun create() {
-        Const.loadImages()
+        Const.load()
         batch = SpriteBatch()
 
         // Define dungeon objects

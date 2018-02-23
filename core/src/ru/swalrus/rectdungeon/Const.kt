@@ -2,6 +2,7 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 
 // All global constants
 //
@@ -42,6 +43,8 @@ object Const {
     val INV_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT.toFloat() - INV_BACKGROUND_HEIGHT * INV_SCALE) / 2
     const val INV_CELL_SIZE: Int = 16
     // TODO: margin left
+    const val INDICATOR_OFFSET_Y: Float = 1.2f
+    const val INDICATOR_OFFSET_X: Float = -0.2f
 
     // Directions
     const val CENTER = 'c'
@@ -57,10 +60,18 @@ object Const {
     const val PUSH_TIME = 0.1f
     const val PUSH_D_S = 0.4f
     const val ROTATE_TIME = 0.3f      // Time to rotate in move
+    const val INDICATOR_TIME = 0.3f
+    const val INDICATOR_D_S = 0.3f
+
+    lateinit var damageFont: BitmapFont
 
     var images : Map<String, Texture> = emptyMap()
 
-    fun loadImages() {
+    fun load() {
+
+        damageFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
+        damageFont.data.setScale(0.8f)
+        damageFont.setColor(0.914f, 0.341f, 0.247f, 1f)
 
         images = mapOf(
                 "floor" to Texture("Floor.png"),

@@ -116,7 +116,7 @@ class Room (val chunk: Chunk) {
             if (creatureList[currentCreature].isActive() and
                     (Pair(creatureList[currentCreature].x, creatureList[currentCreature].y) !in removeQueue)) {
                 // Say him to make turn
-                creatureList[currentCreature].act()
+                creatureList[currentCreature].makeTurn()
             }
         }
 
