@@ -5,7 +5,7 @@ import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Utils
 
-abstract class Weapon(img: Texture, id: Int) : Item(img, id), Castable {
+abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name), Castable {
 
     override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {
         val direction: Char = if (area == 'l')

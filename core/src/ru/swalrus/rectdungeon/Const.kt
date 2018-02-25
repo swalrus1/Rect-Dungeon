@@ -19,6 +19,11 @@ object Const {
     const val INVENTORY_SIZE = 23
     const val ARTIFACT_SLOTS = 3
 
+    // Font scale
+    const val damageScale: Float = 0.8f
+    const val headerScale: Float = 1.4f
+    const val cardFontScale: Float = 0.8f
+
     // Map render parameters
     const val MAP_BORDER: Float = 0.5f   // Относительная величина
     val MAP_SIZE: Float = minOf(SCREEN_HEIGHT - (2 * SCREEN_WIDTH).toFloat() / QUICK_SLOTS,
@@ -53,9 +58,10 @@ object Const {
     val CARD_SCALE: Float = INV_SCALE
     val CARD_MARGIN_LEFT: Float = (SCREEN_WIDTH - CARD_WIDTH * CARD_SCALE) / 2
     val CARD_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - CARD_HEIGHT * CARD_SCALE) / 2
-    const val CARD_PADDING: Int = 4
+    const val CARD_PADDING: Int = 10
     const val CARD_IMG_SiZE: Int = 40
     val CARD_IMG_MARGIN_LEFT: Float = (CARD_WIDTH - CARD_IMG_SiZE) * CARD_SCALE / 2
+    val CARD_HEADER_HEIGHT: Float = headerScale * CARD_SCALE * 10f
 
     // Directions
     const val CENTER = 'c'
@@ -75,14 +81,24 @@ object Const {
     const val INDICATOR_D_S = 0.3f
 
     lateinit var damageFont: BitmapFont
+    lateinit var headerFont: BitmapFont
+    lateinit var cardFont: BitmapFont
 
     var images : Map<String, Texture> = emptyMap()
 
     fun load() {
 
         damageFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
-        damageFont.data.setScale(0.8f)
+        damageFont.data.setScale(damageScale)
         damageFont.setColor(0.914f, 0.341f, 0.247f, 1f)
+
+        headerFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
+        headerFont.data.setScale(headerScale)
+        headerFont.setColor(1f, 1f, 1f, 1f)
+
+        cardFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
+        cardFont.data.setScale(cardFontScale)
+        cardFont.setColor(1f, 1f, 1f, 1f)
 
         images = mapOf(
                 "floor" to Texture("Floor.png"),

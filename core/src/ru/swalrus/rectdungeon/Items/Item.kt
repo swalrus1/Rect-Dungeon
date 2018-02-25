@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import ru.swalrus.rectdungeon.Const
 
-abstract class Item (var img: Texture, val id: Int, val bigImage: Texture = img) {
+abstract class Item (var img: Texture, val id: Int, val name: String,val bigImage: Texture = img) {
 
     abstract fun getDescription() : String
 
