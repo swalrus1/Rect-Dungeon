@@ -35,6 +35,7 @@ object Const {
     const val UI_MAX_HP: Int = 8
     const val INVENTORY_ROW_SIZE: Int = 4
     val BOTTOM_TILE_SIZE: Float = TILE_SIZE * 1.3f
+
     const val INV_BACKGROUND_WIDTH: Int = 65
     const val INV_BACKGROUND_HEIGHT: Int = 80
     val INV_MARGIN_LEFT: Float = SCREEN_WIDTH.toFloat() / 10f
@@ -43,8 +44,18 @@ object Const {
     val INV_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT.toFloat() - INV_BACKGROUND_HEIGHT * INV_SCALE) / 2
     const val INV_CELL_SIZE: Int = 16
     // TODO: margin left
+
     const val INDICATOR_OFFSET_Y: Float = 1.2f
     const val INDICATOR_OFFSET_X: Float = -0.2f
+
+    const val CARD_WIDTH: Int = 65
+    const val CARD_HEIGHT: Int = 100
+    val CARD_SCALE: Float = INV_SCALE
+    val CARD_MARGIN_LEFT: Float = (SCREEN_WIDTH - CARD_WIDTH * CARD_SCALE) / 2
+    val CARD_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - CARD_HEIGHT * CARD_SCALE) / 2
+    const val CARD_PADDING: Int = 4
+    const val CARD_IMG_SiZE: Int = 40
+    val CARD_IMG_MARGIN_LEFT: Float = (CARD_WIDTH - CARD_IMG_SiZE) * CARD_SCALE / 2
 
     // Directions
     const val CENTER = 'c'
@@ -113,7 +124,8 @@ object Const {
                 "lava_top_left" to Texture("Lava_top_left.png"),
                 "lava_bottom_right" to Texture("Lava_bottom_right.png"),
                 "lava_bottom_left" to Texture("Lava_bottom_left.png"),
-                "inventory" to Texture("Inventory_background.png")
+                "inventory" to Texture("Inventory_background.png"),
+                "card_background" to Texture("Card_background.png")
         )
     }
 }

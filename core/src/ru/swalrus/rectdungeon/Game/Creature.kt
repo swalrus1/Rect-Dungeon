@@ -148,6 +148,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     private fun die() {
         // TODO: Play effect
+        // TODO: Wait for damage animation
         room.removeCreatureAt(x, y)
     }
 

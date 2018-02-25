@@ -6,7 +6,7 @@ import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
 
-class InventoryRenderer (val player: Player) {
+class InventoryRenderer (val player: Player, val card: ItemCard) {
 
     val MARGIN_LEFT = Const.INV_MARGIN_LEFT
     val MARGIN_BOTTOM = Const.INV_MARGIN_BOTTOM
@@ -55,6 +55,9 @@ class InventoryRenderer (val player: Player) {
     }
 
     fun press(i: Int) {
-        app.log("Info", "Pressed $i slot")
+        val item = player.inventory[i]
+        if (item != null) {
+            card.open(item)
+        }
     }
 }

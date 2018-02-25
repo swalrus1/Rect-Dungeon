@@ -11,6 +11,7 @@ import ru.swalrus.rectdungeon.Game.Chunk
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
 import ru.swalrus.rectdungeon.UI.InventoryRenderer
+import ru.swalrus.rectdungeon.UI.ItemCard
 import ru.swalrus.rectdungeon.UI.StatusPanel
 
 class MyGame : ApplicationAdapter() {
@@ -22,6 +23,7 @@ class MyGame : ApplicationAdapter() {
     lateinit var bottomPanel: BottomPanel
     lateinit var listener: InputListener
     lateinit var inventoryRenderer: InventoryRenderer
+    lateinit var card: ItemCard
 
     override fun create() {
         Const.load()
@@ -31,8 +33,12 @@ class MyGame : ApplicationAdapter() {
         chunk = Chunk()
         player = Player(6, 2, 8, chunk.Center)
 
-        inventoryRenderer = InventoryRenderer(player)
-        listener = InputListener(player, inventoryRenderer)
+        // TODO: listener.* = * -> *.init { lister.* = this }
+        listener = InputListener(player)
+        card = ItemCard(listener)
+        listener.card = card
+        inventoryRenderer = InventoryRenderer(player, card)
+        listener.inventory = inventoryRenderer
         topPanel = StatusPanel(player)
         bottomPanel = BottomPanel(player, listener, inventoryRenderer)
         listener.bottomPanel = bottomPanel
@@ -50,6 +56,7 @@ class MyGame : ApplicationAdapter() {
         topPanel.draw(batch)
         bottomPanel.draw(batch)
         inventoryRenderer.draw(batch)
+        card.draw(batch)
 
         batch.end()
     }

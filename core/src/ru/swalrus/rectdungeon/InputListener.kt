@@ -6,18 +6,23 @@ import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.UI.BottomPanel
 import ru.swalrus.rectdungeon.UI.InventoryRenderer
+import ru.swalrus.rectdungeon.UI.ItemCard
 
-class InputListener (val player: Player, val inventory: InventoryRenderer) : GestureListener {
+class InputListener (val player: Player) : GestureListener {
 
     var touchAreas: MutableList<Pair<Rectangle, () -> Unit>> = mutableListOf()
     val inventotyArea: Rectangle = Rectangle(Const.INV_MARGIN_LEFT, Const.INV_MARGIN_BOTTOM,
             Const.SCREEN_WIDTH - 2 * Const.INV_MARGIN_LEFT, Const.SCREEN_HEIGHT - 2 * Const.INV_MARGIN_BOTTOM)
+    val cardArea: Rectangle = Rectangle(Const.CARD_MARGIN_LEFT, Const.CARD_MARGIN_BOTTOM,
+            Const.SCREEN_WIDTH - 2 * Const.CARD_MARGIN_LEFT, Const.SCREEN_HEIGHT - 2 * Const.CARD_MARGIN_BOTTOM)
     val INV_MARGIN_TOP: Float = Const.INV_MARGIN_BOTTOM + Const.INV_PADDING * Const.INV_SCALE
     val INV_MARGIN_LEFT: Float = Const.INV_MARGIN_LEFT + Const.INV_PADDING * Const.INV_SCALE
     val INV_CELL_SIZE: Float = Const.INV_CELL_SIZE * Const.INV_SCALE
     val INV_ROW: Int = Const.INVENTORY_ROW_SIZE
     val INV_COLUMN: Int = Const.INVENTORY_SIZE / Const.INVENTORY_ROW_SIZE
     lateinit var bottomPanel: BottomPanel
+    lateinit var inventory: InventoryRenderer
+    lateinit var card: ItemCard
 
 
     fun addArea(x1: Float, y1: Float, width: Float, height: Float, f: () -> Unit) {
@@ -49,7 +54,14 @@ class InputListener (val player: Player, val inventory: InventoryRenderer) : Ges
         // If player is waiting for input
         if (!player.inAnim() and !player.ready) {
             // If inventory is opened
-            if (inventory.opened) {
+            if (card.opened) {
+                if (cardArea.contains(x, Const.SCREEN_HEIGHT - y)) {
+                    // TODO Handle button taps
+                } else {
+                    card.close()
+                }
+                return true
+            } else if (inventory.opened) {
                 // Check if the tap is in inventory area
                 if (inventotyArea.contains(x, Const.SCREEN_HEIGHT - y)) {
                     val invX: Int = ((x - INV_MARGIN_LEFT) / INV_CELL_SIZE).toInt()
