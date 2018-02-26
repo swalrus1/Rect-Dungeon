@@ -25,6 +25,9 @@ class BottomPanel (val player: Player, listener: InputListener, val inventory: I
 
     init {
         listener.addArea(Const.SCREEN_WIDTH - size, 0f, size, size, { inventory.switch() })
+        listener.addArea(0f, 0f, size, size, {
+            player.AP = 0
+            player.endTurn() })
     }
 
 

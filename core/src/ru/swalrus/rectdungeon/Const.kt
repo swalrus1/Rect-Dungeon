@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 
@@ -12,6 +13,9 @@ object Const {
     val SCREEN_WIDTH: Int = Gdx.graphics.width
     val SCREEN_HEIGHT: Int = Gdx.graphics.height
 
+    // Colors
+    val WHITE: Color = Color(0.918f, 0.918f, 0.918f, 1f)
+
     // Amount of some stuff
     const val ROOM_SIZE = 7
     const val QUICK_SLOTS = 6
@@ -20,9 +24,9 @@ object Const {
     const val ARTIFACT_SLOTS = 3
 
     // Font scale
-    const val damageScale: Float = 0.8f
-    const val headerScale: Float = 1.4f
-    const val cardFontScale: Float = 0.8f
+    const val damageScale: Float = 1.4f
+    const val headerScale: Float = 2.8f
+    const val cardFontScale: Float = 1.6f
 
     // Map render parameters
     const val MAP_BORDER: Float = 0.5f   // Относительная величина
@@ -55,13 +59,16 @@ object Const {
 
     const val CARD_WIDTH: Int = 65
     const val CARD_HEIGHT: Int = 100
-    val CARD_SCALE: Float = INV_SCALE
-    val CARD_MARGIN_LEFT: Float = (SCREEN_WIDTH - CARD_WIDTH * CARD_SCALE) / 2
-    val CARD_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - CARD_HEIGHT * CARD_SCALE) / 2
-    const val CARD_PADDING: Int = 10
+    const val CARD_PADDING_LEFT: Int = 8
+    const val CARD_PADDING_RIGHT: Int = 4
     const val CARD_IMG_SiZE: Int = 40
+    const val CARD_MIN_MARGIN: Float = 0.1f
+    // TODO card_max_width
+    val CARD_MARGIN_BOTTOM: Float = CARD_MIN_MARGIN * SCREEN_HEIGHT
+    val CARD_SCALE: Float = (SCREEN_HEIGHT - 2 * CARD_MARGIN_BOTTOM) / CARD_HEIGHT
+    val CARD_MARGIN_LEFT: Float = (SCREEN_WIDTH - CARD_WIDTH * CARD_SCALE) / 2
     val CARD_IMG_MARGIN_LEFT: Float = (CARD_WIDTH - CARD_IMG_SiZE) * CARD_SCALE / 2
-    val CARD_HEADER_HEIGHT: Float = headerScale * CARD_SCALE * 10f
+    val CARD_HEADER_HEIGHT: Float = headerScale * CARD_SCALE * 6f
 
     // Directions
     const val CENTER = 'c'
@@ -89,16 +96,16 @@ object Const {
     fun load() {
 
         damageFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
-        damageFont.data.setScale(damageScale)
+        damageFont.data.setScale(CARD_SCALE / 10 * damageScale)
         damageFont.setColor(0.914f, 0.341f, 0.247f, 1f)
 
         headerFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
-        headerFont.data.setScale(headerScale)
-        headerFont.setColor(1f, 1f, 1f, 1f)
+        headerFont.data.setScale(CARD_SCALE / 10 * headerScale)
+        headerFont.color = WHITE
 
         cardFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
-        cardFont.data.setScale(cardFontScale)
-        cardFont.setColor(1f, 1f, 1f, 1f)
+        cardFont.data.setScale(CARD_SCALE / 10 * cardFontScale)
+        cardFont.color = WHITE
 
         images = mapOf(
                 "floor" to Texture("Floor.png"),

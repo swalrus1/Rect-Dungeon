@@ -116,6 +116,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     ///////////////////////////////////////
 
     fun makeAction(requiredAP: Int) : Boolean {
+        room.resetYellowArea()
         if (AP >= requiredAP) {
             AP -= requiredAP
             return true
@@ -126,7 +127,6 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     }
 
     override fun move(direction: Char, force: Boolean) : Boolean {
-        room.resetYellowArea()
         if (force or makeAction(1)) {
             val isCorrect = super.move(direction, force)
             if (!isCorrect) {
