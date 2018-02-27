@@ -79,11 +79,28 @@ class Room (val chunk: Chunk) {
 
     fun setFocusToPlayer() {
         var i = 0
-        while ((i < creatureList.size) and (creatureList[i] !is Player)) {
+        while ((i < creatureList.size) && (creatureList[i] !is Player)) {
             i++
         }
         if (i < creatureList.size) {
             currentCreature = i
+        }
+    }
+
+    fun findPlayer() : Player? {
+        var i = 0
+        while ((i < creatureList.size) && (creatureList[i] !is Player)) {
+            i++
+        }
+        if (i < creatureList.size) {
+            val temp = creatureList[i]
+            if (temp is Player) {
+                return temp
+            } else {
+                return null
+            }
+        } else {
+            return null
         }
     }
 

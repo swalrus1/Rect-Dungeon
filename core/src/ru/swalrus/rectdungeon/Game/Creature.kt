@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Effects.Buff
+import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 import kotlin.math.exp
@@ -16,9 +17,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     open var ready : Boolean = true             // Is ready to make next turn
     var buffs: Array<Buff> = emptyArray()
 
+    private var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
-    private var action: Char = 'n'              // {Nothing, Move, Attack, Push}
+    private var action: Char = 'n'              // { Nothing, Move, Attack, Push,  }
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
     private var animTime: Float = 0f
@@ -32,6 +34,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var indicatorDTime: Float = 0f
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
+    private var indicatorImg: Texture = Utils.getImg("loot_icon")
     //private var glyphLayout: GlyphLayout = GlyphLayout(Const.cardFont, indicatorText)
 
 
@@ -69,6 +72,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             'd' -> Const.damageFont.draw(batch, indicatorText,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
                     (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY)
+            'l' -> batch.draw(indicatorImg,
+                    (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
+                    (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY,
+                    Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
         }
     }
 
@@ -139,6 +146,13 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             onDeath()
             die()
         }
+    }
+
+    fun dropLoot(item: Item) {
+        indicatorState = 'l'
+        indicatorDTime = 0f
+        indicatorImg = Utils.getImg("loot_icon")
+        room.findPlayer()?.addItem(item)
     }
 
 

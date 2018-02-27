@@ -24,4 +24,8 @@ class Skeleton(x: Int, y: Int, room: Room) : Creature(x, y, 3, Utils.getImg("ske
             move(Utils.randomDirection())
         }
     }
+
+    override fun onDeath() {
+        dropLoot(ShortSword())
+    }
 }

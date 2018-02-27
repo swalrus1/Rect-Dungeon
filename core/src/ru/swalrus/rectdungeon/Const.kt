@@ -148,7 +148,8 @@ object Const {
                 "lava_bottom_right" to Texture("Lava_bottom_right.png"),
                 "lava_bottom_left" to Texture("Lava_bottom_left.png"),
                 "inventory" to Texture("Inventory_background.png"),
-                "card_background" to Texture("Card_background.png")
+                "card_background" to Texture("Card_background.png"),
+                "loot_icon" to Texture("Loot_icon.png")
         )
     }
 }

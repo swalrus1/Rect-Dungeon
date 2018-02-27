@@ -91,7 +91,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             }
             inventory[i] = item
         } else {
-            // TODO: Написать в лог, что инвентарь полон, анимировать предмет
+            // TODO: Добавить предмет в доп.слот; анимировать инвентарь
         }
     }
 
