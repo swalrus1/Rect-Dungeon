@@ -17,7 +17,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1, "Short Sword") {
     }
 
     override fun attack(attacker: Creature, target: Creature) {
-        target.dealDamage(1f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
+        target.dealDamage(2f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
     }
 }
 

@@ -16,11 +16,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     open var ready : Boolean = true             // Is ready to make next turn
     var buffs: Array<Buff> = emptyArray()
-
     private var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
-    private var action: Char = 'n'              // { Nothing, Move, Attack, Push,  }
+    private var action: Char = 'n'              // { Nothing, Move, Attack, Push, Die }
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
     private var animTime: Float = 0f
@@ -35,7 +34,6 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
     private var indicatorImg: Texture = Utils.getImg("loot_icon")
-    //private var glyphLayout: GlyphLayout = GlyphLayout(Const.cardFont, indicatorText)
 
 
     init {
@@ -67,7 +65,9 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     fun render(batch: SpriteBatch) {
         update()
-        sprite.draw(batch)
+        if (alive) {
+            sprite.draw(batch)
+        }
         when (indicatorState) {
             'd' -> Const.damageFont.draw(batch, indicatorText,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
@@ -80,7 +80,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     fun isActive() : Boolean {
-        return active
+        return active && alive
     }
 
     // Returns true if the creature will move
@@ -161,9 +161,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     private fun die() {
-        // TODO: Play effect
-        // TODO: Wait for damage animation
-        room.removeCreatureAt(x, y)
+        startAnim()
+        animTime = Const.INDICATOR_TIME
+        action = 'd'
+        alive = false
     }
 
 
@@ -176,6 +177,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                     'm' -> endMove()
                     'a' -> endAttack()
                     'p' -> endAnim()
+                    'd' -> room.removeCreatureAt(x, y)
                 }
             } else {
                 align()
