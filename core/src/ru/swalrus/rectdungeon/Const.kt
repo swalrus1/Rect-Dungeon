@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import kotlin.math.min
 
 // All global constants
 //
@@ -64,8 +65,8 @@ object Const {
     const val CARD_IMG_SiZE: Int = 40
     const val CARD_MIN_MARGIN: Float = 0.1f
     // TODO card_max_width
-    val CARD_MARGIN_BOTTOM: Float = CARD_MIN_MARGIN * SCREEN_HEIGHT
-    val CARD_SCALE: Float = (SCREEN_HEIGHT - 2 * CARD_MARGIN_BOTTOM) / CARD_HEIGHT
+    val CARD_SCALE: Float = min(SCREEN_HEIGHT / CARD_HEIGHT, SCREEN_WIDTH / CARD_WIDTH) * (1 - 2 * CARD_MIN_MARGIN)
+    val CARD_MARGIN_BOTTOM: Float = (SCREEN_HEIGHT - CARD_HEIGHT * CARD_SCALE) / 2
     val CARD_MARGIN_LEFT: Float = (SCREEN_WIDTH - CARD_WIDTH * CARD_SCALE) / 2
     val CARD_IMG_MARGIN_LEFT: Float = (CARD_WIDTH - CARD_IMG_SiZE) * CARD_SCALE / 2
     val CARD_HEADER_HEIGHT: Float = headerScale * CARD_SCALE * 6f
