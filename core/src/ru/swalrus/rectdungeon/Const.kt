@@ -21,7 +21,7 @@ object Const {
     const val ROOM_SIZE = 7
     const val QUICK_SLOTS = 6
     const val MAX_AP = 2
-    const val INVENTORY_SIZE = 23
+    const val INVENTORY_SIZE = 19
     const val ARTIFACT_SLOTS = 3
 
     // Font scale
@@ -87,6 +87,7 @@ object Const {
     const val ROTATE_TIME = 0.3f      // Time to rotate in move
     const val INDICATOR_TIME = 0.3f
     const val INDICATOR_D_S = 0.3f
+    const val EXTRA_SLOT_BLINK_TIME = 0.8f
 
     lateinit var damageFont: BitmapFont
     lateinit var headerFont: BitmapFont

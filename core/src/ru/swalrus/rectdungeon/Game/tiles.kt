@@ -40,7 +40,9 @@ class Door(val direction: Char, val room: Room) : Tile(Utils.getImg("door", dire
                     creature.y = Const.ROOM_SIZE / 2 + 1
                 }
             }
+            creature.clearExtraSlot()
             creature.move(direction, true)
+            creature.AP = Const.MAX_AP
             // TODO: Закрываем двери
         }
     }

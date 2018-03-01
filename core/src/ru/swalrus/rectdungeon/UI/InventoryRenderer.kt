@@ -1,7 +1,9 @@
 package ru.swalrus.rectdungeon.UI
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.Gdx.app
+import com.badlogic.gdx.Graphics
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
@@ -20,15 +22,24 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
     val SCREEN_HEIGHT = Const.SCREEN_HEIGHT
     val ROW = Const.INVENTORY_ROW_SIZE
 
+    private var time: Float = 0f
     var opened = false
 
 
     fun draw(batch: SpriteBatch) {
         if (opened) {
+            time += Gdx.graphics.deltaTime
+
             batch.draw(background, MARGIN_LEFT, MARGIN_BOTTOM, WIDTH, HEIGHT, 0f, 1f, 1f, 0f)
 
-            var i = 0
+            val extra = player.extraSlot
+            if ((extra != null) && ((time / Const.EXTRA_SLOT_BLINK_TIME).toInt() % 2 == 0)) {
+                batch.draw(extra.img, MARGIN_LEFT + PADDING + (ROW - 1) * STEP,
+                        SCREEN_HEIGHT - MARGIN_BOTTOM - PADDING - (Const.INVENTORY_SIZE / ROW + 1) * STEP - 1 * SCALE,
+                        CELL_SIZE, CELL_SIZE, 0f, 1f, 1f, 0f)
+            }
 
+            var i = 0
             for (item in player.inventory) {
                 if (item != null) {
                     batch.draw(item.img, MARGIN_LEFT + PADDING + (i % ROW) * STEP,
@@ -38,6 +49,8 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
                     i++
                 }
             }
+
+            time %= (10 * Const.EXTRA_SLOT_BLINK_TIME)
         }
     }
 

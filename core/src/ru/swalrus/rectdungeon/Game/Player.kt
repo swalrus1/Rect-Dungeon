@@ -10,6 +10,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     var AP: Int = Const.MAX_AP
     var maxHP = HP
     var inventory: Array<Item?> = arrayOfNulls(Const.INVENTORY_SIZE)
+    var extraSlot: Item? = null
 
     var armor: Armor? = null
     var rightHand: Weapon? = null
@@ -22,6 +23,8 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         addItem(Rapier())
         equip(inventory.indexOfFirst { item -> item is Rapier }, 0)
         equip(inventory.indexOfFirst { item -> item is ShortSword }, 1)
+
+        inventory = Array(19, { _ -> ShortSword() })
     }
 
 
@@ -91,8 +94,21 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             }
             inventory[i] = item
         } else {
-            // TODO: Добавить предмет в доп.слот; анимировать инвентарь
+            extraSlot = item
+            app.log("debug", "Added item to the extra slot")
+            // TODO: Анимировать инвентарь
         }
+    }
+
+    fun clearExtraSlot() {
+        if (null in inventory) {
+            var i = 0
+            while (inventory[i] != null) {
+                i++
+            }
+            inventory[i] = extraSlot
+        }
+        extraSlot = null
     }
 
     fun equip(i: Int, slot: Int = 0) {
