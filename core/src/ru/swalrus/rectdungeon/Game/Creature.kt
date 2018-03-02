@@ -29,7 +29,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var rotated: Boolean = false        // If creature has been rotated during the current movement
     private var attacked: Boolean = false       // If creature has attacked during the current attack
     private var lookRight: Boolean = true
-    private var indicatorState: Char = 'n'      // {Nothing, Damage, Loot}
+    private var indicatorState: Char = 'n'      // { Nothing, Image, Text }
     private var indicatorDTime: Float = 0f
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
@@ -69,10 +69,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             sprite.draw(batch)
         }
         when (indicatorState) {
-            'd' -> Const.damageFont.draw(batch, indicatorText,
+            't' -> Const.damageFont.draw(batch, indicatorText,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
                     (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY)
-            'l' -> batch.draw(indicatorImg,
+            'i' -> batch.draw(indicatorImg,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
                     (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY,
                     Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
@@ -137,10 +137,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             action = 'p'
         }
         HP -= damage.toInt()
-        // Run indicator
-        indicatorState = 'd'
-        indicatorDTime = 0f
-        indicatorText = damage.toInt().toString()
+        playIndicator(damage.toInt().toString())
         // Kill creature if HP <= 0
         if (HP <= 0) {
             onDeath()
@@ -148,10 +145,20 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
-    fun dropLoot(item: Item) {
-        indicatorState = 'l'
+    fun playIndicator(img: Texture) {
+        indicatorState = 'i' // TODO
         indicatorDTime = 0f
-        indicatorImg = Utils.getImg("loot_icon")
+        indicatorImg = img
+    }
+
+    fun playIndicator(text: String) {
+        indicatorState = 't'
+        indicatorDTime = 0f
+        indicatorText = text
+    }
+
+    fun dropLoot(item: Item) {
+        playIndicator(Utils.getImg("loot_icon"))
         room.findPlayer()?.addItem(item)
     }
 
@@ -206,8 +213,6 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             if (indicatorDTime >= Const.INDICATOR_TIME) {
                 indicatorDTime = 0f
                 indicatorState = 'n'
-                indicatorText = ""
-                indicatorY = 0f
             } else {
                 indicatorY = Const.TILE_SIZE * indicatorFun(indicatorDTime / Const.INDICATOR_TIME)
                 indicatorDTime += graphics.deltaTime
