@@ -32,6 +32,7 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
 
             batch.draw(background, MARGIN_LEFT, MARGIN_BOTTOM, WIDTH, HEIGHT, 0f, 1f, 1f, 0f)
 
+            // Draw the extra slot
             val extra = player.extraSlot
             if ((extra != null) && ((time / Const.EXTRA_SLOT_BLINK_TIME).toInt() % 2 == 0)) {
                 batch.draw(extra.img, MARGIN_LEFT + PADDING + (ROW - 1) * STEP,

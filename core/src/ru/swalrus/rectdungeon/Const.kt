@@ -16,6 +16,7 @@ object Const {
 
     // Colors
     val WHITE: Color = Color(0.918f, 0.918f, 0.918f, 1f)
+    val YELLOW: Color = Color(0.95f, 0.84f, 0.4f, 1f)
 
     // Amount of some stuff
     const val ROOM_SIZE = 7
@@ -28,6 +29,7 @@ object Const {
     const val damageScale: Float = 1.4f
     const val headerScale: Float = 2.8f
     const val cardFontScale: Float = 1.6f
+    const val cardButtonFontScale: Float = 2.4f
 
     // Map render parameters
     const val MAP_BORDER: Float = 0.5f   // Относительная величина
@@ -71,6 +73,12 @@ object Const {
     val CARD_IMG_MARGIN_LEFT: Float = (CARD_WIDTH - CARD_IMG_SiZE) * CARD_SCALE / 2
     val CARD_HEADER_HEIGHT: Float = headerScale * CARD_SCALE * 6f
 
+    const val BUTTON_WIDTH: Int = 24
+    const val BUTTON_HEIGHT: Int = 9
+    const val BUTTON_MARGIN_BOTTOM: Int = 4
+    const val BUTTON_SPACE_BETWEEN: Int = 6
+    const val BUTTON_SCALE: Float = 0.5f
+
     // Directions
     const val CENTER = 'c'
     const val TOP = 't'
@@ -92,6 +100,7 @@ object Const {
     lateinit var damageFont: BitmapFont
     lateinit var headerFont: BitmapFont
     lateinit var cardFont: BitmapFont
+    lateinit var cardButtonFont: BitmapFont
 
     var images : Map<String, Texture> = emptyMap()
 
@@ -108,6 +117,10 @@ object Const {
         cardFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
         cardFont.data.setScale(CARD_SCALE / 10 * cardFontScale)
         cardFont.color = WHITE
+
+        cardButtonFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
+        cardButtonFont.data.setScale(CARD_SCALE / 10 * cardButtonFontScale)
+        cardButtonFont.color = YELLOW
 
         images = mapOf(
                 "floor" to Texture("Floor.png"),
@@ -151,7 +164,8 @@ object Const {
                 "lava_bottom_left" to Texture("Lava_bottom_left.png"),
                 "inventory" to Texture("Inventory_background.png"),
                 "card_background" to Texture("Card_background.png"),
-                "loot_icon" to Texture("Loot_icon.png")
+                "loot_icon" to Texture("Loot_icon.png"),
+                "card_button" to Texture("Card_button.png")
         )
     }
 }

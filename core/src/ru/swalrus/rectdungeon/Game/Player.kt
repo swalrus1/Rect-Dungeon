@@ -21,10 +21,8 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         // ShortSword, Rapier
         addItem(ShortSword())
         addItem(Rapier())
-        equip(inventory.indexOfFirst { item -> item is Rapier }, 0)
-        equip(inventory.indexOfFirst { item -> item is ShortSword }, 1)
-
-        inventory = Array(19, { _ -> ShortSword() })
+        equip(inventory.indexOfFirst { item -> item is Rapier })
+        equip(inventory.indexOfFirst { item -> item is ShortSword })
     }
 
 
@@ -111,19 +109,30 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         extraSlot = null
     }
 
-    fun equip(i: Int, slot: Int = 0) {
+    fun equip(i: Int) {
         val item = inventory[i]
         if (item != null) {
             when (item) {
-                is Weapon -> when (slot) {
-                    0 -> leftHand = item
-                    1 -> rightHand = item
-                    else -> app.error("Inventory", "Wrong hand id")
+                is Weapon -> when (leftHand) {
+                    null -> leftHand = item
+                    else -> rightHand = item
                 }
                 is Armor -> armor = item
             }
         } else {
             app.error("Inventory", "Attempt to equip nothing (null)")
+        }
+    }
+
+    fun equip(item: Item) {
+        var i = 0
+        while (i < inventory.size && inventory[i] != item) {
+            i++
+        }
+        if (i < inventory.size) {
+            equip(i)
+        } else {
+            app.error("Inventory", "Attempt to quip item not being stored in the inventory")
         }
     }
 

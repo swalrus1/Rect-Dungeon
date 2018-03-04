@@ -35,7 +35,7 @@ class MyGame : ApplicationAdapter() {
 
         // TODO: listener.* = * -> *.init { lister.* = this }
         listener = InputListener(player)
-        card = ItemCard()
+        card = ItemCard(player)
         listener.card = card
         inventoryRenderer = InventoryRenderer(player, card)
         listener.inventory = inventoryRenderer
