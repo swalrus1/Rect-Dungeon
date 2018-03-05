@@ -21,8 +21,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         // ShortSword, Rapier
         addItem(ShortSword())
         addItem(Rapier())
-        equip(inventory.indexOfFirst { item -> item is Rapier })
-        equip(inventory.indexOfFirst { item -> item is ShortSword })
+        inventory[0]!!.use(this)
     }
 
 

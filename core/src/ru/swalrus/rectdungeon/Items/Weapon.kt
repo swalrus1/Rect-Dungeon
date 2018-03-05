@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Items
 
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.graphics.Texture
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Creature
@@ -11,7 +12,13 @@ abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name)
     var equipped: Boolean = false
 
     override var actionName: String = "Equip"
-    // TODO equip/unequip
+        get() {
+            return if (equipped) {
+                "Unequip"
+            } else {
+                "Equip"
+            }
+        }
 
     override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {
         val direction: Char = if (area == 'l')
@@ -23,10 +30,12 @@ abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name)
 
     override fun use(player: Player) {
         if (equipped) {
-
+            // TODO Unequip
+            equipped = false
         } else {
             player.equip(this)
             equipped = true
+            app.log("debug", "weapon -> equipped")
         }
     }
 

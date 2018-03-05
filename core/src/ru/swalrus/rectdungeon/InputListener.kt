@@ -56,7 +56,14 @@ class InputListener (val player: Player) : GestureListener {
             // If inventory is opened
             if (card.opened) {
                 if (cardArea.contains(x, Const.SCREEN_HEIGHT - y)) {
-                    // TODO Handle button taps
+                    var area = Rectangle(card.BUTTON_MARGIN_LEFT, card.BUTTON_MARGIN_BOTTOM, card.BUTTON_WIDTH, card.BUTTON_HEIGHT)
+                    if (area.contains(x, Const.SCREEN_HEIGHT - y)) {
+                        card.press('l')
+                    }
+                    area.x += card.SPACE_BETWEEN + card.BUTTON_WIDTH
+                    if (area.contains(x, Const.SCREEN_HEIGHT - y)) {
+                        card.press('r')
+                    }
                 } else {
                     card.close()
                 }

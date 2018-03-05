@@ -72,7 +72,7 @@ class ItemCard (val player: Player) {
     // button - { Throw, Use }
     fun press(button: Char) {
         when (button) {
-            'u' -> item.use(player)
+            'r' -> item.use(player)
         }
         close()
     }
