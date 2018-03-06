@@ -20,7 +20,8 @@ class ItemButton(val x: Float, val y: Float, val id: Int, var size: Float, var i
     }
 
 
-    fun draw(batch: SpriteBatch) {
+    fun draw(batch: SpriteBatch, item: Item? = this.item) {
+        this.item = item
         if ((panel.activeHandID == id) or (item == null)) {
             batch.draw(slot, x, y, size, size, 0f, 1f, 1f, 0f)
             if (item != null) {

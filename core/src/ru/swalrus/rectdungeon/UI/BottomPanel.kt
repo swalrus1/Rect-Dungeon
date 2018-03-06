@@ -24,7 +24,9 @@ class BottomPanel (val player: Player, listener: InputListener, val inventory: I
 
 
     init {
+        // Inventory button
         listener.addArea(Const.SCREEN_WIDTH - size, 0f, size, size, { inventory.switch() })
+        // Wait button
         listener.addArea(0f, 0f, size, size, {
             player.AP = 0
             player.endTurn() })
@@ -41,8 +43,8 @@ class BottomPanel (val player: Player, listener: InputListener, val inventory: I
         batch.draw(inventoryIcon, Const.SCREEN_WIDTH - size, 0f,
                 size, size, 0f, 1f, 1f, 0f)
 
-        leftHandSlot.draw(batch)
-        rightHandSlot.draw(batch)
+        leftHandSlot.draw(batch, player.leftHand)
+        rightHandSlot.draw(batch, player.rightHand)
     }
 
     fun tapOnMap(x: Float, y: Float) : Boolean {
