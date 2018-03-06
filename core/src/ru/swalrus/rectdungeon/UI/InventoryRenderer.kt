@@ -69,9 +69,11 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
     }
 
     fun press(i: Int) {
-        val item = player.inventory[i]
-        if (item != null) {
-            card.open(item)
+        if (i < Const.INVENTORY_SIZE) {
+            val item = player.inventory[i]
+            if (item != null) {
+                card.open(item)
+            }
         }
     }
 }

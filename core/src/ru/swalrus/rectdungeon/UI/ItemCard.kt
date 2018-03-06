@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Player
+import ru.swalrus.rectdungeon.InputListener
 import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 
-class ItemCard (val player: Player) {
+class ItemCard (val player: Player, val inputListener: InputListener) {
 
     val background: Texture = Utils.getImg("card_background")
     val button: Texture = Utils.getImg("card_button")
@@ -75,5 +76,6 @@ class ItemCard (val player: Player) {
             'r' -> item.use(player)
         }
         close()
+        inputListener.inventory.switch('c')
     }
 }

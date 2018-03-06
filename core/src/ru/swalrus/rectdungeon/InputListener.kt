@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon
 
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.input.GestureDetector.GestureListener
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
@@ -19,7 +20,7 @@ class InputListener (val player: Player) : GestureListener {
     val INV_MARGIN_LEFT: Float = Const.INV_MARGIN_LEFT + Const.INV_PADDING * Const.INV_SCALE
     val INV_CELL_SIZE: Float = Const.INV_CELL_SIZE * Const.INV_SCALE
     val INV_ROW: Int = Const.INVENTORY_ROW_SIZE
-    val INV_COLUMN: Int = Const.INVENTORY_SIZE / Const.INVENTORY_ROW_SIZE
+    val INV_COLUMN: Int = (Const.INVENTORY_SIZE + 1) / Const.INVENTORY_ROW_SIZE
     lateinit var bottomPanel: BottomPanel
     lateinit var inventory: InventoryRenderer
     lateinit var card: ItemCard
@@ -53,7 +54,7 @@ class InputListener (val player: Player) : GestureListener {
     override fun tap(x: Float, y: Float, count: Int, button: Int): Boolean {
         // If player is waiting for input
         if (!player.inAnim() and !player.ready) {
-            // If inventory is opened
+
             if (card.opened) {
                 if (cardArea.contains(x, Const.SCREEN_HEIGHT - y)) {
                     var area = Rectangle(card.BUTTON_MARGIN_LEFT, card.BUTTON_MARGIN_BOTTOM, card.BUTTON_WIDTH, card.BUTTON_HEIGHT)
@@ -68,6 +69,7 @@ class InputListener (val player: Player) : GestureListener {
                     card.close()
                 }
                 return true
+
             } else if (inventory.opened) {
                 // Check if the tap is in inventory area
                 if (inventotyArea.contains(x, Const.SCREEN_HEIGHT - y)) {
