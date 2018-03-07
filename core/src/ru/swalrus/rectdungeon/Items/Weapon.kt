@@ -30,7 +30,7 @@ abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name)
 
     override fun use(player: Player) {
         if (equipped) {
-            // TODO Unequip
+            player.unequip(this)
             equipped = false
         } else {
             player.equip(this)

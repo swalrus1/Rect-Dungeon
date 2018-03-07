@@ -70,7 +70,7 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
         }
     }
 
-    // button - { Throw, Use }
+    // button - { Left, Right }
     fun press(button: Char) {
         when (button) {
             'r' -> item.use(player)

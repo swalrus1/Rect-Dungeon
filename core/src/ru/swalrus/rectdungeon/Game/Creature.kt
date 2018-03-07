@@ -128,7 +128,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
-    fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
+    open fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
         // TODO: Calculate damage
         if (direction != Const.CENTER) {
             moveDir = Vector2(Utils.dir2vec(direction))
@@ -140,7 +140,6 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         playIndicator(damage.toInt().toString())
         // Kill creature if HP <= 0
         if (HP <= 0) {
-            onDeath()
             die()
         }
     }
@@ -167,7 +166,8 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return action != 'n'
     }
 
-    private fun die() {
+    fun die() {
+        onDeath()
         startAnim()
         animTime = Const.INDICATOR_TIME
         action = 'd'

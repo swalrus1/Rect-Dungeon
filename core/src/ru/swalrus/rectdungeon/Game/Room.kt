@@ -3,7 +3,9 @@ package ru.swalrus.rectdungeon.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Creatures.Chest
 import ru.swalrus.rectdungeon.Creatures.Skeleton
+import ru.swalrus.rectdungeon.Items.Rapier
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 
@@ -192,6 +194,8 @@ class Room (val chunk: Chunk) {
         for (i in 1..5) {
             Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), this)
         }
+
+        Chest(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), Rapier(), this)
     }
 
     private fun setMap(arr: Array<Array<Int>>, doors: Array<Boolean> = arrayOf(true, true, true, true)) {

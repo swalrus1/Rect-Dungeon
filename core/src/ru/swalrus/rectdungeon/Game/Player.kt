@@ -135,6 +135,23 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    fun unequip(item: Item) {
+        when (item) {
+            is Weapon -> {
+                if (leftHand == item) {
+                    leftHand = null
+                } else if (rightHand == item) {
+                    rightHand = null
+                }
+            }
+            is Armor -> {
+                if (armor == item) {
+                    armor = null
+                }
+            }
+        }
+    }
+
     ///////////////////////////////////////
     ////////        ACTIONS        ////////
     ///////////////////////////////////////
