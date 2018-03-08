@@ -1,11 +1,13 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Creatures.Chest
 import ru.swalrus.rectdungeon.Effects.Buff
 import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
@@ -16,7 +18,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     open var ready : Boolean = true             // Is ready to make next turn
     var buffs: Array<Buff> = emptyArray()
-    private var alive: Boolean = true
+    var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
     private var action: Char = 'n'              // { Nothing, Move, Attack, Push, Die }
@@ -144,6 +146,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    fun setSpriteImg(texture: Texture) {
+        img = texture
+        sprite.texture = texture
+    }
+
     fun playIndicator(img: Texture) {
         indicatorState = 'i' // TODO
         indicatorDTime = 0f
@@ -158,7 +165,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
     fun dropLoot(item: Item) {
         playIndicator(Utils.getImg("loot_icon"))
-        room.findPlayer()?.addItem(item)
+        val player = room.findPlayer()
+        if (player != null) {
+            player.addItem(item)
+        }
     }
 
 
@@ -166,7 +176,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return action != 'n'
     }
 
-    fun die() {
+    open fun die() {
         onDeath()
         startAnim()
         animTime = Const.INDICATOR_TIME

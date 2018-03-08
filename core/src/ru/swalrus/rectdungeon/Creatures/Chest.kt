@@ -18,4 +18,10 @@ class Chest (x: Int, y: Int, val item: Item, room: Room) : Creature(x, y, 0, Uti
     override fun dealDamage(damage: Float, direction: Char) {
         die()
     }
+
+    override fun die() {
+        super.die()
+        alive = true
+        setSpriteImg(Utils.getImg("chest_open"))
+    }
 }

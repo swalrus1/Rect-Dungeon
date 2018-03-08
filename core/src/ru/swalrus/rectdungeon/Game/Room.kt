@@ -188,6 +188,8 @@ class Room (val chunk: Chunk) {
         idMap[2][1] = Utils.getTileID("lava")
         idMap[2][2] = Utils.getTileID("lava")
         idMap[3][2] = Utils.getTileID("lava")
+        idMap[4][2] = Utils.getTileID("lava")
+        idMap[5][2] = Utils.getTileID("lava")
 
         setMap(idMap)
 

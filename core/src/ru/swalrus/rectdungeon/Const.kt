@@ -166,7 +166,8 @@ object Const {
                 "card_background" to Texture("Card_background.png"),
                 "loot_icon" to Texture("Loot_icon.png"),
                 "card_button" to Texture("Card_button.png"),
-                "chest" to Texture("Chest.png")
+                "chest" to Texture("Chest.png"),
+                "chest_open" to Texture("Chest_open.png")
         )
     }
 }
