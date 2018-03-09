@@ -39,5 +39,12 @@ abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name)
         }
     }
 
+    override fun land(creature: Creature?, caster: Creature) {
+        // TODO edit
+        if (creature != null) {
+            creature.dealDamage(2f)
+        }
+    }
+
     abstract fun attack(attacker: Creature, target: Creature)
 }

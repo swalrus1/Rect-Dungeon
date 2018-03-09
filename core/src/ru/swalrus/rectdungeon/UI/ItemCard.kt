@@ -74,6 +74,7 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
     fun press(button: Char) {
         when (button) {
             'r' -> item.use(player)
+            'l' -> player.throwButtonPressed(item)
         }
         close()
         inputListener.inventory.switch('c')

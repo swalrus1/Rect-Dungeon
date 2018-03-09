@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon.UI
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Rectangle
 import ru.swalrus.rectdungeon.Const

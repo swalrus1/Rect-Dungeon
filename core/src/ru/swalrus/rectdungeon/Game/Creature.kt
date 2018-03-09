@@ -1,18 +1,18 @@
 package ru.swalrus.rectdungeon.Game
 
-import com.badlogic.gdx.Gdx.app
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
-import ru.swalrus.rectdungeon.Creatures.Chest
 import ru.swalrus.rectdungeon.Effects.Buff
 import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 import kotlin.math.exp
+import kotlin.math.roundToInt
 
 abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, var room: Room) {
 
@@ -21,6 +21,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
+
     private var action: Char = 'n'              // { Nothing, Move, Attack, Push, Die }
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
@@ -31,11 +32,18 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var rotated: Boolean = false        // If creature has been rotated during the current movement
     private var attacked: Boolean = false       // If creature has attacked during the current attack
     private var lookRight: Boolean = true
+
     private var indicatorState: Char = 'n'      // { Nothing, Image, Text }
     private var indicatorDTime: Float = 0f
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
     private var indicatorImg: Texture = Utils.getImg("loot_icon")
+
+    var throwItem: Item? = null
+    private var throwTime: Float = 0f
+    private var throwDir: Vector2 = Vector2.Zero
+    private var throwPos: Float = 0f            // Passed distance / all distance
+    private var throwDTime: Float = 0f
 
 
     init {
@@ -77,6 +85,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             'i' -> batch.draw(indicatorImg,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
                     (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY,
+                    Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
+        }
+        if (!throwDir.isZero) {
+            batch.draw(throwItem!!.img, throwDir.x * throwPos + sprite.x, throwDir.y * throwPos + sprite.y,
                     Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
         }
     }
@@ -128,6 +140,14 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             afterAttack(this, target)
             endAttack()
         }
+    }
+
+    open fun throwItem(item: Item, x: Int, y: Int) {
+        throwItem = item
+        throwDir = Vector2((x - this.x) * Const.TILE_SIZE, (y - this.y) * Const.TILE_SIZE)
+        throwTime = throwDir.dst(0f, 0f) / Const.TILE_SIZE * Const.THROW_TIME
+        throwPos = 0f
+        throwDTime = 0f
     }
 
     open fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
@@ -228,6 +248,17 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 indicatorDTime += graphics.deltaTime
             }
         }
+
+        if (!throwDir.isZero) {
+            if (throwDTime > throwTime) {
+                throwItem!!.land(room.getCreatureAt((x + throwDir.x / Const.TILE_SIZE).roundToInt(),
+                        (y + throwDir.y / Const.TILE_SIZE).roundToInt()), this)
+                throwDir.setZero()
+            } else {
+                throwPos = throwFun(throwDTime / throwTime)
+                throwDTime += graphics.deltaTime
+            }
+        }
     }
 
     // Set sprite position to the center of the tile
@@ -255,6 +286,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     // Indicator function (x, y ~ (0; 1))
     private fun indicatorFun(x: Float) : Float {
         return Const.INDICATOR_D_S * x * (-x + 2)
+    }
+
+    // Throw function (x, y ~ (0; 1))
+    private fun throwFun(x: Float) : Float {
+        return x
     }
 
     private fun startAnim() {

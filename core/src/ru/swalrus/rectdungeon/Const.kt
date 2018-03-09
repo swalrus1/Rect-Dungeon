@@ -92,10 +92,11 @@ object Const {
     const val ATTACK_D_S = 0.5f
     const val PUSH_TIME = 0.1f
     const val PUSH_D_S = 0.4f
-    const val ROTATE_TIME = 0.3f      // Time to rotate in move
+    const val ROTATE_TIME = 0.3f            // Time to rotate in move
     const val INDICATOR_TIME = 0.3f
     const val INDICATOR_D_S = 0.3f
     const val EXTRA_SLOT_BLINK_TIME = 0.8f
+    const val THROW_TIME = 0.1f             // Time required to pass 1 tile
 
     lateinit var damageFont: BitmapFont
     lateinit var headerFont: BitmapFont

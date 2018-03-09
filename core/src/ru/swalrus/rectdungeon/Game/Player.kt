@@ -65,6 +65,9 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
 
     fun cast(id: Int, x: Int, y: Int) {
         when (id) {
+            0 -> if (throwItem != null) {
+                throwItem(throwItem!!, x, y)
+            }
             1 -> if (leftHand != null) {
                 leftHand!!.cast(x, y, this, room.getCreatureAt(x, y))
             }
@@ -94,6 +97,24 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             extraSlot = item
             app.log("debug", "Added item to the extra slot")
             // TODO: Анимировать инвентарь
+        }
+    }
+
+    fun removeItem(item: Item) {
+        var i = 0
+        while (i < inventory.size && inventory[i] != item) {
+            i++
+        }
+        if (i < inventory.size) {
+            inventory[i] = null
+            when (item) {
+                leftHand -> leftHand = null
+                rightHand -> rightHand = null
+                armor -> armor = null
+                // todo
+            }
+        } else {
+            app.error("Inventory", "Attempt to remove item that are not in the inventory")
         }
     }
 
@@ -152,6 +173,12 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    fun throwButtonPressed(item: Item) {
+        throwItem = item
+        // TODO: Edit parameters
+        room.setYellowArea(x-1, y-1, 'r', 'a', 5)
+    }
+
     ///////////////////////////////////////
     ////////        ACTIONS        ////////
     ///////////////////////////////////////
@@ -191,6 +218,13 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
                 AP = 0
             }
             super.attack(direction, target, afterAttack, requiredAP, resetAP)
+        }
+    }
+
+    override fun throwItem(item: Item, x: Int, y: Int) {
+        if (makeAction(1)) {
+            super.throwItem(item, x, y)
+            removeItem(item)
         }
     }
 }
