@@ -4,6 +4,8 @@ import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*
 import com.badlogic.gdx.Gdx.app
+import ru.swalrus.rectdungeon.Effects.Buff
+import ru.swalrus.rectdungeon.HealPotion
 
 class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
 
@@ -22,6 +24,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         addItem(ShortSword())
         addItem(Rapier())
         inventory[0]!!.use(this)
+        addItem(HealPotion())
     }
 
 

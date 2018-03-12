@@ -3,6 +3,7 @@ package ru.swalrus.rectdungeon.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
@@ -12,12 +13,13 @@ import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 import kotlin.math.exp
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, var room: Room) {
 
     open var ready : Boolean = true             // Is ready to make next turn
-    var buffs: Array<Buff> = emptyArray()
+    var buffs: MutableList<Buff> = MutableList(0, { _ -> null!! })
     var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
@@ -38,6 +40,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
     private var indicatorImg: Texture = Utils.getImg("loot_icon")
+    private var font: BitmapFont = Const.damageFont
 
     var throwItem: Item? = null
     private var throwTime: Float = 0f
@@ -79,7 +82,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             sprite.draw(batch)
         }
         when (indicatorState) {
-            't' -> Const.damageFont.draw(batch, indicatorText,
+            't' -> font.draw(batch, indicatorText,
                     (x + 1 + Const.INDICATOR_OFFSET_X) * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
                     (y + Const.INDICATOR_OFFSET_Y) * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM + indicatorY)
             'i' -> batch.draw(indicatorImg,
@@ -88,8 +91,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                     Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
         }
         if (!throwDir.isZero) {
-            batch.draw(throwItem!!.img, throwDir.x * throwPos + sprite.x, throwDir.y * throwPos + sprite.y,
-                    Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
+            batch.draw(throwItem!!.img,
+                    throwDir.x * throwPos + sprite.x + Const.TILE_SIZE * (1 - Const.THROW_SCALE) / 2,
+                    throwDir.y * throwPos + sprite.y + Const.TILE_SIZE * (1 - Const.THROW_SCALE) / 2,
+                    Const.TILE_SIZE * Const.THROW_SCALE, Const.TILE_SIZE * Const.THROW_SCALE,
+                    0f, 1f, 1f, 0f)
         }
     }
 
@@ -159,11 +165,22 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
             action = 'p'
         }
         HP -= damage.toInt()
-        playIndicator(damage.toInt().toString())
+        if (damage < 0) {
+            font = Const.healFont
+            playIndicator((-(damage.toInt())).toString())
+        } else {
+            font = Const.damageFont
+            playIndicator(damage.toInt().toString())
+        }
+
         // Kill creature if HP <= 0
         if (HP <= 0) {
             die()
         }
+    }
+
+    fun addBuff(buff: Buff) {
+        buffs.add(buff)
     }
 
     fun setSpriteImg(texture: Texture) {

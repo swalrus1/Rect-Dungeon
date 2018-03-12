@@ -7,7 +7,7 @@ import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
 
-abstract class Weapon(img: Texture, id: Int, name: String) : Item(img, id, name), Castable {
+abstract class Weapon(img: Texture, name: String) : Item(img, name), Castable {
 
     var equipped: Boolean = false
 

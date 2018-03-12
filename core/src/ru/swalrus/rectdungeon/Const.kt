@@ -96,9 +96,11 @@ object Const {
     const val INDICATOR_TIME = 0.3f
     const val INDICATOR_D_S = 0.3f
     const val EXTRA_SLOT_BLINK_TIME = 0.8f
-    const val THROW_TIME = 0.1f             // Time required to pass 1 tile
+    const val THROW_TIME = 0.1f               // Time required to pass 1 tile
+    const val THROW_SCALE = 0.8f
 
     lateinit var damageFont: BitmapFont
+    lateinit var healFont: BitmapFont
     lateinit var headerFont: BitmapFont
     lateinit var cardFont: BitmapFont
     lateinit var cardButtonFont: BitmapFont
@@ -110,6 +112,10 @@ object Const {
         damageFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
         damageFont.data.setScale(CARD_SCALE / 10 * damageScale)
         damageFont.setColor(0.914f, 0.341f, 0.247f, 1f)
+
+        healFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
+        healFont.data.setScale(CARD_SCALE / 10 * damageScale)
+        healFont.setColor(0.56f, 0.93f, 0.56f, 1f)
 
         headerFont = BitmapFont(Gdx.files.internal("tight_pixel.fnt"))
         headerFont.data.setScale(CARD_SCALE / 10 * headerScale)
@@ -168,7 +174,8 @@ object Const {
                 "loot_icon" to Texture("Loot_icon.png"),
                 "card_button" to Texture("Card_button.png"),
                 "chest" to Texture("Chest.png"),
-                "chest_open" to Texture("Chest_open.png")
+                "chest_open" to Texture("Chest_open.png"),
+                "heal_potion" to Texture("Heal_potion_half.png")
         )
     }
 }

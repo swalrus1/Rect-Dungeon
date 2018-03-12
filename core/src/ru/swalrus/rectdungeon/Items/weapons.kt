@@ -3,7 +3,7 @@ package ru.swalrus.rectdungeon.Items
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Utils
 
-class ShortSword : Weapon(Utils.getImg("short_sword"), 1, "Short Sword") {
+class ShortSword : Weapon(Utils.getImg("short_sword"), "Short Sword") {
 
     override val range: Int = 1
     override val area: Char = 'l'
@@ -22,7 +22,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), 1, "Short Sword") {
 }
 
 
-class Rapier : Weapon(Utils.getImg("rapier"), 2, "Rapier") {
+class Rapier : Weapon(Utils.getImg("rapier"), "Rapier") {
 
     override val range: Int = 2
     override val area: Char = 'l'
