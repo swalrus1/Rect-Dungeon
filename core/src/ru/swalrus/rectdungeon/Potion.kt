@@ -17,6 +17,7 @@ abstract class Potion (img: Texture, name: String) : Item(img, name) {
 
     override fun use(player: Player) {
         cast(player)
+        player.removeItem(this)
     }
 
     abstract fun cast(creature: Creature)

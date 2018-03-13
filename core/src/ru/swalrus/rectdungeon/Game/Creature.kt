@@ -1,11 +1,11 @@
 package ru.swalrus.rectdungeon.Game
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Effects.Buff
@@ -13,7 +13,6 @@ import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 import kotlin.math.exp
-import kotlin.math.min
 import kotlin.math.roundToInt
 
 abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, var room: Room) {
@@ -40,7 +39,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
     private var indicatorImg: Texture = Utils.getImg("loot_icon")
-    private var font: BitmapFont = Const.damageFont
+    private var font: BitmapFont = Const.indicatorFont
 
     var throwItem: Item? = null
     private var throwTime: Float = 0f
@@ -154,22 +153,25 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         throwTime = throwDir.dst(0f, 0f) / Const.TILE_SIZE * Const.THROW_TIME
         throwPos = 0f
         throwDTime = 0f
+
+        push(throwDir)
     }
 
     open fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
+        dealDamage(damage, Utils.dir2vec(direction))
+    }
+
+    open fun dealDamage(damage: Float, direction: Vector2) {
         // TODO: Calculate damage
-        if (direction != Const.CENTER) {
-            moveDir = Vector2(Utils.dir2vec(direction))
-            startAnim()
-            animTime = Const.PUSH_TIME
-            action = 'p'
+        if (!direction.isZero) {
+            push(direction)
         }
         HP -= damage.toInt()
         if (damage < 0) {
-            font = Const.healFont
+            font.color = Const.GREEN
             playIndicator((-(damage.toInt())).toString())
         } else {
-            font = Const.damageFont
+            font.color = Const.RED
             playIndicator(damage.toInt().toString())
         }
 
@@ -198,6 +200,14 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         indicatorState = 't'
         indicatorDTime = 0f
         indicatorText = text
+    }
+
+    fun push(direction: Vector2) {
+        moveDir = Vector2(direction)
+        moveDir.nor()
+        startAnim()
+        animTime = Const.PUSH_TIME
+        action = 'p'
     }
 
     fun dropLoot(item: Item) {
@@ -268,8 +278,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
         if (!throwDir.isZero) {
             if (throwDTime > throwTime) {
-                throwItem!!.land(room.getCreatureAt((x + throwDir.x / Const.TILE_SIZE).roundToInt(),
-                        (y + throwDir.y / Const.TILE_SIZE).roundToInt()), this)
+                val target = room.getCreatureAt((x + throwDir.x / Const.TILE_SIZE).roundToInt(),
+                        (y + throwDir.y / Const.TILE_SIZE).roundToInt())
+                target?.push(throwDir)
+                throwItem!!.land(target, this)
                 throwDir.setZero()
             } else {
                 throwPos = throwFun(throwDTime / throwTime)

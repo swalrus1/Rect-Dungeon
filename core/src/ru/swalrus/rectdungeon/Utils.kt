@@ -28,7 +28,7 @@ object Utils {
             Const.BOTTOM -> Vector2(0f, -1f)
             Const.RIGHT -> Vector2(1f, 0f)
             Const.LEFT -> Vector2(-1f, 0f)
-            else -> Vector2(0f, 0f)
+            else -> Vector2.Zero
         }
     }
 
