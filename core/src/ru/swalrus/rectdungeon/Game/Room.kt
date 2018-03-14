@@ -5,14 +5,15 @@ import com.badlogic.gdx.math.MathUtils
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Creatures.Chest
 import ru.swalrus.rectdungeon.Creatures.Skeleton
+import ru.swalrus.rectdungeon.Generator
 import ru.swalrus.rectdungeon.Items.Rapier
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 
-class Room (val chunk: Chunk) {
+class Room (val chunk: Chunk, generator: Generator) {
 
     // Tiles
-    private var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,
+    var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Floor() }) })
     // Creatures
     private var creatureList : MutableList<Creature> = mutableListOf()
@@ -26,7 +27,7 @@ class Room (val chunk: Chunk) {
 
 
     init {
-        generate()
+        generator.generate(this)
     }
 
 
@@ -175,58 +176,6 @@ class Room (val chunk: Chunk) {
 
         for (creature in creatureList) {
             creature.render(batch)
-        }
-    }
-
-
-    private fun generate() {
-
-        val idMap = Array(Const.ROOM_SIZE,
-                { _ -> Array(Const.ROOM_SIZE, { _ -> Utils.getTileID("floor") }) })
-
-        idMap[1][1] = Utils.getTileID("lava")
-        idMap[2][1] = Utils.getTileID("lava")
-        idMap[2][2] = Utils.getTileID("lava")
-        idMap[3][2] = Utils.getTileID("lava")
-        idMap[4][2] = Utils.getTileID("lava")
-        idMap[5][2] = Utils.getTileID("lava")
-
-        setMap(idMap)
-
-        for (i in 1..5) {
-            Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), this)
-        }
-
-        Chest(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), Rapier(), this)
-    }
-
-    private fun setMap(arr: Array<Array<Int>>, doors: Array<Boolean> = arrayOf(true, true, true, true)) {
-        if ((arr.size == Const.ROOM_SIZE) and (arr[0].size == Const.ROOM_SIZE)) {
-            for (y in 1 until map.size) {
-                map[0][y] = Wall(Const.LEFT)
-            }
-            for (y in 1 until map.size) {
-                map[map.size-1][y] = Wall(Const.RIGHT)
-            }
-            for (x in 1 until map.size-1) {
-                map[x][0] = Wall(Const.BOTTOM)
-            }
-            for (x in 1 until map.size-1) {
-                map[x][map.size-1] = Wall(Const.TOP)
-            }
-            if (doors[0]) map[map.size / 2][map.size - 1] = Door(Const.TOP, this)
-            if (doors[1]) map[map.size / 2][0] = Door(Const.BOTTOM, this)
-            if (doors[2]) map[0][map.size / 2] = Door(Const.LEFT, this)
-            if (doors[3]) map[map.size - 1][map.size / 2] = Door(Const.RIGHT, this)
-
-            for (x in 0 until Const.ROOM_SIZE)
-                for (y in 0 until Const.ROOM_SIZE) {
-                    val tile = Utils.getTile(arr[x][y])
-                    map[x+1][y+1] = when (tile) {
-                        is Lava -> Lava(Utils.getLavaImg(arr, x, y, {id: Int -> Utils.getTile(id) is Lava}))
-                        else -> tile
-                    }
-                }
         }
     }
 

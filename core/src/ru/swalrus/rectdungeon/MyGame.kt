@@ -24,13 +24,15 @@ class MyGame : ApplicationAdapter() {
     lateinit var listener: InputListener
     lateinit var inventoryRenderer: InventoryRenderer
     lateinit var card: ItemCard
+    lateinit var generator: Generator
 
     override fun create() {
         Const.load()
         batch = SpriteBatch()
 
         // Define dungeon objects
-        chunk = Chunk()
+        generator = Generator()
+        chunk = Chunk(generator)
         player = Player(6, 2, 8, chunk.Center)
 
         // TODO: listener.* = * -> *.init { lister.* = this }

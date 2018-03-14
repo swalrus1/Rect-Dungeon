@@ -1,9 +1,10 @@
 package ru.swalrus.rectdungeon.Game
 
 import ru.swalrus.rectdungeon.Const
+import ru.swalrus.rectdungeon.Generator
 import ru.swalrus.rectdungeon.Utils
 
-class Chunk {
+class Chunk (val generator: Generator) {
 
     // Direction - направление СОХРАНЕННОЙ комнаты
     private var direction : Char = Const.CENTER
@@ -12,8 +13,8 @@ class Chunk {
 
 
     init {
-        Center = Room(this)
-        Last = Room(this)
+        Center = Room(this, generator)
+        Last = Room(this, generator)
     }
 
 
@@ -26,7 +27,7 @@ class Chunk {
             direction = Utils.reverseDirection(dir)
         } else {
             Last = Center
-            Center = Room(this)
+            Center = Room(this, generator)
             direction = Utils.reverseDirection(dir)
         }
     }
