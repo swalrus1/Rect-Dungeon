@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Creatures
 
+import com.badlogic.gdx.Gdx.app
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Room
 import ru.swalrus.rectdungeon.Items.Item
@@ -12,7 +13,12 @@ class Chest (x: Int, y: Int, val item: Item, room: Room) : Creature(x, y, 0, Uti
     }
 
     override fun onDeath() {
-        dropLoot(item)
+        // 'item' is null when onDeath is called in initialization
+        if (item != null) {
+            dropLoot(item)
+        } else {
+            app.error("Chest", "A chest is spawned in lava. This can cause bugs")
+        }
     }
 
     override fun dealDamage(damage: Float, direction: Char) {
