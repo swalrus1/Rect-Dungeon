@@ -33,12 +33,20 @@ object Utils {
     }
 
     fun vec2dir (vector: Vector2) : Char {
-        return when {
-            vector.x > 0 -> Const.RIGHT
-            vector.x < 0 -> Const.LEFT
-            vector.y > 0 -> Const.TOP
-            vector.y < 0 -> Const.BOTTOM
-            else -> Const.CENTER
+        return if (vector.isZero) {
+            Const.CENTER
+        } else if (vector.y > vector.x) {
+            if (vector.x + vector.y > 0) {
+                Const.TOP
+            } else {
+                Const.LEFT
+            }
+        } else {
+            if (vector.x + vector.y > 0) {
+                Const.RIGHT
+            } else {
+                Const.BOTTOM
+            }
         }
     }
 

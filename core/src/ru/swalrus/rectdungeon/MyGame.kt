@@ -36,6 +36,7 @@ class MyGame : ApplicationAdapter() {
         player = Player(6, 2, 8, chunk.Center)
 
         // TODO: listener.* = * -> *.init { lister.* = this }
+        AI.player = player
         listener = InputListener(player)
         card = ItemCard(player, listener)
         listener.card = card
