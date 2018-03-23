@@ -16,11 +16,6 @@ class Generator {
         val idMap = Array(Const.ROOM_SIZE,
                 { _ -> Array(Const.ROOM_SIZE, { _ -> Utils.getTileID("floor") }) })
 
-        idMap[1][1] = Utils.getTileID("lava")
-        idMap[2][1] = Utils.getTileID("lava")
-        idMap[2][2] = Utils.getTileID("lava")
-        idMap[3][2] = Utils.getTileID("lava")
-
         setMap(idMap, room)
 
         for (i in 1..5) {

@@ -1,8 +1,9 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.math.Vector2
+import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
-import kotlin.math.abs
+import ru.swalrus.rectdungeon.Items.Weapon
 import kotlin.math.roundToInt
 
 object AI {
@@ -19,6 +20,23 @@ object AI {
             Utils.vec2dir(Vector2((player.x - x).toFloat(), (player.y - y).toFloat()))
         } else {
             'n'
+        }
+    }
+
+    fun moveToPlayer(creature: Creature) {
+        creature.move(playerDirection(creature.x, creature.y))
+    }
+
+    fun attackPlayerIfNear(creature: Creature, weapon: Weapon) : Boolean {
+        val dir = AI.playerNearDirection(creature.x, creature.y)
+        if (dir != 'n') {
+            val t = Utils.dir2vec(dir)
+            val nx = creature.x + t.x.roundToInt()
+            val ny = creature.y + t.y.roundToInt()
+            weapon.cast(nx, ny, creature, creature.room.getCreatureAt(nx, ny))
+            return true
+        } else {
+            return false
         }
     }
 }

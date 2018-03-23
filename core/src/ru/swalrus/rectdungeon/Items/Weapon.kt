@@ -25,7 +25,9 @@ abstract class Weapon(img: Texture, name: String) : Item(img, name), Castable {
             Utils.getDirection(x - attacker.x, y - attacker.y)
         else
             Const.CENTER
-        attacker.attack(direction, defender!!, {a, b -> attack(a, b)}, requiredAP, resetAP)
+        attacker.actionQueue.add({
+            attacker.attack(direction, defender!!, {a, b -> attack(a, b)}, requiredAP, resetAP)
+        })
     }
 
     override fun use(player: Player) {

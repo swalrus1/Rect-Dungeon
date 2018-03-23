@@ -30,7 +30,7 @@ class BottomPanel (val player: Player, listener: InputListener, val inventory: I
         // Wait button
         listener.addArea(0f, 0f, size, size, {
             player.AP = 0
-            player.endTurn() })
+            player.reallyEndTurn() })
     }
 
 

@@ -44,14 +44,9 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     }
 
 
-    fun endTurn() {
-        ready = true
-    }
-
-
     fun swipe (dir: Char) {
         if (!ready and !super.inAnim()) {
-            move(dir)
+            actionQueue.add({ move(dir) })
         }
     }
 
@@ -69,7 +64,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     fun cast(id: Int, x: Int, y: Int) {
         when (id) {
             0 -> if (throwItem != null) {
-                throwItem(throwItem!!, x, y)
+                actionQueue.add({ throwItem(throwItem!!, x, y) })
             }
             1 -> if (leftHand != null) {
                 leftHand!!.cast(x, y, this, room.getCreatureAt(x, y))
@@ -84,8 +79,17 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         if (AP > 0) {
             ready = false
         } else {
-            endTurn()
+            reallyEndTurn()
         }
+    }
+
+    override fun endTurn() {
+        // Prevent standard turn finishing if the action queue is empty
+        // If it is really needed to end turn, use 'reallyEndTurn()'
+    }
+
+    fun reallyEndTurn() {
+        ready = true
     }
 
 

@@ -1,12 +1,8 @@
 package ru.swalrus.rectdungeon.Game
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.MathUtils
 import ru.swalrus.rectdungeon.Const
-import ru.swalrus.rectdungeon.Creatures.Chest
-import ru.swalrus.rectdungeon.Creatures.Skeleton
 import ru.swalrus.rectdungeon.Generator
-import ru.swalrus.rectdungeon.Items.Rapier
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 
@@ -123,9 +119,7 @@ class Room (val chunk: Chunk, generator: Generator) {
     fun render(batch : SpriteBatch) {
 
         // If the current creature is ready to end turn,
-        if (currentCreature >= creatureList.size) {
-            // Not a very good solution, but it works :]
-        } else if (creatureList[currentCreature].ready) {
+        if (currentCreature < creatureList.size && creatureList[currentCreature].ready) {
             // Move focus to the next creature
             if (currentCreature >= creatureList.size - 1) {
                 currentCreature = 0
@@ -136,7 +130,7 @@ class Room (val chunk: Chunk, generator: Generator) {
             if (creatureList[currentCreature].isActive() and
                     (Pair(creatureList[currentCreature].x, creatureList[currentCreature].y) !in removeQueue)) {
                 // Say him to make turn
-                creatureList[currentCreature].makeTurn()
+                creatureList[currentCreature].startTurn()
             }
         }
 

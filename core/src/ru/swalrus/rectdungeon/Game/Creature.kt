@@ -1,16 +1,17 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Effects.Buff
 import ru.swalrus.rectdungeon.Items.Item
 import ru.swalrus.rectdungeon.Utils
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.roundToInt
@@ -22,6 +23,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     var alive: Boolean = true
     private var active : Boolean = true         // Is not sleeping
     private var sprite: Sprite = Sprite(img)
+    var actionQueue: ArrayDeque<() -> Unit> = ArrayDeque()
 
     private var action: Char = 'n'              // { Nothing, Move, Attack, Push, Die }
     private var moveDir: Vector2 = Vector2()
@@ -67,12 +69,25 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
 
-    fun makeTurn() {
+    fun startTurn() {
         for (buff in buffs) {
             buff.onTurn(this)
         }
 
+        ready = false
         act()
+    }
+
+    open fun endTurn() {
+        ready = true
+    }
+
+    fun nextAction() {
+        if (isMakingTurn() && !inAnim() && !actionQueue.isEmpty()) {
+            actionQueue.pop()()
+        } else {
+            app.log("Turn system", "request for next action is not correct (nextAction)")
+        }
     }
 
     fun render(batch: SpriteBatch) {
@@ -223,6 +238,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return action != 'n'
     }
 
+    fun isMakingTurn() : Boolean {
+        return !ready
+    }
+
     open fun die() {
         onDeath()
         startAnim()
@@ -233,6 +252,13 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
 
     private fun update() {
+        if (isMakingTurn() && !inAnim()) {
+            if (!actionQueue.isEmpty()) {
+                nextAction()
+            } else {
+                endTurn()
+            }
+        }
         // Move creature
         if (inAnim()) {
             // Check if creature has reached the destination
@@ -342,7 +368,6 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
     fun endAnim() {
-        ready = true
         action = 'n'
         moveDir = Vector2.Zero
         align()
