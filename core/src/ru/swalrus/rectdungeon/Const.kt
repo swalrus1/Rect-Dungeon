@@ -172,7 +172,12 @@ object Const {
                 "card_button" to Texture("Card_button.png"),
                 "chest" to Texture("Chest.png"),
                 "chest_open" to Texture("Chest_open.png"),
-                "heal_potion" to Texture("Heal_potion_half.png")
+                "heal_potion" to Texture("Heal_potion_half.png"),
+                "bow" to Texture("Bow.png"),
+                "arrow_t" to Texture("Arrow_t.png"),
+                "arrow_r" to Texture("Arrow_r.png"),
+                "arrow_b" to Texture("Arrow_b.png"),
+                "arrow_l" to Texture("Arrow_l.png")
         )
     }
 }

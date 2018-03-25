@@ -59,14 +59,17 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
             // Buttons
             batch.draw(button, BUTTON_MARGIN_LEFT, BUTTON_MARGIN_BOTTOM,
                     BUTTON_WIDTH, BUTTON_HEIGHT, 0f, 1f, 1f, 0f)
-            batch.draw(button, BUTTON_MARGIN_LEFT + BUTTON_WIDTH + SPACE_BETWEEN, BUTTON_MARGIN_BOTTOM,
-                    BUTTON_WIDTH, BUTTON_HEIGHT, 0f, 1f, 1f, 0f)
             // Buttons' text
             // TODO make "throw" const
             Const.cardButtonFont.draw(batch, "Throw", BUTTON_MARGIN_LEFT,
                     BUTTON_MARGIN_BOTTOM + BUTTON_HEIGHT - 1.5f * SCALE, BUTTON_WIDTH, Align.center, false)
-            Const.cardButtonFont.draw(batch, item.actionName, BUTTON_MARGIN_LEFT + BUTTON_WIDTH + SPACE_BETWEEN,
-                    BUTTON_MARGIN_BOTTOM + BUTTON_HEIGHT - 1.5f * SCALE, BUTTON_WIDTH, Align.center, false)
+
+            if (item.actionName != "") {
+                batch.draw(button, BUTTON_MARGIN_LEFT + BUTTON_WIDTH + SPACE_BETWEEN, BUTTON_MARGIN_BOTTOM,
+                        BUTTON_WIDTH, BUTTON_HEIGHT, 0f, 1f, 1f, 0f)
+                Const.cardButtonFont.draw(batch, item.actionName, BUTTON_MARGIN_LEFT + BUTTON_WIDTH + SPACE_BETWEEN,
+                        BUTTON_MARGIN_BOTTOM + BUTTON_HEIGHT - 1.5f * SCALE, BUTTON_WIDTH, Align.center, false)
+            }
         }
     }
 

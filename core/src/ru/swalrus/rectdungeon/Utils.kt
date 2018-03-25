@@ -32,6 +32,10 @@ object Utils {
         }
     }
 
+    fun vec2dir(x: Int, y: Int) : Char {
+        return vec2dir(Vector2(x.toFloat(), y.toFloat()))
+    }
+
     fun vec2dir (vector: Vector2) : Char {
         return if (vector.isZero) {
             Const.CENTER
@@ -150,6 +154,9 @@ object Utils {
                     'v' -> return Const.images["lava_vertical"]!!
                     else -> return Const.images["lava"]!!
                 }
+            }
+            "arrow" -> {
+                return Const.images["arrow_$direction"]!!
             }
             else -> return Const.images[name]!!
         }

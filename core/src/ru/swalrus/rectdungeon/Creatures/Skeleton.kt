@@ -12,12 +12,8 @@ class Skeleton(x: Int, y: Int, room: Room) : Creature(x, y, 3, Utils.getImg("ske
     val weapon: Weapon = ShortSword()
 
     override fun act() {
-        /*if (!AI.attackPlayerIfNear(this, weapon)) {
-            actionQueue.push({ AI.moveToPlayer(this) })
-        }
-        actionQueue.push({ AI.attackPlayerIfNear(this, weapon) })*/
-        actionQueue.add { AI.attackPlayerIfNear(this, weapon) }
         actionQueue.add { AI.moveToPlayer(this) }
+        actionQueue.add { AI.attackPlayerIfNear(this, weapon) }
     }
 
     override fun onDeath() {

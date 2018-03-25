@@ -18,7 +18,7 @@ class Generator {
 
         setMap(idMap, room)
 
-        for (i in 1..5) {
+        for (i in 1..3) {
             Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), room)
         }
 

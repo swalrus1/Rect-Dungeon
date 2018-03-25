@@ -23,6 +23,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         // ShortSword, Rapier
         addItem(ShortSword())
         addItem(Rapier())
+        addItem(Bow())
         inventory[0]!!.use(this)
         addItem(HealPotion())
     }
@@ -232,6 +233,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         if (makeAction(1)) {
             super.throwItem(item, x, y)
             removeItem(item)
+            endAction()
         }
     }
 }
