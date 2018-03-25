@@ -242,6 +242,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return !ready
     }
 
+    fun isThrowing() : Boolean {
+        return !throwDir.isZero
+    }
+
     open fun die() {
         onDeath()
         startAnim()
@@ -252,11 +256,14 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
 
 
     private fun update() {
-        if (isMakingTurn() && !inAnim()) {
+        if (isMakingTurn() && !inAnim() && !isThrowing()) {
             if (!actionQueue.isEmpty()) {
                 nextAction()
             } else {
                 endTurn()
+            }
+            if (this is Player) {
+                this.endAction()
             }
         }
         // Move creature
@@ -291,7 +298,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 }
             }
         }
-
+        // Indicator animation
         if (indicatorState != 'n') {
             if (indicatorDTime >= Const.INDICATOR_TIME) {
                 indicatorDTime = 0f
@@ -301,7 +308,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
                 indicatorDTime += graphics.deltaTime
             }
         }
-
+        // Throw animation
         if (!throwDir.isZero) {
             if (throwDTime > throwTime) {
                 val target = room.getCreatureAt((x + throwDir.x / Const.TILE_SIZE).roundToInt(),

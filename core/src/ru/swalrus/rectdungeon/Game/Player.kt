@@ -76,7 +76,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
-    private fun endAction() {
+    fun endAction() {
         if (AP > 0) {
             ready = false
         } else {
@@ -90,7 +90,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     }
 
     fun reallyEndTurn() {
-        ready = true
+        actionQueue.push({ ready = true })
     }
 
 
@@ -233,7 +233,6 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         if (makeAction(1)) {
             super.throwItem(item, x, y)
             removeItem(item)
-            endAction()
         }
     }
 }
