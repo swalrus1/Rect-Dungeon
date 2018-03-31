@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon.Items
 
 import com.badlogic.gdx.graphics.Texture
+import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
@@ -20,6 +21,14 @@ abstract class RangedWeapon (img: Texture, name: String) : Weapon(img, name) {
         if (attacker is Player) {
             attacker.AP++
         }
-        attacker.throwItem(arrow, target.x, target.y)
+        attacker.actionQueue.push({
+            attacker.throwItem(arrow, target.x, target.y)
+        })
+    }
+
+    override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {
+        attacker.actionQueue.add({
+            attacker.attack(Const.CENTER, defender!!, {a, b -> attack(a, b)}, requiredAP, resetAP)
+        })
     }
 }
