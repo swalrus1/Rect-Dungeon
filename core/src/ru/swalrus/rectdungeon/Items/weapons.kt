@@ -1,7 +1,6 @@
 package ru.swalrus.rectdungeon.Items
 
 import com.badlogic.gdx.Gdx.app
-import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
@@ -44,11 +43,8 @@ class Rapier : Weapon(Utils.getImg("rapier"), "Rapier") {
 }
 
 
-class Bow : Weapon(Utils.getImg("bow"), "Bow") {
+class Bow : RangedWeapon(Utils.getImg("bow"), "Bow") {
 
-    override val area: Char = 'l'
-    override val range: Int = 9
-    override val target: Char = 'e'
     override val requiredAP: Int = 1
     override val resetAP: Boolean = true
 
@@ -57,18 +53,9 @@ class Bow : Weapon(Utils.getImg("bow"), "Bow") {
                 "It's quite heavy."
     }
 
-    override fun attack(attacker: Creature, target: Creature) {
-        val dir = Utils.vec2dir(target.x - attacker.x, target.y - attacker.y)
-        val arrow = Arrow(dir, { creature, caster, dir -> arrowLand(creature, caster, dir) })
-        if (attacker is Player) {
-            attacker.AP++
-        }
-        attacker.throwItem(arrow, target.x, target.y)
-    }
-
-    private fun arrowLand(creature: Creature?, caster: Creature, dir: Char) {
-        if (creature != null) {
-            creature.dealDamage(2f, dir)
+    override fun arrowEffect(target: Creature?, caster: Creature, dir: Char) {
+        if (target != null) {
+            target.dealDamage(2f, dir)
         } else {
             app.error("Arrow", "arrow target is null")
         }
