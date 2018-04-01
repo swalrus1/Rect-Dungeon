@@ -55,4 +55,17 @@ class Generator {
                 }
         }
     }
+
+
+    fun getBasicLoot() {
+        TODO()
+    }
+
+    fun getCoolLoot() {
+        TODO()
+    }
+
+    fun chooseEnemies(progress: Int) {
+        TODO()
+    }
 }

@@ -27,6 +27,10 @@ object Const {
     const val INVENTORY_SIZE = 19
     const val ARTIFACT_SLOTS = 3
 
+    // Generator parameters
+    const val COOL_LOOT_RATE: Int = 3
+    const val BASIC_LOOT_RATE: Int = 5
+
     // Font scale
     const val damageScale: Float = 1.4f
     const val headerScale: Float = 2.8f
