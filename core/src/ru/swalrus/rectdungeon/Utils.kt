@@ -80,7 +80,8 @@ object Utils {
         return getDirection(x.toFloat(), y.toFloat())
     }
 
-    fun newEnemy(id: Char, biome: Char, x: Int, y: Int, room: Room) : Creature {
+    // { Killer, Range(r), Mob, Stealer }
+    fun newCreature(id: Char, biome: Char, x: Int, y: Int, room: Room) : Creature {
         return when (biome) {
             'n' -> when (id) {
                 'k' -> Skeleton(x, y, room)

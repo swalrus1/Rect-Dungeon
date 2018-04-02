@@ -65,7 +65,10 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     abstract fun act()
 
     open fun onDeath() {
-
+        val item = room.chunk.generator.getLoot()
+        if (item != null) {
+            dropLoot(item)
+        }
     }
 
 

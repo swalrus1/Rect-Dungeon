@@ -15,8 +15,4 @@ class Skeleton(x: Int, y: Int, room: Room) : Creature(x, y, 3, Utils.getImg("ske
         actionQueue.add { AI.moveToPlayer(this) }
         actionQueue.add { AI.attackPlayerIfNear(this, weapon) }
     }
-
-    override fun onDeath() {
-        dropLoot(ShortSword())
-    }
 }

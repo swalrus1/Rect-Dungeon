@@ -29,7 +29,7 @@ object Const {
 
     // Generator parameters
     const val COOL_LOOT_RATE: Int = 3
-    const val BASIC_LOOT_RATE: Int = 5
+    const val LOOT_RATE: Int = 2
 
     // Font scale
     const val damageScale: Float = 1.4f
