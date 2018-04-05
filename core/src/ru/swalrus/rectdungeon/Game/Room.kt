@@ -119,7 +119,7 @@ class Room (val chunk: Chunk, generator: Generator) {
     fun render(batch : SpriteBatch) {
 
         // If the current creature is ready to end turn,
-        if (currentCreature < creatureList.size && creatureList[currentCreature].ready) {
+        if (currentCreature < creatureList.size && (creatureList[currentCreature].ready || !creatureList[currentCreature].alive)) {
             // Move focus to the next creature
             if (currentCreature >= creatureList.size - 1) {
                 currentCreature = 0
