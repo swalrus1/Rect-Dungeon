@@ -80,6 +80,6 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
             'l' -> player.throwButtonPressed(item)
         }
         close()
-        inputListener.inventory.switch('c')
+        inputListener.inventory.close()
     }
 }

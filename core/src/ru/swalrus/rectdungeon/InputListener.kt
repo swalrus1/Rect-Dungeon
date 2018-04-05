@@ -80,7 +80,7 @@ class InputListener (val player: Player) : GestureListener {
                         inventory.press(invX, invY)
                     }
                 } else {
-                    inventory.switch('c')
+                    inventory.close()
                 }
                 return true
             } else {

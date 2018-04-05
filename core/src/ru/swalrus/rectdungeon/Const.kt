@@ -181,7 +181,9 @@ object Const {
                 "arrow_t" to Texture("Arrow_t.png"),
                 "arrow_r" to Texture("Arrow_r.png"),
                 "arrow_b" to Texture("Arrow_b.png"),
-                "arrow_l" to Texture("Arrow_l.png")
+                "arrow_l" to Texture("Arrow_l.png"),
+                "item_new" to Texture("Item_new.png"),
+                "item_equipped" to Texture("Item_equipped.png")
         )
     }
 }

@@ -13,6 +13,8 @@ abstract class Item (var img: Texture, val name: String, val bigImage: Texture =
     abstract fun use(player: Player)
     abstract var actionName: String
 
+    var new: Boolean = true
+
     fun draw(batch: SpriteBatch, x: Float, y: Float) {
         batch.draw(img, x, y, Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
     }

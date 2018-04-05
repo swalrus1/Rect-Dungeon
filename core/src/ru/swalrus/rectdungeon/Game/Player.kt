@@ -143,9 +143,19 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
             when (item) {
                 is Weapon -> when (leftHand) {
                     null -> leftHand = item
-                    else -> rightHand = item
+                    else -> {
+                        if (rightHand != null) {
+                            unequip(rightHand!!)
+                        }
+                        rightHand = item
+                    }
                 }
-                is Armor -> armor = item
+                is Armor -> {
+                    if (armor != null) {
+                        unequip(armor!!)
+                    }
+                    armor = item
+                }
             }
         } else {
             app.error("Inventory", "Attempt to equip nothing (null)")
@@ -159,6 +169,9 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
         if (i < inventory.size) {
             equip(i)
+            if (item is equippable) {
+                item.equipped = true
+            }
         } else {
             app.error("Inventory", "Attempt to quip item not being stored in the inventory")
         }
@@ -178,6 +191,10 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
                     armor = null
                 }
             }
+            else -> app.error("Inventory", "Item that is being unequipped is not supportable")
+        }
+        if (item is equippable) {
+            item.equipped = false
         }
     }
 
