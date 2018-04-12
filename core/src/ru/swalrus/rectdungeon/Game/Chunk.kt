@@ -6,8 +6,7 @@ import ru.swalrus.rectdungeon.Utils
 
 class Chunk (val generator: Generator) {
 
-    // Direction - направление СОХРАНЕННОЙ комнаты
-    private var direction : Char = Const.CENTER
+    private var direction : Char = Const.CENTER             // direction of the SAVED room
     var Last : Room
     var Center : Room
 
@@ -18,6 +17,7 @@ class Chunk (val generator: Generator) {
     }
 
 
+    // Move chunk to the given direction
     fun move(dir: Char) {
 
         if (dir == direction) {

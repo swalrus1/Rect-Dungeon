@@ -1,6 +1,7 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Items
 
 import ru.swalrus.rectdungeon.Game.Creature
+import ru.swalrus.rectdungeon.Utils
 
 class HealPotion : Potion(Utils.getImg("heal_potion"), "Heal Potion") {
 

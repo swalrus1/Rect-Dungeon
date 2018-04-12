@@ -10,11 +10,12 @@ object AI {
 
     lateinit var player: Player
 
+    // Return the direction of the player from the given creature (it it is not CENTER)
     fun playerDirection(x: Int, y: Int) : Char {
         return Utils.vec2dir(Vector2((player.x - x).toFloat(), (player.y - y).toFloat()))
     }
 
-    // returns 'n' if player is not near, else returns direction
+    // Returns 'n' if player is not near, else returns direction
     fun playerNearDirection(x: Int, y: Int) : Char {
         return if ((player.x - x) * (player.x - x) + (player.y - y) * (player.y - y) <= 1) {
             Utils.vec2dir(Vector2((player.x - x).toFloat(), (player.y - y).toFloat()))
@@ -23,10 +24,12 @@ object AI {
         }
     }
 
+    // Move the given creature on one cell to the player
     fun moveToPlayer(creature: Creature) {
         creature.move(playerDirection(creature.x, creature.y))
     }
 
+    // Make the given creature attack the player if it is near
     fun attackPlayerIfNear(creature: Creature, weapon: Weapon) : Boolean {
         val dir = AI.playerNearDirection(creature.x, creature.y)
         if (dir != 'n') {

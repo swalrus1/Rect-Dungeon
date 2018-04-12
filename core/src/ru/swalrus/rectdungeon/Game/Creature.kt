@@ -18,25 +18,27 @@ import kotlin.math.roundToInt
 
 abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, var room: Room) {
 
-    open var ready : Boolean = true             // Is ready to make next turn
-    var buffs: MutableList<Buff> = MutableList(0, { _ -> null!! })
+    open var ready : Boolean = true                         // Is ready to end turn (and to make next one)
+    var buffs: MutableList<Buff> =                          // Array of active buffs
+            MutableList(0, { _ -> null!! })
     var alive: Boolean = true
-    private var active : Boolean = true         // Is not sleeping
+    private var active : Boolean = true                     // Is not sleeping
     private var sprite: Sprite = Sprite(img)
-    var actionQueue: ArrayDeque<() -> Unit> = ArrayDeque()
+    var actionQueue: ArrayDeque<() -> Unit> = ArrayDeque()  // Actions to be done
 
-    private var action: Char = 'n'              // { Nothing, Move, Attack, Push, Die }
+    // Animation parameters TODO (comments)
+    private var action: Char = 'n'                          // Actions that is being done (Nothing, Move, Attack, Push, Die)
     private var moveDir: Vector2 = Vector2()
     private var dTime: Float = 0f
     private var animTime: Float = 0f
     private var target: Creature? = null
     private var afterAttack: (attacker: Creature, defender: Creature) -> Unit = {_, _ -> }
     private var dPos: Vector2 = Vector2()
-    private var rotated: Boolean = false        // If creature has been rotated during the current movement
-    private var attacked: Boolean = false       // If creature has attacked during the current attack
+    private var rotated: Boolean = false                    // If creature has been rotated during the current movement
+    private var attacked: Boolean = false                   // If creature has attacked during the current attack
     private var lookRight: Boolean = true
 
-    private var indicatorState: Char = 'n'      // { Nothing, Image, Text }
+    private var indicatorState: Char = 'n'                  // { Nothing, Image, Text }
     private var indicatorDTime: Float = 0f
     private var indicatorY: Float = 0f
     private var indicatorText: String = ""
@@ -46,7 +48,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     var throwItem: Item? = null
     private var throwTime: Float = 0f
     private var throwDir: Vector2 = Vector2.Zero
-    private var throwPos: Float = 0f            // Passed distance / all distance
+    private var throwPos: Float = 0f                        // Passed distance / all distance
     private var throwDTime: Float = 0f
 
 
@@ -59,32 +61,38 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         sprite.setSize(Const.TILE_SIZE, Const.TILE_SIZE)
         sprite.setOriginCenter()
 
+        // Call onStand()
         room.getTile(x, y).onStand(this)
     }
 
+    // Called when it is time to choose actions (to start a turn)
     abstract fun act()
 
+    // Called when the creature dies
     open fun onDeath() {
         val item = room.chunk.generator.getLoot()
         if (item != null) {
             dropLoot(item)
         }
+        TODO()
     }
 
 
+    // Start making turn (called only from room render cycle)
     fun startTurn() {
         for (buff in buffs) {
             buff.onTurn(this)
         }
-
         ready = false
         act()
     }
 
+    // Finish making turn
     open fun endTurn() {
         ready = true
     }
 
+    // Do the next action from the queue
     fun nextAction() {
         if (isMakingTurn() && !inAnim() && !actionQueue.isEmpty()) {
             actionQueue.pop()()
@@ -93,6 +101,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    // The main render cycle
     fun render(batch: SpriteBatch) {
         update()
         if (alive) {
@@ -116,11 +125,14 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    // Returns 'true' if the creature is able to make turn
     fun isActive() : Boolean {
         return active && alive
     }
 
-    // Returns true if the creature will move
+    // Move the creature
+    // Returns 'true' if the creature will move
+    // If 'force', the creature will move despite of any obstacles
     open fun move(direction : Char, force: Boolean = false) : Boolean {
         moveDir = Vector2(Utils.dir2vec(direction))
         val newX = x + moveDir.x.toInt()
@@ -148,6 +160,12 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    // Attack someone
+    // direction - where to push
+    // target - a target of the attack
+    // afterAttack - function that will be called when the creature hit a target
+    // requiredAP - for 'Player' only
+    // resetAP - if players' AP have to be set to zero (for 'Player' only)
     open fun attack(direction: Char, target: Creature,
                     afterAttack: (attacker: Creature, defender: Creature) -> Unit,
                     requiredAP: Int, resetAP: Boolean) {
@@ -165,6 +183,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    // Make the creature to throw an item
     open fun throwItem(item: Item, x: Int, y: Int) {
         throwItem = item
         throwDir = Vector2((x - this.x) * Const.TILE_SIZE, (y - this.y) * Const.TILE_SIZE)
@@ -175,10 +194,12 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         push(throwDir)
     }
 
+    // The same as the next function
     open fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
         dealDamage(damage, Utils.dir2vec(direction))
     }
 
+    // Make the creature to get damage
     open fun dealDamage(damage: Float, direction: Vector2) {
         // TODO: Calculate damage
         if (!direction.isZero) {
@@ -199,6 +220,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         }
     }
 
+    // Adds a new buff to the queue
     fun addBuff(buff: Buff) {
         buffs.add(buff)
     }
@@ -208,18 +230,21 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         sprite.texture = texture
     }
 
+    // Shows a flowing image at the top-right corner of the creature
     fun playIndicator(img: Texture) {
         indicatorState = 'i' // TODO
         indicatorDTime = 0f
         indicatorImg = img
     }
 
+    // Shows a flowing text at the top-right corner of the creature
     fun playIndicator(text: String) {
         indicatorState = 't'
         indicatorDTime = 0f
         indicatorText = text
     }
 
+    // Move the creature to some distance and move it back
     fun push(direction: Vector2) {
         moveDir = Vector2(direction)
         moveDir.nor()
@@ -228,6 +253,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         action = 'p'
     }
 
+    // Gives player the given item
     fun dropLoot(item: Item) {
         playIndicator(Utils.getImg("loot_icon"))
         val player = room.findPlayer()
@@ -237,18 +263,22 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
 
+    // Returns 'true' if the animation is being played
     fun inAnim() : Boolean {
         return action != 'n'
     }
 
+    // Returns 'true' if the creature is in process of making turn
     fun isMakingTurn() : Boolean {
         return !ready
     }
 
+    // Returns 'true' if the creature is in process of throwing
     fun isThrowing() : Boolean {
         return !throwDir.isZero
     }
 
+    // Make the creature to die
     open fun die() {
         onDeath()
         startAnim()
@@ -258,6 +288,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
     }
 
 
+    // The main non-render cycle
     private fun update() {
         if (isMakingTurn() && !inAnim() && !isThrowing()) {
             if (!actionQueue.isEmpty()) {
@@ -358,6 +389,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         return x
     }
 
+    // Start an animation
     private fun startAnim() {
         ready = false
         dTime = 0f
@@ -365,6 +397,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         attacked = false
     }
 
+    // End a move
     open fun endMove() {
         x += moveDir.x.toInt()
         y += moveDir.y.toInt()
@@ -373,16 +406,19 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         room.getTile(x, y).onStand(this)
     }
 
+    // End an attack
     open fun endAttack() {
         endAnim()
     }
 
+    // End an animation
     fun endAnim() {
         action = 'n'
         moveDir = Vector2.Zero
         align()
     }
 
+    // Change a direction of the sprite
     private fun changeSpriteDirection(dir: Char) {
         if (lookRight and (dir == Const.LEFT)) {
             sprite.setScale(-1f, 1f)

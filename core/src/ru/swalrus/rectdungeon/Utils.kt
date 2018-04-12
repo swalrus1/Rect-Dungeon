@@ -12,6 +12,7 @@ import kotlin.math.abs
 
 object Utils {
 
+    // Return the opposite direction of 'direction'
     fun reverseDirection(direction : Char) : Char {
 
         return when (direction) {
@@ -56,10 +57,13 @@ object Utils {
         }
     }
 
+    // Returns one of horizontal or vertical directions
     fun randomDirection() : Char {
         return arrayOf(Const.TOP, Const.BOTTOM, Const.LEFT, Const.RIGHT)[MathUtils.random(3)]
     }
 
+    // Return the nearest direction of given vector
+    // If there isn't one nearest direction, return one of them
     fun getDirection(x: Float, y: Float) : Char {
         return if (abs(x) > abs(y)) {
             if (x > 0) {
@@ -76,11 +80,16 @@ object Utils {
         }
     }
 
+    // The same as the previous
     fun getDirection(x: Int, y: Int) : Char {
         return getDirection(x.toFloat(), y.toFloat())
     }
 
-    // { Killer, Range(r), Mob, Stealer }
+    // Place creature to a room
+    // id - Type of the creature by its role in battle (Killer, Range(r), Mob, Stealer)
+    // biome - Type of the creature by the place where it can be found
+    // x, y - Where to place the creature
+    // room - The room where the creature must be placed to
     fun newCreature(id: Char, biome: Char, x: Int, y: Int, room: Room) : Creature {
         return when (biome) {
             'n' -> when (id) {
@@ -91,6 +100,7 @@ object Utils {
         }
     }
 
+    // Returns tile by id
     fun getTile(id: Int) : Tile {
         return when (id) {
             0 -> Floor()
@@ -99,6 +109,7 @@ object Utils {
         }
     }
 
+    // Returns id of tile with the given name
     fun getTileID(name: String) : Int {
         return when (name) {
             "floor" -> 0
@@ -107,6 +118,7 @@ object Utils {
         }
     }
 
+    // Returns 'true' if the creature can be a target of an attack with the given mark
     fun isTarget(creature: Creature?, target: Char) : Boolean {
         return when (target) {
             'a' -> true
@@ -117,6 +129,7 @@ object Utils {
         }
     }
 
+    // Returns an image of a lava tile with the given coordinates in the given room
     fun getLavaImg(map: Array<Array<Int>>, x: Int, y: Int, connect: (Int) -> Boolean) : Texture {
         // Directions are reversed
         val bottom = (y == map[0].size - 1) or (connect(map[x][y+1]))
@@ -139,6 +152,7 @@ object Utils {
         }
     }
 
+    // Returns image by name (and direction)
     fun getImg(name: String, direction: Char = Const.CENTER) : Texture {
         when (name) {
             "wall" -> {

@@ -11,26 +11,34 @@ import ru.swalrus.rectdungeon.UI.ItemCard
 
 class InputListener (val player: Player) : GestureListener {
 
+    // Areas which must be listened for clicks
     var touchAreas: MutableList<Pair<Rectangle, () -> Unit>> = mutableListOf()
+    // The area of the opened inventory
     val inventotyArea: Rectangle = Rectangle(Const.INV_MARGIN_LEFT, Const.INV_MARGIN_BOTTOM,
             Const.SCREEN_WIDTH - 2 * Const.INV_MARGIN_LEFT, Const.SCREEN_HEIGHT - 2 * Const.INV_MARGIN_BOTTOM)
+    // The area of an opened card
     val cardArea: Rectangle = Rectangle(Const.CARD_MARGIN_LEFT, Const.CARD_MARGIN_BOTTOM,
             Const.SCREEN_WIDTH - 2 * Const.CARD_MARGIN_LEFT, Const.SCREEN_HEIGHT - 2 * Const.CARD_MARGIN_BOTTOM)
+    // Parameters of the inventory
     val INV_MARGIN_TOP: Float = Const.INV_MARGIN_BOTTOM + Const.INV_PADDING * Const.INV_SCALE
     val INV_MARGIN_LEFT: Float = Const.INV_MARGIN_LEFT + Const.INV_PADDING * Const.INV_SCALE
     val INV_CELL_SIZE: Float = Const.INV_CELL_SIZE * Const.INV_SCALE
     val INV_ROW: Int = Const.INVENTORY_ROW_SIZE
     val INV_COLUMN: Int = (Const.INVENTORY_SIZE + 1) / Const.INVENTORY_ROW_SIZE
+
     lateinit var bottomPanel: BottomPanel
     lateinit var inventory: InventoryRenderer
     lateinit var card: ItemCard
 
 
+    // Add a new area to the array of listed areas
+    // f - a function that must be called when area is clicked to
     fun addArea(x1: Float, y1: Float, width: Float, height: Float, f: () -> Unit) {
         touchAreas.add(Pair(Rectangle(x1, y1, width, height), f))
     }
 
 
+    // Swipe, then release
     override fun fling(velocityX: Float, velocityY: Float, button: Int): Boolean {
         if (!inventory.opened) {
             player.swipe(Utils.getDirection(velocityX, -velocityY))
@@ -51,6 +59,7 @@ class InputListener (val player: Player) : GestureListener {
 
     }
 
+    // Tap, then release
     override fun tap(x: Float, y: Float, count: Int, button: Int): Boolean {
         // If player is waiting for input
         if (!player.inAnim() and !player.ready) {

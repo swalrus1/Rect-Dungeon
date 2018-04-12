@@ -1,4 +1,4 @@
-package ru.swalrus.rectdungeon
+package ru.swalrus.rectdungeon.Items
 
 import com.badlogic.gdx.graphics.Texture
 import ru.swalrus.rectdungeon.Game.Creature

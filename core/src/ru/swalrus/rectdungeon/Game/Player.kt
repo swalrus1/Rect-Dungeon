@@ -4,19 +4,18 @@ import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*
 import com.badlogic.gdx.Gdx.app
-import ru.swalrus.rectdungeon.Effects.Buff
-import ru.swalrus.rectdungeon.HealPotion
+import ru.swalrus.rectdungeon.Items.HealPotion
 
 class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
 
-    var AP: Int = Const.MAX_AP
+    var AP: Int = Const.MAX_AP                                          // Action Points
     var maxHP = HP
     var inventory: Array<Item?> = arrayOfNulls(Const.INVENTORY_SIZE)
-    var extraSlot: Item? = null
+    var extraSlot: Item? = null                                         // An additional slot of the inventory
 
     var armor: Armor? = null
-    var rightHand: Weapon? = null
-    var leftHand: Weapon? = null
+    var rightHand: Weapon? = null                                       // A weapon hold in the right hand
+    var leftHand: Weapon? = null                                        // A weapon hold in the left hand
 
 
     init {
@@ -31,6 +30,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
 
     override fun act() {
         ready = false
+        // Reset AP
         AP = Const.MAX_AP
     }
 
@@ -45,12 +45,14 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     }
 
 
+    // Handle swiped
     fun swipe (dir: Char) {
         if (!ready and !super.inAnim()) {
             actionQueue.add({ move(dir) })
         }
     }
 
+    // Handle button clicks
     fun onButtonTouch(id: Int) {
         when (id) {
             1 -> if (leftHand != null) {
@@ -62,6 +64,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // TODO: докомментировать все функции нгиже этой включительно
     fun cast(id: Int, x: Int, y: Int) {
         when (id) {
             0 -> if (throwItem != null) {

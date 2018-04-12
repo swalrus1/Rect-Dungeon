@@ -8,17 +8,16 @@ import kotlin.math.abs
 
 class Room (val chunk: Chunk, generator: Generator) {
 
-    // Tiles
-    var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,
+    var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,  // Tiles of the room
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Floor() }) })
-    // Creatures
-    private var creatureList : MutableList<Creature> = mutableListOf()
-    private var currentCreature : Int = 0
-    private var removeQueue: MutableList<Pair<Int, Int>> = MutableList(0, { _ -> Pair(0, 0) })
+    private var creatureList : MutableList<Creature> = mutableListOf()          // All creatures contained in the room
+    private var currentCreature : Int = 0                                       // Index of the making move creature
+    private var removeQueue: MutableList<Pair<Int, Int>> =                      // All creatures which are being removed
+            MutableList(0, { _ -> Pair(0, 0) })
 
-    var yellowArea: Array<Array<Boolean>> = Array(Const.ROOM_SIZE,
+    var yellowArea: Array<Array<Boolean>> = Array(Const.ROOM_SIZE,              // What cells can be casted (tapped) to
             { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
-    var grayArea: Array<Array<Boolean>> = Array(Const.ROOM_SIZE,
+    var grayArea: Array<Array<Boolean>> = Array(Const.ROOM_SIZE,                // Range of the weapon
             { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
 
 
@@ -27,6 +26,10 @@ class Room (val chunk: Chunk, generator: Generator) {
     }
 
 
+    // x, y - coordinates of the caster
+    // area - type of area (Self, Line, Range)
+    // target - type of target (All, Creatures, Player, Enemies)
+    // range - parameter of the area
     fun setYellowArea(x: Int, y: Int, area: Char, target: Char, range: Int = 1) {
         resetYellowArea()
         when (area) {
@@ -67,15 +70,18 @@ class Room (val chunk: Chunk, generator: Generator) {
         }
     }
 
+    // Set yellow area to null
     fun resetYellowArea() {
         yellowArea = Array(Const.ROOM_SIZE, { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
         grayArea = Array(Const.ROOM_SIZE, { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
     }
 
+    // Add a new creature to the room (to the creatureList)
     fun addCreature(creature : Creature) {
         creatureList.add(creature)
     }
 
+    // Make player to make turn if it is in the room (player makes turn in the next render cycle)
     fun setFocusToPlayer() {
         var i = 0
         while ((i < creatureList.size) && (creatureList[i] !is Player)) {
@@ -86,6 +92,7 @@ class Room (val chunk: Chunk, generator: Generator) {
         }
     }
 
+    // Returns player if it is in the room
     fun findPlayer() : Player? {
         var i = 0
         while ((i < creatureList.size) && (creatureList[i] !is Player)) {
@@ -103,6 +110,7 @@ class Room (val chunk: Chunk, generator: Generator) {
         }
     }
 
+    // Returns a creature from (x, y) if there is one
     fun getCreatureAt(x: Int, y: Int) : Creature? {
         for (item in creatureList) {
             if ((item.x == x) and (item.y == y)) {
@@ -112,10 +120,12 @@ class Room (val chunk: Chunk, generator: Generator) {
         return null
     }
 
+    // Removes a creature from (x, y) if there is one
     fun removeCreatureAt(x: Int, y: Int) {
         removeQueue.add(Pair(x, y))
     }
 
+    // The main render fun
     fun render(batch : SpriteBatch) {
 
         // If the current creature is ready to end turn,
@@ -149,9 +159,9 @@ class Room (val chunk: Chunk, generator: Generator) {
         }
         removeQueue.clear()
 
+        // Render tiles
         var xPos : Float
         var yPos : Float
-
         for (x in 0 until map.size)
             for (y in map.size-1 downTo 0) {
                 xPos = x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT
@@ -168,11 +178,13 @@ class Room (val chunk: Chunk, generator: Generator) {
                 }
             }
 
+        // Render creatures
         for (creature in creatureList) {
             creature.render(batch)
         }
     }
 
+    // Returns a tile from (x, y)
     fun getTile(x: Int, y: Int) : Tile {
         return try {
             map[x][y]

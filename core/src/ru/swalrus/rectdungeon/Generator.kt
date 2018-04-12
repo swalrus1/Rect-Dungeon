@@ -2,14 +2,16 @@ package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.math.MathUtils
 import ru.swalrus.rectdungeon.Game.*
+import ru.swalrus.rectdungeon.Items.HealPotion
 import ru.swalrus.rectdungeon.Items.Item
 
+// The class that is responsible for creating new rooms
 class Generator {
 
-    var progress: Int = 0
-    var biome: Char = 'n'
-    var lootProgress: Int = 0
-    var droppedLoot: Boolean = false
+    var progress: Int = 0                       // How long has the player moved through a biome
+    var biome: Char = 'n'                       // The current level of the dungeon
+    var lootProgress: Int = 0                   // How many turns the player has the player made without getting loot
+    var droppedLoot: Boolean = false            // Has loot been dropped in the current turn
 
     fun generate(room: Room) {
 
@@ -21,14 +23,11 @@ class Generator {
 
         setMap(idMap, room)
 
-        /*for (i in 1..3) {
-            Skeleton(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), room)
-        }
+        // Represents free cells in the room
+        val free = Array(Const.ROOM_SIZE, { Array(Const.ROOM_SIZE, { true }) })
 
-        Chest(MathUtils.random(1, Const.ROOM_SIZE), MathUtils.random(1, Const.ROOM_SIZE), Rapier(), room)*/
-
-        var free = Array(Const.ROOM_SIZE, { Array(Const.ROOM_SIZE, { true }) })
-
+        // For each enemy choose a free cell,
+        // then place it to this cell and make the cell not free
         for (item in chooseEnemies(progress)) {
             var x = MathUtils.random(Const.ROOM_SIZE-1)
             var y = MathUtils.random(Const.ROOM_SIZE-1)
@@ -37,9 +36,13 @@ class Generator {
                 y = MathUtils.random(Const.ROOM_SIZE)
             }
             Utils.newCreature(item, biome, x+1, y+1, room)
+            free[x][y] = false
         }
     }
 
+    // Set the given tiles to the room
+    // arr - array of ID of tiles
+    // doors - represents existing of doors
     fun setMap(arr: Array<Array<Int>>, room: Room, doors: Array<Boolean> = arrayOf(true, true, true, true)) {
         if ((arr.size == Const.ROOM_SIZE) and (arr[0].size == Const.ROOM_SIZE)) {
             val size = room.map.size
@@ -72,6 +75,8 @@ class Generator {
     }
 
 
+    // Returns a random loot if it must be dropped,
+    // in other case returns 'null'
     fun getLoot() : Item? {
         if (!droppedLoot && lootProgress >= Const.LOOT_RATE) {
             lootProgress = 0
@@ -82,10 +87,13 @@ class Generator {
         }
     }
 
+    // Returns a random loot that is better than usual loot if it must be dropped,
+    // in other case returns 'null'
     fun getCoolLoot() : Item {
         TODO()
     }
 
+    // Returns an array of enemy IDs which must be placed to the current room
     fun chooseEnemies(progress: Int) : Array<Char> {
         return arrayOf('k', 'k', 'k')
     }
