@@ -20,5 +20,6 @@ abstract class Potion (img: Texture, name: String) : Item(img, name) {
         player.removeItem(this)
     }
 
+    // An effect of drinking the potion
     abstract fun cast(creature: Creature)
 }

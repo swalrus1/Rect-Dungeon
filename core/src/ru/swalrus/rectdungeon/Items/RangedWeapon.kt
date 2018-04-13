@@ -12,6 +12,7 @@ abstract class RangedWeapon (img: Texture, name: String) : Weapon(img, name) {
     override val range: Int = 9
     override val target: Char = 'e'
 
+    // Called when an arrow is landed
     abstract fun arrowEffect(target: Creature?, caster: Creature, dir: Char)
 
     override fun attack(attacker: Creature, target: Creature) {

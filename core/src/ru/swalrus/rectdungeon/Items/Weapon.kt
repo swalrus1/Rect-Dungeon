@@ -7,7 +7,7 @@ import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
 
-abstract class Weapon(img: Texture, name: String) : Item(img, name), Castable, equippable {
+abstract class Weapon(img: Texture, name: String) : Item(img, name), castable, equippable {
 
     override var equipped: Boolean = false
 
@@ -48,5 +48,6 @@ abstract class Weapon(img: Texture, name: String) : Item(img, name), Castable, e
         }
     }
 
+    // Called when someone hits someone with the weapon
     abstract fun attack(attacker: Creature, target: Creature)
 }

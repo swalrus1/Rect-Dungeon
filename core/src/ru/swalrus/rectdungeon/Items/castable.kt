@@ -2,7 +2,7 @@ package ru.swalrus.rectdungeon.Items
 
 import ru.swalrus.rectdungeon.Game.Creature
 
-interface Castable {
+interface castable {
 
     val area: Char
     val range: Int

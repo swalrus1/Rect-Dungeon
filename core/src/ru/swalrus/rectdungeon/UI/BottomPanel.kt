@@ -48,6 +48,8 @@ class BottomPanel (val player: Player, listener: InputListener, val inventory: I
         rightHandSlot.draw(batch, player.rightHand)
     }
 
+    // I don't know why handler of taps to the map is BottomPanel, but... let it be :]
+    // Handle taps to the yellow area of the room
     fun tapOnMap(x: Float, y: Float) : Boolean {
         var xPos: Float
         var yPos: Float

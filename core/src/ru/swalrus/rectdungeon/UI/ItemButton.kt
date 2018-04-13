@@ -34,6 +34,7 @@ class ItemButton(val x: Float, val y: Float, val id: Int, var size: Float, var i
         }
     }
 
+    // Called when the button is pressed
     fun onTouch() {
         if (item != null) {
             if (panel.activeHandID == id) {

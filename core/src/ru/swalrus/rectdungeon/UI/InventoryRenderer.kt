@@ -27,7 +27,7 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
     val new = Utils.getImg("item_new")
     val equipped = Utils.getImg("item_equipped")
 
-    private var time: Float = 0f
+    private var time: Float = 0f                                // Just a timer
     var opened = false
 
 
@@ -90,10 +90,14 @@ class InventoryRenderer (val player: Player, val card: ItemCard) {
         }
     }
 
+    // Called when a slot at (x, y) is pressed
+    // Opens an item card
     fun press(x: Int, y: Int) {
         press(y * ROW + x)
     }
 
+    // Called when the slot number 'i' is pressed
+    // Opens an item card
     fun press(i: Int) {
         if (i < Const.INVENTORY_SIZE) {
             var c = 0

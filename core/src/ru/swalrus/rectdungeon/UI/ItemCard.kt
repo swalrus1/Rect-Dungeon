@@ -33,21 +33,19 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
     var opened: Boolean = false
 
 
-    init {
-
-    }
-
-
+    // Open an item card with the given item
     fun open(item: Item) {
         this.item = item
         opened = true
         text = item.getDescription()
     }
 
+    // Close a button card
     fun close() {
         opened = false
     }
 
+    // Render
     fun draw(batch: SpriteBatch) {
         if (opened) {
             batch.draw(background, MARGIN_LEFT, MARGIN_BOTTOM, WIDTH, HEIGHT, 0f, 1f, 1f, 0f)
@@ -73,7 +71,7 @@ class ItemCard (val player: Player, val inputListener: InputListener) {
         }
     }
 
-    // button - { Left, Right }
+    // Called when a button is pressed (Left, Right)
     fun press(button: Char) {
         when (button) {
             'r' -> item.use(player)

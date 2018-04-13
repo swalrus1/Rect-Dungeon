@@ -64,7 +64,8 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
-    // TODO: докомментировать все функции нгиже этой включительно
+    // Cast weapon from given hand (id)
+    // If 'id' == 0, throws an item (костыль)
     fun cast(id: Int, x: Int, y: Int) {
         when (id) {
             0 -> if (throwItem != null) {
@@ -79,6 +80,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Called when an action is finished
     fun endAction() {
         if (AP > 0) {
             ready = false
@@ -89,14 +91,17 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
 
     override fun endTurn() {
         // Prevent standard turn finishing if the action queue is empty
-        // If it is really needed to end turn, use 'reallyEndTurn()'
+        // If it really need to end turn, use 'reallyEndTurn()'
     }
 
+    // Finish turn. Certainly
+    // More specific alternative to 'Creature's 'endTurn'
     fun reallyEndTurn() {
         actionQueue.push({ ready = true })
     }
 
 
+    // Add a new item to the inventory
     fun addItem(item: Item) {
         if (null in inventory) {
             var i = 0
@@ -111,6 +116,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Remove an item from the inventory
     fun removeItem(item: Item) {
         var i = 0
         while (i < inventory.size && inventory[i] != item) {
@@ -129,6 +135,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Removes an item from the extra slot
     fun clearExtraSlot() {
         if (null in inventory) {
             var i = 0
@@ -140,6 +147,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         extraSlot = null
     }
 
+    // Equips an item from the inventory with the given index
     fun equip(i: Int) {
         val item = inventory[i]
         if (item != null) {
@@ -165,6 +173,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // The same as the previous one
     fun equip(item: Item) {
         var i = 0
         while (i < inventory.size && inventory[i] != item) {
@@ -180,6 +189,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Unequips an item
     fun unequip(item: Item) {
         when (item) {
             is Weapon -> {
@@ -201,6 +211,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Called when throw button is pressed
     fun throwButtonPressed(item: Item) {
         throwItem = item
         // TODO: Edit parameters
@@ -211,6 +222,8 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     ////////        ACTIONS        ////////
     ///////////////////////////////////////
 
+    // Returns 'true' if player is able to make an action requiring 'requiredAP'
+    // Also subtracts AP
     fun makeAction(requiredAP: Int) : Boolean {
         room.resetYellowArea()
         if (AP >= requiredAP) {
@@ -222,6 +235,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Move player
     override fun move(direction: Char, force: Boolean) : Boolean {
         if (force or makeAction(1)) {
             val isCorrect = super.move(direction, force)
@@ -238,6 +252,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Make player to attack
     override fun attack(direction: Char, target: Creature,
                         afterAttack: (attacker: Creature, defender: Creature) -> Unit,
                         requiredAP: Int, resetAP: Boolean) {
@@ -249,6 +264,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         }
     }
 
+    // Throw an item
     override fun throwItem(item: Item, x: Int, y: Int) {
         if (makeAction(1)) {
             super.throwItem(item, x, y)
