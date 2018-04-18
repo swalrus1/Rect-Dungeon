@@ -4,8 +4,7 @@ import ru.swalrus.rectdungeon.Game.Creature
 
 interface castable {
 
-    val area: Char
-    val range: Int
+    val area: Array<Array<Boolean>>
     val target: Char
     val requiredAP: Int
     val resetAP: Boolean

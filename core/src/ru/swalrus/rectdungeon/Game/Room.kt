@@ -1,5 +1,6 @@
 package ru.swalrus.rectdungeon.Game
 
+import com.badlogic.gdx.Gdx.app
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Generator
@@ -8,7 +9,7 @@ import kotlin.math.abs
 
 class Room (val chunk: Chunk, generator: Generator) {
 
-    var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,  // Tiles of the room
+    var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,  // Tiles of the room, including walls
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Floor() }) })
     private var creatureList : MutableList<Creature> = mutableListOf()          // All creatures contained in the room
     private var currentCreature : Int = 0                                       // Index of the making move creature
@@ -30,44 +31,17 @@ class Room (val chunk: Chunk, generator: Generator) {
     // area - type of area (Self, Line, Range)
     // target - type of target (All, Creatures, Player, Enemies)
     // range - parameter of the area
-    fun setYellowArea(x: Int, y: Int, area: Char, target: Char, range: Int = 1) {
+    fun setYellowArea(centerX: Int, centerY: Int, area: Array<Array<Boolean>>, target: Char) {
         resetYellowArea()
-        when (area) {
-            's' -> yellowArea[x][y] = true
-            'l' -> {
-                for (i in x-range..x+range) {
-                    if ((i >= 0) and (i < Const.ROOM_SIZE)) {
-                        grayArea[i][y] = true
-                        if (Utils.isTarget(getCreatureAt(i+1, y+1), target)) {
-                            yellowArea[i][y] = true
-                        }
+        for (x in 0 until Const.ROOM_SIZE)
+            for (y in 0 until Const.ROOM_SIZE) {
+                if (area[x - centerX + Const.ROOM_SIZE - 1][y - centerY + Const.ROOM_SIZE - 1]) {
+                    grayArea[x][y] = true
+                    if (Utils.isTarget(getCreatureAt(x+1, y+1), target)) {
+                        yellowArea[x][y] = true
                     }
                 }
-                for (i in y-range..y+range) {
-                    if ((i >= 0) and (i < Const.ROOM_SIZE)) {
-                        grayArea[x][i] = true
-                        if (Utils.isTarget(getCreatureAt(x+1, i+1), target)) {
-                            yellowArea[x][i] = true
-                        }
-                    }
-                }
-                yellowArea[x][y] = false
-                grayArea[x][y] = false
             }
-            'r' -> {
-                for (nx in 0 until Const.ROOM_SIZE)
-                    for (ny in 0 until Const.ROOM_SIZE) {
-                        if ((abs(nx - x) + abs(ny - y) <= range)) {
-                            grayArea[nx][ny] = true
-                            if (Utils.isTarget(getCreatureAt(nx + 1, ny + 1), target)) {
-                                yellowArea[nx][ny] = true
-                            }
-                        }
-                    }
-                yellowArea[x][y] = false
-                grayArea[x][y] = false
-            }
-        }
     }
 
     // Set yellow area to null

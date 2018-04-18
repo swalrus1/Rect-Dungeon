@@ -74,7 +74,6 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         if (item != null) {
             dropLoot(item)
         }
-        TODO()
     }
 
 

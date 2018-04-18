@@ -21,7 +21,7 @@ abstract class Weapon(img: Texture, name: String) : Item(img, name), castable, e
         }
 
     override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {
-        val direction: Char = if (area == 'l')
+        val direction: Char = if (x == attacker.x || y == attacker.y)
             Utils.getDirection(x - attacker.x, y - attacker.y)
         else
             Const.CENTER

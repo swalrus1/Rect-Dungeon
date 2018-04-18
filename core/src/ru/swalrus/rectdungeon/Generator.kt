@@ -32,8 +32,8 @@ class Generator {
             var x = MathUtils.random(Const.ROOM_SIZE-1)
             var y = MathUtils.random(Const.ROOM_SIZE-1)
             while (!free[x][y]) {
-                x = MathUtils.random(Const.ROOM_SIZE)
-                y = MathUtils.random(Const.ROOM_SIZE)
+                x = MathUtils.random(Const.ROOM_SIZE-1)
+                y = MathUtils.random(Const.ROOM_SIZE-1)
             }
             Utils.newCreature(item, biome, x+1, y+1, room)
             free[x][y] = false

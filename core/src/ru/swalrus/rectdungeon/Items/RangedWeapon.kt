@@ -1,6 +1,7 @@
 package ru.swalrus.rectdungeon.Items
 
 import com.badlogic.gdx.graphics.Texture
+import ru.swalrus.rectdungeon.Area
 import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
@@ -8,8 +9,7 @@ import ru.swalrus.rectdungeon.Utils
 
 abstract class RangedWeapon (img: Texture, name: String) : Weapon(img, name) {
 
-    override val area: Char = 'l'
-    override val range: Int = 9
+    override val area: Array<Array<Boolean>> = Area.line(Const.ROOM_SIZE - 1)
     override val target: Char = 'e'
 
     // Called when an arrow is landed

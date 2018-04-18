@@ -1,14 +1,14 @@
 package ru.swalrus.rectdungeon.Items
 
 import com.badlogic.gdx.Gdx.app
+import ru.swalrus.rectdungeon.Area
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Utils
 
 class ShortSword : Weapon(Utils.getImg("short_sword"), "Short Sword") {
 
-    override val range: Int = 1
-    override val area: Char = 'l'
+    override val area: Array<Array<Boolean>> = Area.line(1)
     override val target: Char = 'e'
     override val requiredAP: Int = 1
     override val resetAP: Boolean = false
@@ -26,8 +26,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), "Short Sword") {
 
 class Rapier : Weapon(Utils.getImg("rapier"), "Rapier") {
 
-    override val range: Int = 2
-    override val area: Char = 'l'
+    override val area: Array<Array<Boolean>> = Area.line(2)
     override val target: Char = 'e'
     override val requiredAP: Int = 1
     override val resetAP: Boolean = true

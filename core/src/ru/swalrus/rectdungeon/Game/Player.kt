@@ -4,6 +4,7 @@ import ru.swalrus.rectdungeon.Const
 import ru.swalrus.rectdungeon.Utils
 import ru.swalrus.rectdungeon.Items.*
 import com.badlogic.gdx.Gdx.app
+import ru.swalrus.rectdungeon.Area
 import ru.swalrus.rectdungeon.Items.HealPotion
 
 class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.getImg("human"), room) {
@@ -56,10 +57,10 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     fun onButtonTouch(id: Int) {
         when (id) {
             1 -> if (leftHand != null) {
-                room.setYellowArea(x-1, y-1, leftHand!!.area, leftHand!!.target, leftHand!!.range)
+                room.setYellowArea(x-1, y-1, leftHand!!.area, leftHand!!.target)
             }
             2 -> if (rightHand != null) {
-                room.setYellowArea(x-1, y-1, rightHand!!.area, rightHand!!.target, rightHand!!.range)
+                room.setYellowArea(x-1, y-1, rightHand!!.area, rightHand!!.target)
             }
         }
     }
@@ -215,7 +216,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
     fun throwButtonPressed(item: Item) {
         throwItem = item
         // TODO: Edit parameters
-        room.setYellowArea(x-1, y-1, 'r', 'a', 5)
+        room.setYellowArea(x-1, y-1, Area.range(5), 'a')
     }
 
     ///////////////////////////////////////
