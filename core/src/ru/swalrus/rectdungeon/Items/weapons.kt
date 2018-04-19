@@ -19,7 +19,7 @@ class ShortSword : Weapon(Utils.getImg("short_sword"), "Short Sword") {
     }
 
     override fun attack(attacker: Creature, target: Creature) {
-        target.dealDamage(2f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
+        target.dealDamage(2f, attacker)
     }
 }
 
@@ -37,7 +37,25 @@ class Rapier : Weapon(Utils.getImg("rapier"), "Rapier") {
     }
 
     override fun attack(attacker: Creature, target: Creature) {
-        target.dealDamage(1f, Utils.getDirection(target.x - attacker.x, target.y - attacker.y))
+        target.dealDamage(1f, attacker)
+    }
+}
+
+
+class Dagger : Weapon(Utils.getImg("dagger"), "Dagger") {
+
+    override val area: Array<Array<Boolean>> = Area.line(1)
+    override val target: Char = 'e'
+    override val requiredAP: Int = 1
+    override val resetAP: Boolean = false
+
+    override fun attack(attacker: Creature, target: Creature) {
+        target.dealDamage(1f, attacker)
+    }
+
+    override fun getDescription(): String {
+        return "A strong knife with a sharp blade.\n\n" +
+                "It can be found everywhere."
     }
 }
 

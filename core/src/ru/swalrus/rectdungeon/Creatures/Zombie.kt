@@ -8,9 +8,9 @@ import ru.swalrus.rectdungeon.Items.ShortSword
 import ru.swalrus.rectdungeon.Items.Weapon
 import ru.swalrus.rectdungeon.Utils
 
-class Skeleton(x: Int, y: Int, room: Room) : Creature(x, y, 2, Utils.getImg("skeleton"), room) {
+class Zombie(x: Int, y: Int, room: Room) : Creature(x, y, 4, Utils.getImg("skeleton"), room) {
 
-    val weapon: Weapon = Dagger()
+    val weapon: Weapon = ShortSword()
 
     override fun act() {
         actionQueue.add { AI.moveToPlayer(this) }

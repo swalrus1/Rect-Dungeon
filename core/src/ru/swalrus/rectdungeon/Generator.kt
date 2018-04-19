@@ -94,7 +94,7 @@ class Generator {
     }
 
     // Returns an array of enemy IDs which must be placed to the current room
-    fun chooseEnemies(progress: Int) : Array<Char> {
-        return arrayOf('k', 'k', 'k')
+    private fun chooseEnemies(progress: Int) : Array<Char> {
+        return arrayOf('m', 'm', 'm', 'k')
     }
 }

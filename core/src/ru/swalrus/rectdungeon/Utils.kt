@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Creatures.Dummy
 import ru.swalrus.rectdungeon.Creatures.Skeleton
+import ru.swalrus.rectdungeon.Creatures.Zombie
 import ru.swalrus.rectdungeon.Game.*
 import kotlin.math.abs
 
@@ -93,7 +94,8 @@ object Utils {
     fun newCreature(id: Char, biome: Char, x: Int, y: Int, room: Room) : Creature {
         return when (biome) {
             'n' -> when (id) {
-                'k' -> Skeleton(x, y, room)
+                'm' -> Skeleton(x, y, room)
+                'k' -> Zombie(x, y, room)
                 else -> Dummy(x, y, room)
             }
             else -> Dummy(x, y, room)

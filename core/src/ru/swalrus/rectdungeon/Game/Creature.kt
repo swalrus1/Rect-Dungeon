@@ -193,7 +193,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         push(throwDir)
     }
 
-    // The same as the next function
+    // Make the creature to get damage
     open fun dealDamage(damage: Float, direction: Char = Const.CENTER) {
         dealDamage(damage, Utils.dir2vec(direction))
     }
@@ -217,6 +217,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         if (HP <= 0) {
             die()
         }
+    }
+
+    // Make the creature to get damage
+    open fun dealDamage(damage: Float, attacker: Creature) {
+        dealDamage(damage, Utils.getDirection(x - attacker.x, y - attacker.y))
     }
 
     // Adds a new buff to the queue
