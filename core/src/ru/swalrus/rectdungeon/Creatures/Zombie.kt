@@ -8,7 +8,7 @@ import ru.swalrus.rectdungeon.Items.ShortSword
 import ru.swalrus.rectdungeon.Items.Weapon
 import ru.swalrus.rectdungeon.Utils
 
-class Zombie(x: Int, y: Int, room: Room) : Creature(x, y, 4, Utils.getImg("skeleton"), room) {
+class Zombie(x: Int, y: Int, room: Room) : Creature(x, y, 4, Utils.getImg("zombie"), room) {
 
     val weapon: Weapon = ShortSword()
 

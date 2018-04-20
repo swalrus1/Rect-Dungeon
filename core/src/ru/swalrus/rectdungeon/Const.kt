@@ -184,7 +184,9 @@ object Const {
                 "arrow_l" to Texture("Arrow_l.png"),
                 "item_new" to Texture("Item_new.png"),
                 "item_equipped" to Texture("Item_equipped.png"),
-                "dagger" to Texture("Dagger.png")
+                "dagger" to Texture("Dagger.png"),
+                "zombie" to Texture("Zombie.png"),
+                "goblin" to Texture("Goblin.png")
         )
     }
 }

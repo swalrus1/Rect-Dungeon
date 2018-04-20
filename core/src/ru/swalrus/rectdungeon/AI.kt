@@ -29,6 +29,11 @@ object AI {
         creature.move(playerDirection(creature.x, creature.y))
     }
 
+    // Move the given creature on one cell in the direction opposite to player
+    fun moveFromPlayer(creature: Creature) {
+        creature.move(Utils.reverseDirection(playerDirection(creature.x, creature.y)))
+    }
+
     // Make the given creature attack the player if it is near
     fun attackPlayerIfNear(creature: Creature, weapon: Weapon) : Boolean {
         val dir = AI.playerNearDirection(creature.x, creature.y)
