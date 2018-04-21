@@ -22,9 +22,7 @@ abstract class RangedWeapon (img: Texture, name: String) : Weapon(img, name) {
         if (attacker is Player) {
             attacker.AP++
         }
-        attacker.actionQueue.push({
-            attacker.throwItem(arrow, target.x, target.y)
-        })
+        attacker.throwItem(arrow, target.x, target.y)
     }
 
     override fun cast(x: Int, y: Int, attacker: Creature, defender: Creature?) {

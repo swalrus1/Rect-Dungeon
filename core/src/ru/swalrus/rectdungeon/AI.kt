@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import ru.swalrus.rectdungeon.Game.Creature
 import ru.swalrus.rectdungeon.Game.Player
 import ru.swalrus.rectdungeon.Items.Weapon
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 object AI {
@@ -34,17 +35,38 @@ object AI {
         creature.move(Utils.reverseDirection(playerDirection(creature.x, creature.y)))
     }
 
-    // Make the given creature attack the player if it is near
-    fun attackPlayerIfNear(creature: Creature, weapon: Weapon) : Boolean {
-        val dir = AI.playerNearDirection(creature.x, creature.y)
-        if (dir != 'n') {
-            val t = Utils.dir2vec(dir)
-            val nx = creature.x + t.x.roundToInt()
-            val ny = creature.y + t.y.roundToInt()
-            weapon.cast(nx, ny, creature, creature.room.getCreatureAt(nx, ny))
+    // Move the given creature on one cell to be at the same line as the player
+    fun moveToPlayerLine(creature: Creature) {
+        val moveDir = Vector2(0f, 0f)
+        when (playerDirection(creature.x, creature.y)) {
+            'l', 'r' -> moveDir.y = 1f
+            't', 'b' -> moveDir.x = 1f
+        }
+        if (creature.x > player.x) {
+            moveDir.x *= -1
+        } else if (creature.x == player.x) {
+            moveDir.x = 0f
+        }
+        if (creature.y > player.y) {
+            moveDir.y *= -1
+        } else if (creature.y == player.y) {
+            moveDir.y = 0f
+        }
+        creature.move(Utils.vec2dir(moveDir))
+    }
+
+    // Make the given creature attack the player if it is possible with its weapon
+    fun attackPlayerIfPossible(creature: Creature, weapon: Weapon) : Boolean {
+        if (weapon.area[player.x - creature.x + Const.ROOM_SIZE - 1][player.y - creature.y + Const.ROOM_SIZE - 1]) {
+            weapon.cast(player.x, player.y, creature, player)
             return true
         } else {
             return false
         }
+    }
+
+    // How many cells are between the given creature and the player
+    fun distToPlayer(creature: Creature) : Int {
+        return abs(creature.x - player.x) + abs(creature.y - player.y)
     }
 }

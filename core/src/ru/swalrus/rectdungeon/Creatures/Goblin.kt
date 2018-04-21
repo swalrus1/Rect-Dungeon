@@ -13,7 +13,7 @@ class Goblin(x: Int, y: Int, room: Room) : Creature(x, y, 3, Utils.getImg("gobli
 
     override fun act() {
         actionQueue.add { AI.moveToPlayer(this) }
-        actionQueue.add { AI.attackPlayerIfNear(this, weapon)
+        actionQueue.add { AI.attackPlayerIfPossible(this, weapon)
             actionQueue.add { if (AI.playerNearDirection(x, y) != 'n') actionQueue.push { AI.moveFromPlayer(this) } }
         }
     }

@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
-import ru.swalrus.rectdungeon.Creatures.Dummy
-import ru.swalrus.rectdungeon.Creatures.Goblin
-import ru.swalrus.rectdungeon.Creatures.Skeleton
-import ru.swalrus.rectdungeon.Creatures.Zombie
+import ru.swalrus.rectdungeon.Creatures.*
 import ru.swalrus.rectdungeon.Game.*
 import kotlin.math.abs
 
@@ -98,6 +95,7 @@ object Utils {
                 'm' -> Skeleton(x, y, room)
                 'k' -> Zombie(x, y, room)
                 's' -> Goblin(x, y, room)
+                'r' -> Archer(x, y, room)
                 else -> Dummy(x, y, room)
             }
             else -> Dummy(x, y, room)
