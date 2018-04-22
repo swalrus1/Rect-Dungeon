@@ -148,33 +148,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         extraSlot = null
     }
 
-    // Equips an item from the inventory with the given index
-    fun equip(i: Int) {
-        val item = inventory[i]
-        if (item != null) {
-            when (item) {
-                is Weapon -> when (leftHand) {
-                    null -> leftHand = item
-                    else -> {
-                        if (rightHand != null) {
-                            unequip(rightHand!!)
-                        }
-                        rightHand = item
-                    }
-                }
-                is Armor -> {
-                    if (armor != null) {
-                        unequip(armor!!)
-                    }
-                    armor = item
-                }
-            }
-        } else {
-            app.error("Inventory", "Attempt to equip nothing (null)")
-        }
-    }
-
-    // The same as the previous one
+    // Equips the given item
     fun equip(item: Item) {
         var i = 0
         while (i < inventory.size && inventory[i] != item) {
@@ -270,6 +244,34 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         if (makeAction(1)) {
             super.throwItem(item, x, y)
             removeItem(item)
+        }
+    }
+
+    // Equips an item from the inventory with the given index
+    fun equip(i: Int) {
+        if (makeAction(1)) {
+            val item = inventory[i]
+            if (item != null) {
+                when (item) {
+                    is Weapon -> when (leftHand) {
+                        null -> leftHand = item
+                        else -> {
+                            if (rightHand != null) {
+                                unequip(rightHand!!)
+                            }
+                            rightHand = item
+                        }
+                    }
+                    is Armor -> {
+                        if (armor != null) {
+                            unequip(armor!!)
+                        }
+                        armor = item
+                    }
+                }
+            } else {
+                app.error("Inventory", "Attempt to equip nothing (null)")
+            }
         }
     }
 }
