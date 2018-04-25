@@ -92,8 +92,8 @@ object Utils {
     fun newCreature(id: Char, biome: Char, x: Int, y: Int, room: Room) : Creature {
         return when (biome) {
             'n' -> when (id) {
-                'm' -> Skeleton(x, y, room)
-                'k' -> Zombie(x, y, room)
+                'm' -> Zombie(x, y, room)
+                'k' -> Skeleton(x, y, room)
                 's' -> Goblin(x, y, room)
                 'r' -> Archer(x, y, room)
                 else -> Dummy(x, y, room)
