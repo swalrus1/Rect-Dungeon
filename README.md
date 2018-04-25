@@ -2,6 +2,8 @@
 
 A small android rogue-like game
 
+All the source code is located in `core > src/ru/swalrus/rectdungeon`
+
 ---
 
-![Screenshot](http://image.ibb.co/gaF54R/Rect_Dungeon.png)
+![Screenshot](https://github.com/S-Walrus/Rect-Dungeon/blob/master/RD.png)
