@@ -1,7 +1,10 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.math.MathUtils
-import ru.swalrus.rectdungeon.Game.*
+import ru.swalrus.rectdungeon.Game.Door
+import ru.swalrus.rectdungeon.Game.Lava
+import ru.swalrus.rectdungeon.Game.Room
+import ru.swalrus.rectdungeon.Game.Wall
 import ru.swalrus.rectdungeon.Items.HealPotion
 import ru.swalrus.rectdungeon.Items.Item
 
@@ -28,7 +31,7 @@ class Generator {
 
         // For each enemy choose a free cell,
         // then place it to this cell and make the cell not free
-        for (item in chooseEnemies(progress)) {
+        for (item in chooseEnemies(progress, biome)) {
             var x = MathUtils.random(Const.ROOM_SIZE-1)
             var y = MathUtils.random(Const.ROOM_SIZE-1)
             while (!free[x][y]) {
@@ -94,7 +97,20 @@ class Generator {
     }
 
     // Returns an array of enemy IDs which must be placed to the current room
-    private fun chooseEnemies(progress: Int) : Array<Char> {
-        return arrayOf('s', 'm', 'm', 'k')
+    private fun chooseEnemies(progress: Int, biome: Char) : Array<Char> {
+        return when (biome) {
+            'n' -> when (progress) {
+                0 -> arrayOf('m', 'm')
+                1 -> arrayOf('m', 'm', 'r')
+                2 -> arrayOf('k', 'k')
+                3 -> arrayOf('k', 'r')
+                4 -> arrayOf('k', 'r', 's')
+                5 -> arrayOf('k', 'k', 'k')
+                6 -> arrayOf('m', 'm', 'm', 'r')
+                7 -> arrayOf('m', 'm', 'm', 'k', 'r')
+                else -> emptyArray()
+            }
+            else -> emptyArray()
+        }
     }
 }

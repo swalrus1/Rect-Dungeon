@@ -186,7 +186,11 @@ object Const {
                 "item_equipped" to Texture("Item_equipped.png"),
                 "dagger" to Texture("Dagger.png"),
                 "zombie" to Texture("Zombie.png"),
-                "goblin" to Texture("Goblin.png")
+                "goblin" to Texture("Goblin.png"),
+                "door_closed_top" to Texture("Door_closed_top.png"),
+                "door_closed_right" to Texture("Door_closed_right.png"),
+                "door_closed_left" to Texture("Door_closed_left.png"),
+                "door_closed_bottom" to Texture("Door_closed_bottom.png")
         )
     }
 }

@@ -14,6 +14,18 @@ class EmptyTile : Tile(Utils.getImg("empty"), passable = false)
 
 class Door(val direction: Char, val room: Room) : Tile(Utils.getImg("door", direction), passable = false) {
 
+    var closed: Boolean = false
+
+    fun close() {
+        closed = true
+        img = Utils.getImg("door_closed", direction)
+    }
+
+    fun open() {
+        closed = false
+        img = Utils.getImg("door", direction)
+    }
+
     override fun onStand(creature: Creature) {
         if (creature is Player) {
             room.chunk.move(direction)

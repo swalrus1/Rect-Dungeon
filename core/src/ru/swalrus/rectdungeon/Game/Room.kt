@@ -7,7 +7,7 @@ import ru.swalrus.rectdungeon.Generator
 import ru.swalrus.rectdungeon.Utils
 import kotlin.math.abs
 
-class Room (val chunk: Chunk, generator: Generator) {
+class Room (val chunk: Chunk, val generator: Generator) {
 
     var map : Array<Array<Tile>> = Array<Array<Tile>>(Const.ROOM_SIZE + 2,  // Tiles of the room, including walls
             { _ -> Array(Const.ROOM_SIZE + 2, { _ -> Floor() }) })
@@ -20,12 +20,36 @@ class Room (val chunk: Chunk, generator: Generator) {
             { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
     var grayArea: Array<Array<Boolean>> = Array(Const.ROOM_SIZE,                // Range of the weapon
             { _ -> Array(Const.ROOM_SIZE, { _ -> false }) })
+    var cleared: Boolean = false
 
 
     init {
         generator.generate(this)
+        closeDoors()
     }
 
+
+    // Prohibit getting out of the room
+    fun closeDoors() {
+        for (row in map)
+            for (tile in row) {
+                if (tile is Door) {
+                    tile.close()
+                }
+            }
+    }
+
+    // Called when the room is cleared
+    fun clearRoom() {
+        for (row in map)
+            for (tile in row) {
+                if (tile is Door) {
+                    tile.open()
+                }
+            }
+        generator.progress++
+        cleared = true
+    }
 
     // x, y - coordinates of the caster
     // area - type of area (Self, Line, Range)
@@ -155,6 +179,11 @@ class Room (val chunk: Chunk, generator: Generator) {
         // Render creatures
         for (creature in creatureList) {
             creature.render(batch)
+        }
+
+        // Check if the room is cleared
+        if (!cleared && creatureList.size <= 1 && findPlayer() != null) {
+            clearRoom()
         }
     }
 

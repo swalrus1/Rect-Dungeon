@@ -138,7 +138,7 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         val nexY = y + moveDir.y.toInt()
         val tile = room.getTile(newX, nexY)
 
-        if (force or tile.passable or ((this is Player) and (tile is Door))) {
+        if (force || tile.passable || (this is Player && tile is Door && !tile.closed)) {
             val creature = room.getCreatureAt(newX, nexY)
             // If there are no creature
             if (force or (creature == null)) {

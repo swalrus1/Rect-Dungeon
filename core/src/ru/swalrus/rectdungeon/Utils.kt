@@ -173,6 +173,14 @@ object Utils {
                     Const.LEFT -> return Const.images["door_left"]!!
                 }
             }
+            "door_closed" -> {
+                when (direction) {
+                    Const.TOP -> return Const.images["door_closed_top"]!!
+                    Const.BOTTOM -> return Const.images["door_closed_bottom"]!!
+                    Const.RIGHT -> return Const.images["door_closed_right"]!!
+                    Const.LEFT -> return Const.images["door_closed_left"]!!
+                }
+            }
             "lava" -> {
                 when (direction) {
                     't' -> return Const.images["lava_top"]!!
