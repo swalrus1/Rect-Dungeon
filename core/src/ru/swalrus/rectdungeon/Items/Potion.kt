@@ -16,8 +16,7 @@ abstract class Potion (img: Texture, name: String) : Item(img, name) {
     }
 
     override fun use(player: Player) {
-        cast(player)
-        player.removeItem(this)
+        player.drinkPotion(this)
     }
 
     // An effect of drinking the potion
