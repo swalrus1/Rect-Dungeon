@@ -24,6 +24,9 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
         addItem(ShortSword())
         addItem(Rapier())
         addItem(LongBow())
+        addItem(ShortBow())
+        addItem(Hammer())
+        addItem(LongSword())
         inventory[0]!!.use(this)
         addItem(HealPotion())
     }

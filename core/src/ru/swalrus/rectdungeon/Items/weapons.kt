@@ -60,9 +60,9 @@ class Rapier : Weapon(Utils.getImg("rapier"), "Rapier") {
 }
 
 
-class Hammer : Weapon(Utils.getImg("hammer"), "Rapier") {
+class Hammer : Weapon(Utils.getImg("hammer"), "Hammer") {
 
-    override val area: Array<Array<Boolean>> = Area.line(2)
+    override val area: Array<Array<Boolean>> = Area.line(1)
     override val target: Char = 'e'
     override val requiredAP: Int = 2
     override val resetAP: Boolean = false

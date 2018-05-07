@@ -177,7 +177,7 @@ object Const {
                 "chest" to Texture("Chest.png"),
                 "chest_open" to Texture("Chest_open.png"),
                 "heal_potion" to Texture("Heal_potion_half.png"),
-                "bow" to Texture("LongBow.png"),
+                "bow" to Texture("Bow.png"),
                 "arrow_t" to Texture("Arrow_t.png"),
                 "arrow_r" to Texture("Arrow_r.png"),
                 "arrow_b" to Texture("Arrow_b.png"),
@@ -191,7 +191,11 @@ object Const {
                 "door_closed_right" to Texture("Door_closed_right.png"),
                 "door_closed_left" to Texture("Door_closed_left.png"),
                 "door_closed_bottom" to Texture("Door_closed_bottom.png"),
-                "skeleton_archer" to Texture("Skeleton_archer.png")
+                "skeleton_archer" to Texture("Skeleton_archer.png"),
+                "long_sword" to Texture("Long_sword.png"),
+                "hammer" to Texture("Hammer.png"),
+                "dagger" to Texture("Dagger.png"),
+                "long_bow" to Texture("Long_bow.png")
         )
     }
 }
