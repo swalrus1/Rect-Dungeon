@@ -54,7 +54,7 @@
     <orderEntry type="library" exported="" name="Gradle: gdx-backend-robovm-1.9.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-platform-1.9.8-natives-ios" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-box2d-platform-1.9.8-natives-ios" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: kotlin-stdlib-1.2.30" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: kotlin-stdlib-1.2.31" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-1.9.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-box2d-1.9.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: annotations-13.0" level="project" />

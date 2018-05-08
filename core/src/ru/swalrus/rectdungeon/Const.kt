@@ -28,8 +28,8 @@ object Const {
     const val ARTIFACT_SLOTS = 3
 
     // Generator parameters
-    const val COOL_LOOT_RATE: Int = 3
-    const val LOOT_RATE: Int = 2
+    const val COOL_LOOT_RATE: Int = 2
+    const val LOOT_RATE: Int = 1
 
     // Font scale
     const val damageScale: Float = 1.4f

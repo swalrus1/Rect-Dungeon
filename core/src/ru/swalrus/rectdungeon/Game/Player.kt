@@ -20,13 +20,7 @@ class Player (x: Int, y: Int, HP: Int, room: Room) : Creature(x, y, 6, Utils.get
 
 
     init {
-        // ShortSword, Rapier
-        addItem(ShortSword())
-        addItem(Rapier())
-        addItem(LongBow())
-        addItem(ShortBow())
-        addItem(Hammer())
-        addItem(LongSword())
+        addItem(Dagger())
         inventory[0]!!.use(this)
         addItem(HealPotion())
     }

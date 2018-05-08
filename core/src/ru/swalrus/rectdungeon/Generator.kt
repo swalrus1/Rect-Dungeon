@@ -1,12 +1,12 @@
 package ru.swalrus.rectdungeon
 
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.MathUtils.random
 import ru.swalrus.rectdungeon.Game.Door
 import ru.swalrus.rectdungeon.Game.Lava
 import ru.swalrus.rectdungeon.Game.Room
 import ru.swalrus.rectdungeon.Game.Wall
-import ru.swalrus.rectdungeon.Items.HealPotion
-import ru.swalrus.rectdungeon.Items.Item
+import ru.swalrus.rectdungeon.Items.*
 
 // The class that is responsible for creating new rooms
 class Generator {
@@ -81,19 +81,34 @@ class Generator {
     // Returns a random loot if it must be dropped,
     // in other case returns 'null'
     fun getLoot() : Item? {
-        if (!droppedLoot && lootProgress >= Const.LOOT_RATE) {
-            lootProgress = 0
+        if (!droppedLoot && lootProgress % Const.LOOT_RATE == 0) {
             droppedLoot = true
-            return HealPotion()
+            // Return Cool loot if it must be dropped
+            if (lootProgress >= Const.COOL_LOOT_RATE) {
+                lootProgress = 0
+                return getCoolLoot()
+            } else {
+                // Else return basic loot
+                return HealPotion()
+            }
         } else {
             return null
         }
     }
 
-    // Returns a random loot that is better than usual loot if it must be dropped,
+    // Returns a random loot that is better than usual loot,
     // in other case returns 'null'
     fun getCoolLoot() : Item {
-        TODO()
+        return when (random(6)) {
+            0 -> Rapier()
+            1 -> ShortSword()
+            2 -> LongSword()
+            3 -> Hammer()
+            4 -> ShortBow()
+            5 -> LongBow()
+            6 -> Dagger()
+            else -> null!!
+        }
     }
 
     // Returns an array of enemy IDs which must be placed to the current room
