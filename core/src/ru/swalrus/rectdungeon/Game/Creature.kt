@@ -105,6 +105,11 @@ abstract class Creature (var x: Int, var y: Int, var HP: Int, var img: Texture, 
         update()
         if (alive) {
             sprite.draw(batch)
+        } else {
+            batch.draw(Utils.getImg("dead"),
+                    x * Const.TILE_SIZE + Const.MAP_MARGIN_LEFT,
+                    y * Const.TILE_SIZE + Const.MAP_MARGIN_BOTTOM,
+                    Const.TILE_SIZE, Const.TILE_SIZE, 0f, 1f, 1f, 0f)
         }
         when (indicatorState) {
             't' -> font.draw(batch, indicatorText,

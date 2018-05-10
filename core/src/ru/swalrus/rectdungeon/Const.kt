@@ -195,7 +195,8 @@ object Const {
                 "long_sword" to Texture("Long_sword.png"),
                 "hammer" to Texture("Hammer.png"),
                 "dagger" to Texture("Dagger.png"),
-                "long_bow" to Texture("Long_bow.png")
+                "long_bow" to Texture("Long_bow.png"),
+                "dead" to Texture("Dead.png")
         )
     }
 }
