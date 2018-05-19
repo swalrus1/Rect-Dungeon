@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/Projects/Rect-Dungeon/core/build/libs/core-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="ce57cbeafcf952e8a9ce00e8ebd0e0398147b196">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/core-1.0_a6e87513a4b3f21f76bb0321ba07209387727f8b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="919f0dfe192fb4e063e7dacadee7f8bb9a2672a9">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/annotations-13.0_f63bd123b48f3bb9497015a098085e83875b3c3f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/6f0497b7958216464101adfb7bdc3a0f7b88d6d3/gdx-box2d-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="6f0497b7958216464101adfb7bdc3a0f7b88d6d3">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/gdx-box2d-1.9.8_ad500a1a3ca5654b159fcb73bffb6e2f13feecf4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.9.8/84024cd60ad6f26370891fbcd17de9f0167e662/gdx-backend-android-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="084024cd60ad6f26370891fbcd17de9f0167e662">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/gdx-backend-android-1.9.8_371a0cf226b4eed785f5a1d720a7d1f6db3d26bd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.31/153dcd9ed9db246a7e36f4d7609e2a9f4718c674/kotlin-stdlib-1.2.31.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="153dcd9ed9db246a7e36f4d7609e2a9f4718c674">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/kotlin-stdlib-1.2.31_ae3ba2351e4352b53b261090ec9e046087333276.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/swalrus/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/a35a0076fbce873f9c2d5a1a1c8066244231bb3c/gdx-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.2"
+        sha1="a35a0076fbce873f9c2d5a1a1c8066244231bb3c">
+        <dex dex="/home/swalrus/Projects/Rect-Dungeon/android/build/intermediates/pre-dexed/debug/gdx-1.9.8_51c48eb34007bca2a76f89ae92cdb43dd2b5920b.jar" />
+    </item>
+
+</items>
